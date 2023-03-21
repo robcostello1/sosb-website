@@ -1,0 +1,141 @@
+import { Triplet } from "../../../../utils/types";
+import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
+import { useRef, useMemo, useEffect, useCallback } from "react";
+import {
+  Mesh,
+  BoxGeometry,
+  RawShaderMaterial,
+  Group,
+  Uniform,
+  Vector3,
+  IUniform,
+} from "three";
+// @ts-ignore
+import vertexShader from "../../shaders/vine/vertex.glsl";
+// @ts-ignore
+import fragmentShader from "../../shaders/vine/fragment.glsl";
+
+type VinesProps = Pick<GroupProps, "scale" | "rotation" | "position"> & {
+  geometryDimensions: Triplet;
+  vinesAmount: number;
+  pulsate?: number;
+  debug?: boolean;
+};
+
+const Vines = ({
+  geometryDimensions,
+  vinesAmount = 2,
+  debug = false,
+  pulsate,
+  ...props
+}: VinesProps) => {
+  const vineComplexity = 3;
+  const vineRef = useRef<Mesh<BoxGeometry, RawShaderMaterial>>(null);
+  const vineGroup = useRef<Group>(null);
+  const vineClone = useRef<Mesh<BoxGeometry, RawShaderMaterial>>();
+
+  const time = useRef(0);
+
+  const vine1Seed = useMemo(() => Math.random() * 100, []);
+  const vine2Seed = useMemo(() => Math.random() * 100, []);
+
+  const applyPulsate = useCallback(
+    (uniforms: Record<string, IUniform>) => {
+      if (pulsate) {
+        const pulse = Math.sin(((time.current * 60) / 123) * Math.PI * 4);
+
+        uniforms.uAmount.value = vinesAmount + Math.max(pulse, 0) * pulsate;
+      }
+    },
+    [vinesAmount, pulsate]
+  );
+
+  const applyTime = useCallback(
+    (uniforms: Record<string, IUniform>, time: number, seed: number) => {
+      uniforms.uTime.value = time + seed;
+    },
+    []
+  );
+
+  useFrame((_, delta) => {
+    // Move the time
+    time.current += delta;
+    if (debug) {
+      return;
+    }
+    if (vineRef.current) {
+      const uniforms = vineRef.current.material.uniforms;
+      applyTime(uniforms, time.current, vine1Seed);
+      applyPulsate(uniforms);
+    }
+    0;
+    if (vineClone.current) {
+      vineClone.current.material = vineClone.current.material.clone();
+      const uniforms = vineClone.current.material.uniforms;
+
+      applyTime(uniforms, time.current, vine2Seed);
+      applyPulsate(uniforms);
+    }
+  });
+  const vine1 = useMemo(() => {
+    return (
+      <mesh ref={vineRef}>
+        <boxGeometry
+          args={[
+            geometryDimensions[0] * 0.99,
+            geometryDimensions[1] * 1.01,
+            geometryDimensions[2] * 1.01,
+            Math.pow(2, vineComplexity),
+            Math.pow(2, vineComplexity),
+          ]}
+        />
+        {debug ? (
+          <meshBasicMaterial opacity={0.5} transparent />
+        ) : (
+          <rawShaderMaterial
+            depthWrite={false}
+            vertexShader={vertexShader}
+            fragmentShader={fragmentShader}
+            transparent
+            uniforms={{
+              uTime: new Uniform(0),
+              uSpeed: new Uniform(0.05),
+              uAmount: new Uniform(vinesAmount),
+              uScale: props.scale
+                ? new Uniform(
+                    new Vector3(
+                      // @ts-expect-error
+                      props.scale.x * geometryDimensions[0],
+                      // @ts-expect-error
+                      props.scale.y * geometryDimensions[1],
+                      // @ts-expect-error
+                      props.scale.z * geometryDimensions[2]
+                    ).multiplyScalar(0.02)
+                  )
+                : new Uniform(
+                    new Vector3(...geometryDimensions).multiplyScalar(0.02)
+                  ),
+            }}
+          />
+        )}
+      </mesh>
+    );
+  }, [vineComplexity]);
+
+  useEffect(() => {
+    if (vineRef.current && vineGroup.current) {
+      vineClone.current = vineRef.current.clone();
+
+      vineClone.current.rotation.y = Math.PI / 2;
+      vineGroup.current.add(vineClone.current);
+    }
+  }, [vineRef.current, vineGroup.current]);
+
+  return (
+    <group ref={vineGroup} {...props}>
+      {vine1}
+    </group>
+  );
+};
+
+export default Vines;

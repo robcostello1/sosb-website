@@ -18,15 +18,15 @@ import {
   useState,
 } from "react";
 import SOSB from "./SOSB";
-import StreetLamp from "./StreetLamp";
+import StreetLamp from "./City/StreetLamp";
 
-import Road from "./Road";
-import Warehouse from "./Warehouse";
-import TowerBlock from "./TowerBlock";
+import Road from "./City/Road";
+import Warehouse from "./City/Warehouse";
+import TowerBlock from "./City/TowerBlock";
 import dynamic from "next/dynamic";
 import Socials from "./Socials/Socials";
 import { useSoundAdjustments } from "../hooks/useSoundAdjustments";
-import Reset from "./Reset";
+import Reset from "./City/Reset";
 import { SFXProps } from "./SFX";
 
 import Camera from "./Camera";
