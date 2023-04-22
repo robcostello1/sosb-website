@@ -1,12 +1,16 @@
 import { useTexture } from "@react-three/drei";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState, Suspense } from "react";
 import { Group, MirroredRepeatWrapping, RepeatWrapping, Texture } from "three";
 import Building2 from "./BouncingBuilding";
-import gsap, { Linear, Power2 } from "gsap";
+import gsap, { Quad, Power2, Power1 } from "gsap";
 import BuildingWithVines from "./BuildingWithVines";
 import VineBuildingGroup from "./VineBuildingGroup";
 import BouncingBuildings from "./BouncingBuildings";
 import Ad from "./Ad/Ad";
+import Vines from "./Vines";
+import Garage from "../Garage/Garage";
+
+const START_POSITION_Z = 0.3;
 
 const applyWrap = (textures: Texture | Texture[]) => {
   (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
@@ -53,14 +57,24 @@ const DebugBuildings = ({
 );
 
 type City2Props = {
+  moving: boolean;
   sinkStart: number;
   duration: number;
   size: number;
   debug?: boolean;
+  setMoving: (moving: boolean) => void;
 };
 
-const City2 = ({ debug, duration, size, sinkStart }: City2Props) => {
+const City2 = ({
+  debug,
+  duration,
+  size,
+  sinkStart,
+  moving,
+  setMoving,
+}: City2Props) => {
   const groupRef = useRef<Group>(null);
+  const [garageLoaded, setGarageLoaded] = useState(false);
   const textureProps = [
     useTexture(
       {
@@ -85,11 +99,19 @@ const City2 = ({ debug, duration, size, sinkStart }: City2Props) => {
     ),
   ];
 
+  const [startedMoving, setStartedMoving] = useState(false);
+
   useEffect(() => {
-    if (groupRef.current && !debug) {
+    if (moving) {
+      setStartedMoving(true);
+    }
+  }, [moving]);
+
+  useEffect(() => {
+    if (groupRef.current && !debug && startedMoving) {
       gsap.to(groupRef.current.position, {
         duration,
-        ease: Linear.easeNone,
+        ease: Power1.easeIn,
         z: size / 2,
       });
 
@@ -100,21 +122,51 @@ const City2 = ({ debug, duration, size, sinkStart }: City2Props) => {
         y: -300,
       });
     }
-  }, [groupRef.current]);
+  }, [groupRef.current, startedMoving]);
 
   return (
-    <group position={!debug ? [0, 0, -size / 2] : undefined} ref={groupRef}>
-      <Ad />
-      {!debug ? (
-        <BouncingBuildings textureProps={textureProps} size={size} />
-      ) : (
-        <DebugBuildings textureProps={textureProps} />
+    <group
+      position={!debug ? [0, 0, -size * START_POSITION_Z] : undefined}
+      ref={groupRef}
+    >
+      <Suspense>
+        <Garage
+          position={[0, 0, size * START_POSITION_Z]}
+          doorDisabled={moving}
+          onClickOpen={() => setMoving(true)}
+          onLoad={() => setGarageLoaded(true)}
+        />
+      </Suspense>
+
+      {garageLoaded && (
+        <>
+          <group position={[-10, 2, -3]} rotation={[0, Math.PI / 2, 0]}>
+            <Vines geometryDimensions={[20, 10, 0.1]} vinesAmount={1} />
+            <Ad
+              boxArgs={[20, 10, 0.1]}
+              start={true}
+              url="/maps/verse1.mp4"
+              videoScale={1.7}
+              videoOffset={[0.2, 0.4]}
+            />
+          </group>
+
+          {!debug ? (
+            <BouncingBuildings
+              textureProps={textureProps}
+              size={size}
+              started={startedMoving}
+            />
+          ) : (
+            <DebugBuildings textureProps={textureProps} />
+          )}
+          <VineBuildingGroup
+            debug={debug}
+            textureProps={textureProps}
+            size={size}
+          />
+        </>
       )}
-      <VineBuildingGroup
-        debug={debug}
-        textureProps={textureProps}
-        size={size}
-      />
     </group>
   );
 };

@@ -1,10 +1,18 @@
-import { PointerLockControls, Sky, Stats } from "@react-three/drei";
+import {
+  FirstPersonControls,
+  OrbitControls,
+  PointerLockControls,
+  Sky,
+  Stats,
+} from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { Suspense, useEffect, useRef } from "react";
-import { Mesh } from "three";
+
+import { Suspense, useEffect, useRef, useState } from "react";
+
 import Ocean from "../../components/Terrain/Ocean";
 
-import { Islands, City, Galaxy, Raft } from "./components";
+import { City, Galaxy, Islands, Raft } from "./components";
+import Garage from "./components/Garage/Garage";
 
 const parts = {
   intro: 0,
@@ -17,6 +25,7 @@ const parts = {
 const debug = true;
 
 const AfloatContent = () => {
+  const [moving, setMoving] = useState(false);
   const time = 0;
 
   const analyserRef = useRef<AnalyserNode | null>(null);
@@ -42,6 +51,7 @@ const AfloatContent = () => {
   return (
     <>
       <PointerLockControls makeDefault />
+
       <ambientLight intensity={0.03} />
 
       {time > 7 && time < 21 ? (
@@ -56,14 +66,17 @@ const AfloatContent = () => {
       <Suspense>
         <City
           duration={parts.verse2}
-          sinkStart={parts.break1}
+          sinkStart={parts.break1 - 30}
           size={500}
-          debug={debug}
+          moving={moving}
+          setMoving={setMoving}
+          // debug={debug}
         />
       </Suspense>
 
       <Stats />
-      {/* <Islands
+      {/*       
+      <Islands
         scale={200}
         position={[-105, -3, 0]}
         bounce={0.6}

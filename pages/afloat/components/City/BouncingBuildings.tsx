@@ -1,17 +1,19 @@
 import { Triplet } from "../../../../utils/types";
 import { useFrame } from "@react-three/fiber";
 
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef } from "react";
 import BouncingBuilding from "./BouncingBuilding";
 import { TextureProps } from "./types";
 
 type BouncingBuildingsProps = {
+  started: boolean;
   textureProps: TextureProps[];
   debug?: boolean;
   size: number;
 };
 
 const BouncingBuildings = ({
+  started,
   textureProps,
   size,
   debug = false,
@@ -29,16 +31,18 @@ const BouncingBuildings = ({
         const z = Math.random() * size - size / 2;
         const sizeFactor = 50;
 
+        const scale =
+          0.2 +
+          Math.min(
+            Math.random() *
+              Math.sqrt(Math.abs(sizeFactor / z)) *
+              Math.sqrt(Math.abs(sizeFactor / x)),
+            2
+          );
+
         buildingArray.push({
           key: `${index}-1`,
-          scale: [
-            0.5 + Math.random(),
-            0.2 +
-              Math.random() *
-                Math.sqrt(Math.abs(sizeFactor / z)) *
-                Math.sqrt(Math.abs(sizeFactor / x)),
-            0.5 + Math.random(),
-          ] as Triplet,
+          scale: [0.5 + Math.random(), scale, 0.5 + Math.random()] as Triplet,
           position: [x, 0, -z] as Triplet,
           textureProps:
             textureProps[Math.floor(Math.random() * textureProps.length)],
@@ -51,8 +55,10 @@ const BouncingBuildings = ({
   const time = useRef(0);
 
   useFrame((_, delta) => {
-    time.current += delta;
-    setBuildingMovement(Math.floor(time.current / 4) / 12);
+    if (started) {
+      time.current += delta;
+      setBuildingMovement(Math.floor(time.current / 4) / 12);
+    }
   });
 
   // useEffect(() => {

@@ -1,16 +1,8 @@
 import { Triplet } from "../../../../utils/types";
 
 import { MeshProps } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
-import {
-  BoxGeometry,
-  Mesh,
-  MeshStandardMaterial,
-  MirroredRepeatWrapping,
-  RepeatWrapping,
-  Texture,
-  Vector3,
-} from "three";
+import { useMemo, useRef } from "react";
+import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from "three";
 import BaseBuilding, {
   DEFAULT_BUILDING_HEIGHT,
   DEFAULT_BUILDING_WIDTH,

@@ -14,16 +14,24 @@ export default {
   },
 } as ComponentMeta<typeof Ad>;
 
-const Template: ComponentStory<typeof Ad> = (args) => (
-  <>
-    <Canvas camera={{ position: [2, 1, 3] }}>
+const Template: ComponentStory<typeof Ad> = (args) => {
+  return (
+    <Canvas camera={{ position: [2, 1, 2] }}>
       <OrbitControls autoRotate />
 
       <Stage adjustCamera={false}>
-        <Ad />
+        <Ad {...args} />
       </Stage>
     </Canvas>
-  </>
-);
+  );
+};
 
 export const Default = Template.bind({});
+
+Default.args = {
+  url: "/maps/verse1.mp4",
+  boxArgs: [3, 1, 0.1],
+  videoOffset: [0, 0.6],
+  videoScale: 1,
+  start: true,
+};

@@ -10,6 +10,7 @@ import * as THREE from "three";
 
 import { Water, WaterOptions } from "three/examples/jsm/objects/Water.js";
 import { RGBA_ASTC_10x10_Format } from "three";
+import { Triplet } from "../../utils/types";
 
 extend({ Water });
 declare global {
@@ -21,7 +22,13 @@ declare global {
 }
 const scale = 1;
 
-const Ocean = () => {
+const Ocean = ({
+  position,
+  waterColor = 0x0064b5,
+}: {
+  position?: Triplet;
+  waterColor?: number;
+}) => {
   const ref = useRef<Water>(null);
   const gl = useThree((state) => state.gl);
   const waterNormals = useLoader(
@@ -38,7 +45,7 @@ const Ocean = () => {
       waterNormals,
       sunDirection: new THREE.Vector3(),
       // sunColor: 0xeb8934,
-      waterColor: 0x0064b5,
+      waterColor: waterColor,
       distortionScale: 0.3,
       fog: false,
       // @ts-ignore
@@ -73,7 +80,7 @@ const Ocean = () => {
       ref={ref}
       args={[geom, config]}
       rotation-x={-Math.PI / 2}
-      position={[0, 0, 0]}
+      position={position}
     />
   );
 };
