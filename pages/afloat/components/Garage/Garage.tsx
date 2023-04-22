@@ -40,7 +40,6 @@ const Garage = ({
 
   const handleClickOpen = () => {
     if (!doorDisabled) {
-      console.log("HHH");
       setOpen((currentOpen) => !currentOpen);
       onClickOpen();
     }

@@ -31,7 +31,8 @@ export const Default = Template.bind({});
 Default.args = {
   url: "/maps/verse1.mp4",
   boxArgs: [3, 1, 0.1],
-  videoOffset: [0, 0.6],
+  videoOffset: [0, 0.2],
   videoScale: 1,
   start: true,
+  position: [0, 10, 0],
 };

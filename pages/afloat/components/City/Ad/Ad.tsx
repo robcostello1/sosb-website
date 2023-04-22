@@ -5,7 +5,7 @@ import { forwardRef, Suspense, useEffect, useRef } from "react";
 import { MeshBasicMaterial, RepeatWrapping, Vector2 } from "three";
 import { MeshProps } from "@react-three/fiber";
 
-type AdProps = MeshProps & {
+type AdProps = Pick<MeshProps, "position"> & {
   aspectRatio?: number;
   boxArgs: Triplet;
   start: boolean;
