@@ -5,7 +5,7 @@ import { forwardRef, Suspense, useEffect, useRef } from "react";
 import { MeshBasicMaterial, RepeatWrapping, Vector2 } from "three";
 import { MeshProps } from "@react-three/fiber";
 
-type AdProps = Pick<MeshProps, "position"> & {
+type ScreenContentsProps = Pick<MeshProps, "position"> & {
   aspectRatio?: number;
   boxArgs: Triplet;
   start: boolean;
@@ -14,15 +14,14 @@ type AdProps = Pick<MeshProps, "position"> & {
   videoScale?: number;
 };
 
-const Ad = ({
+const ScreenContents = ({
   start = true,
   url,
   boxArgs,
   aspectRatio = 1920 / 1080,
   videoOffset = [0, 0],
   videoScale = 1,
-  ...props
-}: AdProps) => {
+}: ScreenContentsProps) => {
   const videoMatRef = useRef<MeshBasicMaterial>(null);
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const Ad = ({
   }, [videoMatRef, videoOffset, aspectRatio, videoScale, boxArgs]);
 
   return (
-    <mesh {...props}>
+    <>
       <boxGeometry args={boxArgs} />
       <meshStandardMaterial attach="material-0" color={0x000000} />
       <meshStandardMaterial attach="material-1" color={0x000000} />
@@ -66,7 +65,7 @@ const Ad = ({
       </Suspense>
       <meshStandardMaterial attach="material-5" color={0x000000} />
       <meshStandardMaterial attach="material-6" color={0x000000} />
-    </mesh>
+    </>
   );
 };
 
@@ -88,4 +87,4 @@ const VideoMaterial = forwardRef<MeshBasicMaterial, VideoMaterialProps>(
   }
 );
 
-export default Ad;
+export default ScreenContents;

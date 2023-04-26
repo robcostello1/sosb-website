@@ -1,26 +1,26 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import Ad from "./Ad";
+import Screen from "./Screen";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stage } from "@react-three/drei";
 
 export default {
-  title: "City/Ad",
-  component: Ad,
+  title: "City/Screen",
+  component: Screen,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
   },
-} as ComponentMeta<typeof Ad>;
+} as ComponentMeta<typeof Screen>;
 
-const Template: ComponentStory<typeof Ad> = (args) => {
+const Template: ComponentStory<typeof Screen> = (args) => {
   return (
     <Canvas camera={{ position: [2, 1, 2] }}>
       <OrbitControls autoRotate />
 
       <Stage adjustCamera={false}>
-        <Ad {...args} />
+        <Screen {...args} />
       </Stage>
     </Canvas>
   );

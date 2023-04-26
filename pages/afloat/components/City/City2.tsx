@@ -6,7 +6,7 @@ import gsap, { Quad, Power2, Power1 } from "gsap";
 import BuildingWithVines from "./BuildingWithVines";
 import VineBuildingGroup from "./VineBuildingGroup";
 import BouncingBuildings from "./BouncingBuildings";
-import Ad from "./Ad/Ad";
+import Ad from "./Screen/Screen";
 import Vines from "./Vines";
 import Garage from "../Garage/Garage";
 

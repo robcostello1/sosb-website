@@ -3,8 +3,9 @@ import { ComponentStory, ComponentMeta } from "@storybook/react";
 
 import FloatingStuff from "./FloatingStuff";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stage } from "@react-three/drei";
+import { OrbitControls, Stats } from "@react-three/drei";
 import Ocean from "../../../../components/Terrain/Ocean";
+import { RaftContent } from "../Raft";
 
 export default {
   title: "City/FloatingStuff",
@@ -19,8 +20,12 @@ const Template: ComponentStory<typeof FloatingStuff> = (args) => {
   return (
     <Canvas camera={{ position: [5, 10, 20] }}>
       <OrbitControls />
+      <Stats />
 
-      <directionalLight position={[-5, 10, 3]} />
+      <directionalLight position={[-5, 10, 3]} intensity={0.3} />
+
+      {/* <RaftContent /> */}
+
       <Ocean position={[0, 0, 0]} waterColor={0x444422} />
       <FloatingStuff {...args} />
     </Canvas>
@@ -30,8 +35,9 @@ const Template: ComponentStory<typeof FloatingStuff> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  from: -10,
-  to: 10,
+  from: -20,
+  to: 20,
   delay: 0,
-  duration: 20,
+  duration: 10,
+  debug: true,
 };
