@@ -3,13 +3,6 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   webpack: (config) => {
-    //   loaders: [
-    //     {
-    //         test: /\.glsl$/,
-    //         loader: 'webpack-glsl'
-    //     }
-    // ]
-
     config.module.rules.push({
       test: /\.(frag|vert|glsl)$/,
       use: [
@@ -19,7 +12,6 @@ const nextConfig = {
         },
       ],
     });
-    // console.log(config.module.rules);
 
     return config;
   },

@@ -18,7 +18,7 @@ export default {
 
 const Template: ComponentStory<typeof FloatingStuff> = (args) => {
   return (
-    <Canvas camera={{ position: [5, 10, 20] }}>
+    <Canvas camera={{ position: [0, 20, 0] }}>
       <OrbitControls />
       <Stats />
 

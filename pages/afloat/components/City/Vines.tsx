@@ -16,17 +16,19 @@ import vertexShader from "../../shaders/vine/vertex.glsl";
 import fragmentShader from "../../shaders/vine/fragment.glsl";
 
 type VinesProps = Pick<GroupProps, "scale" | "rotation" | "position"> & {
-  geometryDimensions: Triplet;
-  vinesAmount: number;
-  pulsate?: number;
   debug?: boolean;
+  geometryDimensions: Triplet;
+  includeSides?: boolean;
+  pulsate?: number;
+  vinesAmount: number;
 };
 
 const Vines = ({
-  geometryDimensions,
-  vinesAmount = 2,
   debug = false,
+  geometryDimensions,
+  includeSides = true,
   pulsate,
+  vinesAmount = 2,
   ...props
 }: VinesProps) => {
   const vineComplexity = 3;
@@ -123,7 +125,7 @@ const Vines = ({
   }, [vineComplexity]);
 
   useEffect(() => {
-    if (vineRef.current && vineGroup.current) {
+    if (vineRef.current && vineGroup.current && includeSides) {
       vineClone.current = vineRef.current.clone();
 
       vineClone.current.rotation.y = Math.PI / 2;

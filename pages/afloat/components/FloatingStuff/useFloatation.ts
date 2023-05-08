@@ -1,5 +1,9 @@
 import { useFrame } from "@react-three/fiber";
-import { RapierRigidBody, vec3 } from "@react-three/rapier";
+import {
+  RapierRigidBody,
+  useAfterPhysicsStep,
+  vec3,
+} from "@react-three/rapier";
 import { useRef } from "react";
 import { InstancedMesh, Mesh } from "three";
 
@@ -24,7 +28,9 @@ export const useFloatation = <T extends Mesh | InstancedMesh>({
 
   useFrame((_, delta) => {
     time.current += delta;
+  });
 
+  useAfterPhysicsStep(() => {
     if (meshRef.current && bodyRef.current) {
       const body = bodyRef.current;
 

@@ -6,7 +6,7 @@ import { MeshBasicMaterial, RepeatWrapping, Vector2 } from "three";
 import { MeshProps } from "@react-three/fiber";
 import ScreenContents from "./ScreenContents";
 
-type ScreenProps = Pick<MeshProps, "position"> & {
+export type ScreenProps = Pick<MeshProps, "position"> & {
   aspectRatio?: number;
   boxArgs: Triplet;
   start: boolean;

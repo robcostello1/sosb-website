@@ -3,15 +3,9 @@ import { Group } from "three";
 import gsap, { Linear } from "gsap";
 
 import { useFrame } from "@react-three/fiber";
-import {
-  MeshCollider,
-  Physics,
-  RapierRigidBody,
-  RigidBody,
-} from "@react-three/rapier";
+import { Physics, RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { FloatingObjectProps } from "./FloatingObject";
 import FloatingTV from "./FloatingTV";
-import { Box } from "@react-three/drei";
 
 type FloatingStuffProps = {
   from: number;
@@ -19,9 +13,10 @@ type FloatingStuffProps = {
   duration: number;
   delay: number;
   debug?: boolean;
+  spread?: [number, number];
+  numberOfItems?: number;
+  typesOfItems?: "tv"[];
 };
-
-const raftSize = [];
 
 const FloatingStuff = ({
   from,
@@ -29,17 +24,20 @@ const FloatingStuff = ({
   duration,
   delay,
   debug,
+  spread = [100, 200],
+  numberOfItems = 100,
+  typesOfItems = ["tv"],
 }: FloatingStuffProps) => {
   const objects = useMemo(() => {
     const objectArray = [];
 
-    for (let index = 0; index < 100; index++) {
+    for (let index = 0; index < numberOfItems; index++) {
       const objectProps: FloatingObjectProps = {
         key: index,
         position: [
-          Math.random() * 20 - 10,
+          Math.random() * spread[0] - spread[0] / 2,
           Math.random() * 5 - 2.5,
-          Math.random() * 20 - 10,
+          Math.random() * spread[1] - spread[1] / 2,
         ],
         rotation: [
           Math.random() * Math.PI * 2,
@@ -59,16 +57,16 @@ const FloatingStuff = ({
     }
 
     return objectArray;
-  }, []);
+  }, [numberOfItems]);
 
   const worldRef = useRef<Group>(null);
   const raftColliderRef = useRef<RapierRigidBody>(null);
   const worldPosition = useRef(from);
-  const raftPostion = useRef();
 
   useEffect(() => {
-    if (raftColliderRef.current && worldRef.current) {
+    if (worldRef.current) {
       gsap.to(worldPosition, {
+        from,
         current: to,
         delay,
         duration,
@@ -76,42 +74,20 @@ const FloatingStuff = ({
         repeat: debug ? -1 : undefined,
       });
     }
-    //   moving.current = true;
-    //   gsap.to(worldRef.current.position, {
-    //     z: to,
-    //     delay,
-    //     duration,
-    //     ease: Linear.easeNone,
-    //     repeat: debug ? -1 : undefined,
-    //   });
-    // }
-  }, [to, delay, duration, debug]);
+  }, [from, to, delay, duration, debug, worldRef]);
 
-  // const time = useRef(0);
-  useFrame((_, delta) => {
+  useFrame(() => {
     if (raftColliderRef.current && worldRef.current) {
-      //     time.current += delta;
-      //     const fractionTravelled = duration / time.current;
-      //     // (from - to) / fractionTravelled;
-      //     const currentWorldPosition = from - (from - to) / fractionTravelled;
-      //     // (to - from) / fractionTravelled;
-
-      //     // console.log({ time: time.current, fractionTravelled });
-
       worldRef.current.position.set(0, 0, worldPosition.current);
 
-      //     const currentRaftPosition = to - (to - from) / fractionTravelled;
-
-      //     console.log({ currentWorldPosition, currentRaftPosition });
-
       raftColliderRef.current.setTranslation(
-        { x: 0, y: 0, z: worldPosition.current },
+        {
+          x: 0,
+          y: 0,
+          z: worldPosition.current * -1 + from / 2,
+        },
         false
       );
-
-      //     if (debug && time.current > duration) {
-      //       time.current = 0;
-      //     }
     }
   });
 
@@ -127,7 +103,7 @@ const FloatingStuff = ({
             angularDamping={Infinity}
             colliders={"ball"}
           >
-            <mesh position={[0, 0, to]}>
+            <mesh position={[0, 0, from / 2]}>
               <boxGeometry args={[3, 2, 3]} />
               <meshBasicMaterial
                 transparent

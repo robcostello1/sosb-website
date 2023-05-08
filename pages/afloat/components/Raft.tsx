@@ -4,7 +4,11 @@ import { useEffect } from "react";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
-const Raft = () => {
+type RaftProps = {
+  showModel?: boolean;
+};
+
+const Raft = ({ showModel }: RaftProps) => {
   const { camera } = useThree();
 
   useEffect(() => {
@@ -12,10 +16,10 @@ const Raft = () => {
     camera.position.set(0, 2, 0);
   }, []);
 
-  return <Raft />;
+  return <RaftContent showModel={showModel} />;
 };
 
-export function RaftContent() {
+export function RaftContent({ showModel = true }: RaftProps) {
   const raftModel = useLoader(GLTFLoader, "/raft.glb", (loader) => {
     const dracoLoader = new DRACOLoader();
     // TODO
@@ -24,9 +28,11 @@ export function RaftContent() {
   });
 
   return (
-    <group scale={[0.01, 0.01, 0.01]} position={[0, 0.15, 0]}>
-      <primitive object={raftModel.scene} />
-    </group>
+    <>
+      <group scale={[0.01, 0.01, 0.01]} position={[0, 0.08, 0]}>
+        {showModel && <primitive object={raftModel.scene} />}
+      </group>
+    </>
   );
 }
 

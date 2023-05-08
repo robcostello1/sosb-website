@@ -2,13 +2,12 @@ import { useTexture } from "@react-three/drei";
 import { useRef, useEffect, useState, Suspense } from "react";
 import { Group, MirroredRepeatWrapping, RepeatWrapping, Texture } from "three";
 import Building2 from "./BouncingBuilding";
-import gsap, { Quad, Power2, Power1 } from "gsap";
+import gsap, { Power2, Power1 } from "gsap";
 import BuildingWithVines from "./BuildingWithVines";
 import VineBuildingGroup from "./VineBuildingGroup";
 import BouncingBuildings from "./BouncingBuildings";
-import Ad from "./Screen/Screen";
-import Vines from "./Vines";
 import Garage from "../Garage/Garage";
+import { ScreenWithVines } from "./Screen";
 
 const START_POSITION_Z = 0.3;
 
@@ -140,16 +139,15 @@ const City2 = ({
 
       {garageLoaded && (
         <>
-          <group position={[-10, 2, -3]} rotation={[0, Math.PI / 2, 0]}>
-            <Vines geometryDimensions={[20, 10, 0.1]} vinesAmount={1} />
-            <Ad
-              boxArgs={[20, 10, 0.1]}
-              start={true}
-              url="/maps/verse1.mp4"
-              videoScale={1.7}
-              videoOffset={[0.2, 0.4]}
-            />
-          </group>
+          <ScreenWithVines
+            position={[-10, 2, -3]}
+            rotation={[0, Math.PI / 2, 0]}
+            boxArgs={[20, 10, 0.1]}
+            start={true}
+            url="/maps/verse1.mp4"
+            videoScale={1.7}
+            videoOffset={[0.2, 0.4]}
+          />
 
           {!debug ? (
             <BouncingBuildings

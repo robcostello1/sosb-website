@@ -5,13 +5,14 @@ import {
   Sky,
   Stats,
 } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
 import Ocean from "../../components/Terrain/Ocean";
 
 import { City, Galaxy, Islands, Raft } from "./components";
+import FloatingStuff from "./components/FloatingStuff";
 import Garage from "./components/Garage/Garage";
 
 const parts = {
@@ -22,37 +23,48 @@ const parts = {
   break2: 140.448,
 };
 
-const debug = true;
+const debug = false;
 
 const AfloatContent = () => {
   const [moving, setMoving] = useState(false);
-  const time = 0;
+  const [showFloatingStuff, setShowFloatingStuff] = useState(false);
+  const time = 7;
 
+  const song = useRef<HTMLAudioElement>();
   const analyserRef = useRef<AnalyserNode | null>(null);
 
+  const handleSetMoving = useCallback(() => {
+    !debug && song.current?.play();
+    setMoving(true);
+  }, []);
+
   useEffect(() => {
-    const song = new Audio();
-    song.src = "/sound/afloat-full.mp3";
+    song.current = new Audio();
+    song.current.src = "/sound/afloat-full.mp3";
     const audioCtx = new window.AudioContext();
     let audioSource = null;
 
-    !debug && song.play();
-    audioSource = audioCtx.createMediaElementSource(song);
+    audioSource = audioCtx.createMediaElementSource(song.current);
     analyserRef.current = audioCtx.createAnalyser();
     audioSource.connect(analyserRef.current);
     analyserRef.current.connect(audioCtx.destination);
     analyserRef.current.fftSize = 128;
 
     return () => {
-      song.pause();
+      song.current?.pause();
     };
   }, []);
+
+  useFrame(() => {
+    const time = song.current?.currentTime || 0;
+    if (time > parts.verse1) {
+      setShowFloatingStuff(true);
+    }
+  });
 
   return (
     <>
       <PointerLockControls makeDefault />
-
-      <ambientLight intensity={0.03} />
 
       {time > 7 && time < 21 ? (
         // TODO sun position
@@ -63,13 +75,23 @@ const AfloatContent = () => {
 
       <Ocean />
 
+      {showFloatingStuff && (
+        <FloatingStuff
+          numberOfItems={200}
+          from={-100}
+          to={100}
+          duration={30}
+          delay={0}
+        />
+      )}
+
       <Suspense>
         <City
           duration={parts.verse2}
-          sinkStart={parts.break1 - 30}
+          sinkStart={parts.break1 - 20}
           size={500}
           moving={moving}
-          setMoving={setMoving}
+          setMoving={handleSetMoving}
           // debug={debug}
         />
       </Suspense>
@@ -92,7 +114,7 @@ const AfloatContent = () => {
 
       {/* <BuildingGlitch /> */}
 
-      <Raft />
+      <Raft showModel={false} />
     </>
   );
 };
