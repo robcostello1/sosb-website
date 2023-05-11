@@ -92,6 +92,7 @@ const Garage = ({
   useEffect(() => {
     window.onclick = function () {
       handleClickOpen();
+      return true;
     };
   });
 
@@ -121,7 +122,6 @@ const Garage = ({
       <Button
         ref={buttonRef}
         text="Open"
-        onClick={handleClickOpen}
         position={[WIDTH / 2 - 0.2, 2, -3]}
         rotation={[Math.PI / 2, 0, Math.PI / 2]}
         scale={[1.2, 1.2, 1.2]}

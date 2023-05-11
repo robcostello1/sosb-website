@@ -13,7 +13,7 @@ type ButtonProps = {
   scale?: Triplet;
   castShadow?: boolean;
   buttonName?: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const Button = forwardRef<Mesh, ButtonProps>(

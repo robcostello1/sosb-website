@@ -18,3 +18,12 @@ export const getBuildingAttributes = (size: number, index: number) => {
     position: [x, 0, -z] as Triplet,
   };
 };
+
+export function weightedRandom(
+  // Controls the shape of the distribution, higher values make it more skewed towards lower values
+  lambda = 2
+) {
+  const u = Math.random(); // Generate a random number between 0 and 1
+  const x = -Math.log(1 - u) / lambda; // Transform the uniform distribution into an exponential distribution
+  return x;
+}

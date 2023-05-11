@@ -2,7 +2,7 @@ import { useTexture } from "@react-three/drei";
 import { useRef, useEffect, useState, Suspense, memo } from "react";
 import { Group, MirroredRepeatWrapping, RepeatWrapping, Texture } from "three";
 import Building2 from "./BouncingBuilding";
-import gsap, { Power2, Power1 } from "gsap";
+import gsap, { Power2, Linear, Sine, Power1 } from "gsap";
 import BuildingWithVines from "./BuildingWithVines";
 import VineBuildingGroup from "./VineBuildingGroup";
 import BouncingBuildings from "./BouncingBuildings";
@@ -108,9 +108,16 @@ const City2 = ({
 
   useEffect(() => {
     if (groupRef.current && !debug && startedMoving) {
-      gsap.to(groupRef.current.position, {
-        duration,
+      const tl = gsap.timeline();
+
+      tl.to(groupRef.current.position, {
+        duration: 7,
         ease: Power1.easeIn,
+        z: -size * START_POSITION_Z + 10,
+      });
+      tl.to(groupRef.current.position, {
+        duration: duration - 5,
+        ease: Linear.easeIn,
         z: size / 2,
       });
 
@@ -128,14 +135,12 @@ const City2 = ({
       position={!debug ? [0, 0, -size * START_POSITION_Z] : undefined}
       ref={groupRef}
     >
-      <Suspense>
-        <Garage
-          position={[0, 0, size * START_POSITION_Z]}
-          doorDisabled={moving}
-          onClickOpen={() => setMoving(true)}
-          onLoad={() => setGarageLoaded(true)}
-        />
-      </Suspense>
+      <Garage
+        position={[0, 0, size * START_POSITION_Z]}
+        doorDisabled={moving}
+        onClickOpen={() => setMoving(true)}
+        onLoad={() => setGarageLoaded(true)}
+      />
 
       {garageLoaded && (
         <>

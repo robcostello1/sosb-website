@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef, memo } from "react";
+import { useEffect, useMemo, useRef, memo, ReactElement } from "react";
 import { Group } from "three";
 import gsap, { Linear } from "gsap";
 
@@ -6,16 +6,18 @@ import { useFrame } from "@react-three/fiber";
 import { Physics, RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { FloatingObjectProps } from "./FloatingObject";
 import FloatingTV from "./FloatingTV";
+import { weightedRandom } from "../City/utils";
 
 type FloatingStuffProps = {
   from: number;
   to: number;
   duration: number;
-  delay: number;
+  delay?: number;
   debug?: boolean;
   spread?: [number, number];
   numberOfItems?: number;
   typesOfItems?: "tv"[];
+  visible?: boolean;
 };
 
 const FloatingStuff = ({
@@ -27,16 +29,21 @@ const FloatingStuff = ({
   spread = [100, 200],
   numberOfItems = 100,
   typesOfItems = ["tv"],
+  visible = true,
 }: FloatingStuffProps) => {
   const objects = useMemo(() => {
-    const objectArray = [];
+    const objectArray: ReactElement[] = [];
+
+    if (!visible) {
+      return objectArray;
+    }
 
     for (let index = 0; index < numberOfItems; index++) {
       const objectProps: FloatingObjectProps = {
         key: index,
         position: [
-          Math.random() * spread[0] - spread[0] / 2,
-          Math.random() * 5 - 2.5,
+          weightedRandom(6) * spread[0] * (index % 2 === 0 ? 1 : -1),
+          Math.random() * -50,
           Math.random() * spread[1] - spread[1] / 2,
         ],
         rotation: [
@@ -57,14 +64,14 @@ const FloatingStuff = ({
     }
 
     return objectArray;
-  }, [numberOfItems]);
+  }, [numberOfItems, visible]);
 
   const worldRef = useRef<Group>(null);
   const raftColliderRef = useRef<RapierRigidBody>(null);
   const worldPosition = useRef(from);
 
   useEffect(() => {
-    if (worldRef.current) {
+    if (worldRef.current && visible) {
       gsap.to(worldPosition, {
         from,
         current: to,
@@ -74,10 +81,10 @@ const FloatingStuff = ({
         repeat: debug ? -1 : undefined,
       });
     }
-  }, [from, to, delay, duration, debug, worldRef]);
+  }, [from, to, delay, duration, debug, worldRef, visible]);
 
   useFrame(() => {
-    if (raftColliderRef.current && worldRef.current) {
+    if (raftColliderRef.current && worldRef.current && visible) {
       worldRef.current.position.set(0, 0, worldPosition.current);
 
       raftColliderRef.current.setTranslation(
@@ -92,29 +99,27 @@ const FloatingStuff = ({
   });
 
   return (
-    <Suspense>
-      <group ref={worldRef} position={[0, 0, from]}>
-        <Physics debug={debug}>
-          {objects}
+    <group ref={worldRef} position={[0, 0, from]}>
+      <Physics debug={debug} paused={!visible}>
+        {objects}
 
-          <RigidBody
-            ref={raftColliderRef}
-            linearDamping={Infinity}
-            angularDamping={Infinity}
-            colliders={"ball"}
-          >
-            <mesh position={[0, 0, from / 2]}>
-              <boxGeometry args={[3, 2, 3]} />
-              <meshBasicMaterial
-                transparent
-                color={0xff0000}
-                opacity={debug ? 1 : 0}
-              />
-            </mesh>
-          </RigidBody>
-        </Physics>
-      </group>
-    </Suspense>
+        <RigidBody
+          ref={raftColliderRef}
+          linearDamping={Infinity}
+          angularDamping={Infinity}
+          colliders={"ball"}
+        >
+          <mesh position={[0, 0, from / 2]}>
+            <boxGeometry args={[4.7, 2, 5.3]} />
+            <meshBasicMaterial
+              transparent
+              color={0xff0000}
+              opacity={debug ? 1 : 0}
+            />
+          </mesh>
+        </RigidBody>
+      </Physics>
+    </group>
   );
 };
 

@@ -1,9 +1,7 @@
 import { Triplet } from "../../../../../utils/types";
-import { useVideoTexture } from "@react-three/drei";
 
-import { forwardRef, Suspense, useEffect, useRef, memo } from "react";
-import { MeshBasicMaterial, RepeatWrapping, Vector2 } from "three";
 import { MeshProps } from "@react-three/fiber";
+import { memo } from "react";
 import ScreenContents from "./ScreenContents";
 
 export type ScreenProps = Pick<MeshProps, "position"> & {

@@ -1,11 +1,11 @@
 import {
   FirstPersonControls,
-  OrbitControls,
+  Loader,
   PointerLockControls,
   Sky,
   Stats,
 } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 
 import {
   Suspense,
@@ -26,7 +26,6 @@ import {
   BobbingItem,
   FloatingStuff,
 } from "./components";
-import Garage from "./components/Garage/Garage";
 
 const parts = {
   intro: 0,
@@ -41,6 +40,8 @@ const debug = false;
 const AfloatContent = () => {
   const [moving, setMoving] = useState(false);
   const [showFloatingStuff, setShowFloatingStuff] = useState(false);
+  const [showIslands, setShowIslands] = useState(false);
+  const [showCity, setShowCity] = useState(true);
   const time = 7;
 
   const song = useRef<HTMLAudioElement>();
@@ -70,18 +71,35 @@ const AfloatContent = () => {
 
   useFrame(() => {
     const time = song.current?.currentTime || 0;
-    if (time > parts.verse1) {
+
+    if (time > parts.break1) {
       setShowFloatingStuff(true);
+    }
+    if (time > parts.verse2) {
+      setShowFloatingStuff(false);
+      setShowCity(false);
+      setShowIslands(true);
     }
   });
 
+  const controls = useRef(null);
+
+  useEffect(() => {
+    if (controls.current && moving) {
+      // @ts-expect-error // TODO
+      controls.current?.lock();
+    }
+  }, [controls, moving]);
+
   return (
-    <>
-      {moving ? (
-        <PointerLockControls makeDefault />
-      ) : (
-        <FirstPersonControls makeDefault />
-      )}
+    <Suspense fallback={<></>}>
+      <PointerLockControls enabled={moving} makeDefault ref={controls} />
+
+      <FirstPersonControls
+        enabled={!moving}
+        lookSpeed={0.01}
+        movementSpeed={0}
+      />
 
       {time > 7 && time < 21 ? (
         // TODO sun position
@@ -92,17 +110,16 @@ const AfloatContent = () => {
 
       <Ocean />
 
-      {showFloatingStuff && (
-        <FloatingStuff
-          numberOfItems={200}
-          from={-100}
-          to={100}
-          duration={30}
-          delay={0}
-        />
-      )}
+      <FloatingStuff
+        numberOfItems={200}
+        from={-100}
+        to={1000}
+        duration={300}
+        delay={0}
+        visible={showFloatingStuff}
+      />
 
-      <Suspense>
+      {showCity && (
         <City
           duration={parts.verse2}
           sinkStart={parts.break1 - 20}
@@ -111,30 +128,32 @@ const AfloatContent = () => {
           setMoving={handleSetMoving}
           // debug={debug}
         />
-      </Suspense>
+      )}
 
       <Stats />
-      {/*       
-      <Islands
-        scale={200}
-        position={[-105, -3, 0]}
-        bounce={0.6}
-        analyserRef={analyserRef}
-      />
-
-      <Islands
-        scale={200}
-        position={[105, -3, 0]}
-        bounce={0.6}
-        analyserRef={analyserRef}
-      /> */}
+      {showIslands && (
+        <>
+          <Islands
+            scale={200}
+            position={[-105, -3, 0]}
+            bounce={0.6}
+            analyserRef={analyserRef}
+          />
+          <Islands
+            scale={200}
+            position={[105, -3, 0]}
+            bounce={0.6}
+            analyserRef={analyserRef}
+          />
+        </>
+      )}
 
       {/* <BuildingGlitch /> */}
 
       <BobbingItem>
         <Raft />
       </BobbingItem>
-    </>
+    </Suspense>
   );
 };
 
