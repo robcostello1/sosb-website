@@ -1,5 +1,5 @@
 import { MeshProps } from "@react-three/fiber";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import {
   BufferAttribute,
   Color,
@@ -54,4 +54,4 @@ const Land = (props: Omit<MeshProps, "rotation">) => {
     </mesh>
   );
 };
-export default Land;
+export default memo(Land);

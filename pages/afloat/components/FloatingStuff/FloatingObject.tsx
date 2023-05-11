@@ -31,4 +31,4 @@ const FloatingObject = ({
   );
 };
 
-export default FloatingObject;
+export default memo(FloatingObject);

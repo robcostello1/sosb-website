@@ -1,7 +1,7 @@
 import { Triplet } from "../../../../utils/types";
 import { useTexture } from "@react-three/drei";
 import { MeshProps, useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, memo } from "react";
 import {
   BoxGeometry,
   Mesh,
@@ -80,4 +80,4 @@ const Building = ({ scale, ...props }: BuildingProps) => {
   );
 };
 
-export default Building;
+export default memo(Building);

@@ -1,5 +1,5 @@
 import { GroupProps, useLoader } from "@react-three/fiber";
-import { useEffect, useMemo } from "react";
+import { useEffect, usememo } from "react";
 import { CubeTextureLoader } from "three";
 
 import { VectorProp } from "../../consts";
@@ -148,4 +148,4 @@ const BuildingStory = ({
   );
 };
 
-export default BuildingStory;
+export default memo(BuildingStory);

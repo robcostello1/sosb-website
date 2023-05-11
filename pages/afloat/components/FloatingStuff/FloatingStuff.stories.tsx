@@ -5,7 +5,6 @@ import FloatingStuff from "./FloatingStuff";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stats } from "@react-three/drei";
 import Ocean from "../../../../components/Terrain/Ocean";
-import { RaftContent } from "../Raft";
 
 export default {
   title: "City/FloatingStuff",

@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import styles from "../styles/Home.module.css";
 
 import HomeAnimation from "../components/HomeAnimation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import Gravity from "../components/Gravity";
 
 export default function Home() {

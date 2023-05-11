@@ -51,4 +51,4 @@ const Road = ({ width, depth }: RoadProps) => {
   );
 };
 
-export default Road;
+export default memo(Road);

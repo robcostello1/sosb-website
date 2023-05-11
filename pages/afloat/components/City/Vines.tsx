@@ -1,6 +1,6 @@
 import { Triplet } from "../../../../utils/types";
 import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
-import { useRef, useMemo, useEffect, useCallback } from "react";
+import { useRef, useMemo, useEffect, useCallback, memo } from "react";
 import {
   Mesh,
   BoxGeometry,
@@ -140,4 +140,4 @@ const Vines = ({
   );
 };
 
-export default Vines;
+export default memo(Vines);

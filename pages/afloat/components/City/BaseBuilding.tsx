@@ -1,10 +1,9 @@
 import { MeshProps } from "@react-three/fiber";
-import { forwardRef, useMemo } from "react";
+import { forwardRef, useMemo, memo } from "react";
 import {
   Mesh,
   BoxGeometry,
   MeshStandardMaterial,
-  Texture,
   Vector3,
   MirroredRepeatWrapping,
   RepeatWrapping,
@@ -60,4 +59,4 @@ const BaseBuilding = forwardRef<
   );
 });
 
-export default BaseBuilding;
+export default memo(BaseBuilding);

@@ -1,4 +1,5 @@
 import { GroupProps } from "@react-three/fiber";
+import { memo } from "react";
 import { Vines } from "..";
 import Screen, { ScreenProps } from "./Screen";
 
@@ -20,4 +21,4 @@ const ScreenWithVines = ({
   );
 };
 
-export default ScreenWithVines;
+export default memo(ScreenWithVines);

@@ -1,7 +1,6 @@
-import { Fragment, useMemo } from "react";
+import { Fragment, memo, useMemo } from "react";
 import { Texture } from "three";
 import BuildingWithVines from "./BuildingWithVines";
-import { TextureProps } from "./types";
 
 type VineBuildingGroupProps = {
   debug?: boolean;
@@ -58,4 +57,4 @@ const VineBuildingGroup = ({
   return <>{buildings}</>;
 };
 
-export default VineBuildingGroup;
+export default memo(VineBuildingGroup);

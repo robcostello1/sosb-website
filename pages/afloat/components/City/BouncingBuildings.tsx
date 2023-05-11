@@ -1,7 +1,7 @@
 import { Triplet } from "../../../../utils/types";
 import { useFrame } from "@react-three/fiber";
 
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, memo } from "react";
 import BouncingBuilding from "./BouncingBuilding";
 import { TextureProps } from "./types";
 
@@ -61,10 +61,6 @@ const BouncingBuildings = ({
     }
   });
 
-  // useEffect(() => {
-  //   console.log(buildingMovement);
-  // }, [buildingMovement]);
-
   return (
     <>
       {buildingParams.map((props) => (
@@ -74,4 +70,4 @@ const BouncingBuildings = ({
   );
 };
 
-export default BouncingBuildings;
+export default memo(BouncingBuildings);

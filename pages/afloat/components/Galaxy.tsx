@@ -1,5 +1,5 @@
 import { useLoader } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, memo } from "react";
 import { BackSide, Group, TextureLoader } from "three";
 import gsap, { Linear } from "gsap";
 import { Environment, Lightformer } from "@react-three/drei";
@@ -83,4 +83,4 @@ const Galaxy = () => {
   );
 };
 
-export default Galaxy;
+export default memo(Galaxy);

@@ -6,7 +6,7 @@ import {
   Object3D,
   Vector2,
 } from "three";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, memo } from "react";
 import { Texture } from "three";
 import { Triplet } from "../../../../utils/types";
 import { gsap } from "gsap";
@@ -188,4 +188,4 @@ function GarageMaterial(props: { map: Texture; roughnessMap: Texture }) {
   );
 }
 
-export default Garage;
+export default memo(Garage);

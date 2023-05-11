@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, memo } from "react";
 import { Mesh } from "three";
 import { VectorProp, RotationProp } from "../consts";
 
@@ -48,4 +48,4 @@ const StreetLamp = (props: StreetLampProps) => {
   );
 };
 
-export default StreetLamp;
+export default memo(StreetLamp);

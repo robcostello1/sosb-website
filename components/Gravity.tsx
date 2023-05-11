@@ -1,7 +1,7 @@
 import { Physics } from "@react-three/cannon";
 import { PerspectiveCamera } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 
 import Sphere from "./PhysicsPrimitives/Sphere";
 
@@ -117,4 +117,4 @@ const Gravity = () => {
   );
 };
 
-export default Gravity;
+export default memo(Gravity);

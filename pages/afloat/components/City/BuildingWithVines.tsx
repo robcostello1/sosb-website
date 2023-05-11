@@ -1,7 +1,7 @@
 import { Triplet } from "../../../../utils/types";
 
 import { MeshProps } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, memo } from "react";
 import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from "three";
 import BaseBuilding, {
   DEFAULT_BUILDING_HEIGHT,
@@ -68,4 +68,4 @@ const BuildingWithVines = ({
   );
 };
 
-export default BuildingWithVines;
+export default memo(BuildingWithVines);

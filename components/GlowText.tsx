@@ -58,4 +58,4 @@ const GlowText = ({
   );
 };
 
-export default GlowText;
+export default memo(GlowText);

@@ -33,4 +33,4 @@ const MirrorTest = () => {
   );
 };
 
-export default MirrorTest;
+export default memo(MirrorTest);

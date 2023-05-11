@@ -1,7 +1,7 @@
 import { Triplet } from "../../../../../utils/types";
 import { useVideoTexture } from "@react-three/drei";
 
-import { forwardRef, Suspense, useEffect, useRef } from "react";
+import { forwardRef, Suspense, useEffect, useRef, memo } from "react";
 import { MeshBasicMaterial, RepeatWrapping, Vector2 } from "three";
 import { MeshProps } from "@react-three/fiber";
 import ScreenContents from "./ScreenContents";
@@ -38,4 +38,4 @@ const Screen = ({
   );
 };
 
-export default Screen;
+export default memo(Screen);

@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, usememo } from "react";
 import Wad from "web-audio-daw";
 
 export type SoundConfig = Omit<ConstructorParameters<typeof Wad>[0], "source">;
@@ -28,4 +28,4 @@ const SFX = ({ current }: SFXProps) => {
   return <></>;
 };
 
-export default SFX;
+export default memo(SFX);

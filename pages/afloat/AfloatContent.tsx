@@ -7,12 +7,25 @@ import {
 } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  memo,
+} from "react";
 
 import Ocean from "../../components/Terrain/Ocean";
 
-import { City, Galaxy, Islands, Raft } from "./components";
-import FloatingStuff from "./components/FloatingStuff";
+import {
+  City,
+  Galaxy,
+  Islands,
+  Raft,
+  BobbingItem,
+  FloatingStuff,
+} from "./components";
 import Garage from "./components/Garage/Garage";
 
 const parts = {
@@ -64,7 +77,11 @@ const AfloatContent = () => {
 
   return (
     <>
-      <PointerLockControls makeDefault />
+      {moving ? (
+        <PointerLockControls makeDefault />
+      ) : (
+        <FirstPersonControls makeDefault />
+      )}
 
       {time > 7 && time < 21 ? (
         // TODO sun position
@@ -114,9 +131,11 @@ const AfloatContent = () => {
 
       {/* <BuildingGlitch /> */}
 
-      <Raft showModel={false} />
+      <BobbingItem>
+        <Raft />
+      </BobbingItem>
     </>
   );
 };
 
-export default AfloatContent;
+export default memo(AfloatContent);

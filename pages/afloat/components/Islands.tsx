@@ -11,7 +11,7 @@ import {
   Vector3,
 } from "three";
 import { useFrame } from "@react-three/fiber";
-import { MutableRefObject, useRef } from "react";
+import { MutableRefObject, useRef, memo } from "react";
 import { Triplet } from "../../../utils/types";
 import gsap from "gsap";
 
@@ -94,4 +94,4 @@ const Islands = ({
   );
 };
 
-export default Islands;
+export default memo(Islands);

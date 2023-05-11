@@ -1,7 +1,7 @@
 import { useSphere, SphereProps, Triplet } from "@react-three/cannon";
 import { Trail } from "@react-three/drei";
 
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import { Mesh, BufferGeometry, Vector3 } from "three";
 const factor = 0.1;
 
@@ -43,4 +43,4 @@ const Sphere = ({
   );
 };
 
-export default Sphere;
+export default memo(Sphere);

@@ -1,9 +1,10 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 
 import { gsap } from "gsap";
+import { Triplet } from "../utils/types";
 
 const cameraSettings: Record<
   string,
@@ -69,15 +70,13 @@ const Camera = ({ focus }: CameraProps) => {
 
       if (settings.rotation) {
         gsap.to(camera.rotation, {
-          x: () => settings.rotation[0],
-          y: () => settings.rotation[1],
-          z: () => settings.rotation[2],
+          x: () => (settings.rotation as Triplet)[0],
+          y: () => (settings.rotation as Triplet)[1],
+          z: () => (settings.rotation as Triplet)[2],
           duration: 3,
         });
       }
     }
-
-    // console.log(camera.rotation);
   });
 
   return (
@@ -100,4 +99,4 @@ const Camera = ({ focus }: CameraProps) => {
   );
 };
 
-export default Camera;
+export default memo(Camera);

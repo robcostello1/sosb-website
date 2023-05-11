@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import Wad from "web-audio-daw";
 
 export type SoundConfig = Omit<ConstructorParameters<typeof Wad>[0], "source">;
@@ -52,4 +52,4 @@ const Sounds = ({ initSoundConfig, soundAdjustments }: SoundsProps) => {
   return <></>;
 };
 
-export default Sounds;
+export default memo(Sounds);

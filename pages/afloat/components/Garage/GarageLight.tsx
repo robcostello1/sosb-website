@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, memo } from "react";
 
 import { Triplet } from "../../../../utils/types";
 import {
@@ -51,4 +51,4 @@ const GarageLight = ({ position }: { position: Triplet }) => {
     </group>
   );
 };
-export default GarageLight;
+export default memo(GarageLight);

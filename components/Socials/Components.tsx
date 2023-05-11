@@ -10,7 +10,7 @@ import {
 } from "@react-three/cannon";
 import { Text3D } from "@react-three/drei";
 import { Color, MeshProps } from "@react-three/fiber";
-import { PropsWithChildren, ReactNode, useMemo, useRef } from "react";
+import { PropsWithChildren, ReactNode, useMemo, useRef, memo } from "react";
 import { Mesh, BufferGeometry, Group } from "three";
 import { useSocialShapeSetup } from "./useSocialShapeSetup";
 

@@ -9,4 +9,4 @@ const Reset = ({
   onClick: () => void;
 }) => <Button position={position} onClick={onClick} text={"Reset"} />;
 
-export default Reset;
+export default memo(Reset);

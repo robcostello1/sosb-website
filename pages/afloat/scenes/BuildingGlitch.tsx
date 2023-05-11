@@ -16,8 +16,6 @@ const RandomBuilding = () => (
 const BuildingGlitch = () => {
   const bar = useBar();
 
-  console.log(bar);
-
   return bar % 4 === 1 ? (
     <>
       <RandomBuilding />
@@ -33,4 +31,4 @@ const BuildingGlitch = () => {
   ) : null;
 };
 
-export default BuildingGlitch;
+export default memo(BuildingGlitch);

@@ -3,6 +3,7 @@ import { Triplet } from "../../../../utils/types";
 
 import { MeshProps, useFrame } from "@react-three/fiber";
 import {
+  memo,
   MutableRefObject,
   useCallback,
   useEffect,
@@ -126,4 +127,4 @@ const BouncingBuilding = ({
   );
 };
 
-export default BouncingBuilding;
+export default memo(BouncingBuilding);

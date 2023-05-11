@@ -3,7 +3,7 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 
 import { Physics } from "@react-three/cannon";
 
-import { memo, useState } from "react";
+import { memo, useState, memo } from "react";
 import { Container, Plane, Social, SquareSocial } from "./Components";
 import { GradientTexture } from "@react-three/drei";
 

@@ -1,5 +1,5 @@
 import { ContactShadows } from "@react-three/drei";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, memo } from "react";
 import { Color } from "three";
 
 import BuildingStory from "./BuildingStory";
@@ -82,4 +82,4 @@ const Warehouse = ({ active, onClick }: WarehouseProps) => {
   );
 };
 
-export default Warehouse;
+export default memo(Warehouse);

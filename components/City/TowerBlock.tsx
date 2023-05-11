@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { usememo } from "react";
 import { VectorProp } from "../../consts";
 import BuildingStory, { BuildingStoryProps } from "./BuildingStory";
 
@@ -45,4 +45,4 @@ const TowerBlock = ({
   );
 };
 
-export default TowerBlock;
+export default memo(TowerBlock);

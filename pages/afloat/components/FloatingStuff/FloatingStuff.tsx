@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Suspense, useEffect, useMemo, useRef, memo } from "react";
 import { Group } from "three";
 import gsap, { Linear } from "gsap";
 
@@ -118,4 +118,4 @@ const FloatingStuff = ({
   );
 };
 
-export default FloatingStuff;
+export default memo(FloatingStuff);

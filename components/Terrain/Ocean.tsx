@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, memo } from "react";
 import {
   extend,
   useThree,
@@ -85,4 +85,4 @@ const Ocean = ({
   );
 };
 
-export default Ocean;
+export default memo(Ocean);

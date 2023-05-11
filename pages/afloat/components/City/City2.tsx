@@ -1,5 +1,5 @@
 import { useTexture } from "@react-three/drei";
-import { useRef, useEffect, useState, Suspense } from "react";
+import { useRef, useEffect, useState, Suspense, memo } from "react";
 import { Group, MirroredRepeatWrapping, RepeatWrapping, Texture } from "three";
 import Building2 from "./BouncingBuilding";
 import gsap, { Power2, Power1 } from "gsap";
@@ -169,4 +169,4 @@ const City2 = ({
   );
 };
 
-export default City2;
+export default memo(City2);

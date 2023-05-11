@@ -194,4 +194,4 @@ const HomeAnimation = () => {
   );
 };
 
-export default HomeAnimation;
+export default memo(HomeAnimation);

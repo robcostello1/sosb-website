@@ -4,4 +4,4 @@ const Bus = (props: GroupProps) => {
   return <group {...props}></group>;
 };
 
-export default Bus;
+export default memo(Bus);

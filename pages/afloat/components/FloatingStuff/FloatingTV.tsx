@@ -1,4 +1,4 @@
-import { useRef, useEffect, forwardRef, MutableRefObject } from "react";
+import { useRef, useEffect, forwardRef, MutableRefObject, memo } from "react";
 import { BufferGeometry, InstancedMesh, Material, Matrix4, Mesh } from "three";
 import ScreenContents from "../City/Screen/ScreenContents";
 import { MeshProps } from "@react-three/fiber";
@@ -60,4 +60,4 @@ const FloatingTV = ({
   );
 };
 
-export default FloatingTV;
+export default memo(FloatingTV);

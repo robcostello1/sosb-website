@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { usememo } from "react";
 import TowerBlock from "../../../../components/City/TowerBlock";
 
 const City = () => {
@@ -37,4 +37,4 @@ const City = () => {
   );
 };
 
-export default City;
+export default memo(City);
