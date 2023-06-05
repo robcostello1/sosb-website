@@ -1,6 +1,5 @@
-import { GroupProps, useLoader } from "@react-three/fiber";
-import { useEffect, usememo } from "react";
-import { CubeTextureLoader } from "three";
+import { GroupProps } from "@react-three/fiber";
+import { memo, useMemo } from "react";
 
 import { VectorProp } from "../../consts";
 

@@ -1,4 +1,5 @@
 import { Text3D } from "@react-three/drei";
+import { memo } from "react";
 
 import { Color } from "three";
 import { RotationProp, VectorProp } from "../consts";

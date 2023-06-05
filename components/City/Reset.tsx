@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Triplet } from "../../utils/types";
 import Button from "../Button";
 

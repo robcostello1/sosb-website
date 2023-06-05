@@ -1,4 +1,4 @@
-import { usememo } from "react";
+import { useMemo, memo } from "react";
 import { VectorProp } from "../../consts";
 import BuildingStory, { BuildingStoryProps } from "./BuildingStory";
 

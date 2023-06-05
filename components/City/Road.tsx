@@ -1,4 +1,5 @@
 import { useTexture, MeshReflectorMaterial } from "@react-three/drei";
+import { memo } from "react";
 import { RepeatWrapping } from "three";
 
 type RoadProps = { width: number; depth: number };

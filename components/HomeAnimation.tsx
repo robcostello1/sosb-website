@@ -11,6 +11,7 @@ import { UnrealBloomPass } from "three-stdlib";
 
 import {
   Fragment,
+  memo,
   SetStateAction,
   Suspense,
   useCallback,

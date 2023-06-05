@@ -1,8 +1,6 @@
 import {
   FirstPersonControls,
-  Loader,
   PointerLockControls,
-  Sky,
   Stats,
 } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
@@ -18,14 +16,8 @@ import {
 
 import Ocean from "../../components/Terrain/Ocean";
 
-import {
-  City,
-  Galaxy,
-  Islands,
-  Raft,
-  BobbingItem,
-  FloatingStuff,
-} from "./components";
+import { City, Islands, Raft, BobbingItem, FloatingStuff } from "./components";
+import Sky from "./components/Sky";
 
 const parts = {
   intro: 0,
@@ -42,7 +34,7 @@ const AfloatContent = () => {
   const [showFloatingStuff, setShowFloatingStuff] = useState(false);
   const [showIslands, setShowIslands] = useState(false);
   const [showCity, setShowCity] = useState(true);
-  const time = 7;
+  const time = 3;
 
   const song = useRef<HTMLAudioElement>();
   const analyserRef = useRef<AnalyserNode | null>(null);
@@ -101,17 +93,12 @@ const AfloatContent = () => {
         movementSpeed={0}
       />
 
-      {time > 7 && time < 21 ? (
-        // TODO sun position
-        <Sky sunPosition={0} inclination={0} />
-      ) : (
-        <Galaxy />
-      )}
+      <Sky overrideTime={0} timeSpeedMultiplier={0.5} />
 
       <Ocean />
 
       <FloatingStuff
-        numberOfItems={200}
+        numberOfItems={100}
         from={-100}
         to={1000}
         duration={300}
@@ -131,6 +118,7 @@ const AfloatContent = () => {
       )}
 
       <Stats />
+
       {showIslands && (
         <>
           <Islands

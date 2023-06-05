@@ -1,6 +1,6 @@
 import { Cloud } from "@react-three/drei";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
-import { memo, useEffect, useRef, useState, memo } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import GlowText from "./GlowText";
 import { useLoader } from "@react-three/fiber";
 
