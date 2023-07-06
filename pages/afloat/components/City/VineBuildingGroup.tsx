@@ -1,6 +1,7 @@
-import { Fragment, memo, useMemo } from "react";
-import { Texture } from "three";
-import BuildingWithVines from "./BuildingWithVines";
+import { Fragment, memo, useMemo } from 'react';
+import { Texture } from 'three';
+
+import BuildingWithVines from './BuildingWithVines';
 
 type VineBuildingGroupProps = {
   debug?: boolean;
@@ -52,7 +53,7 @@ const VineBuildingGroup = ({
       }
     }
     return buildingArray;
-  }, [debug, textureProps]);
+  }, [debug, size, textureProps]);
 
   return <>{buildings}</>;
 };

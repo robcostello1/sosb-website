@@ -1,22 +1,12 @@
-import gsap, { Power2 } from "gsap";
-import { Triplet } from "../../../../utils/types";
+import gsap, { Power2 } from 'gsap';
+import { memo, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from 'three';
 
-import { MeshProps, useFrame } from "@react-three/fiber";
-import {
-  memo,
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from "three";
-import BaseBuilding, {
-  BUILDING_TEXTURE_HEIGHT,
-  DEFAULT_BUILDING_HEIGHT,
-} from "./BaseBuilding";
-import { TextureProps } from "./types";
+import { MeshProps, useFrame } from '@react-three/fiber';
+
+import { Triplet } from '../../../../utils/types';
+import BaseBuilding, { BUILDING_TEXTURE_HEIGHT, DEFAULT_BUILDING_HEIGHT } from './BaseBuilding';
+import { TextureProps } from './types';
 
 type BuildingProps = Omit<MeshProps, "scale" | "position"> & {
   bounce?: number;
@@ -48,7 +38,7 @@ const BouncingBuilding = ({
         position[1] + (DEFAULT_BUILDING_HEIGHT * vectorScale.y) / 2,
         position[2]
       ),
-    [position]
+    [position, vectorScale.y]
   );
 
   const meshRef = useRef<Mesh<BoxGeometry, MeshStandardMaterial>>(null);
@@ -80,7 +70,7 @@ const BouncingBuilding = ({
           y: (DEFAULT_BUILDING_HEIGHT * finalSize) / BUILDING_TEXTURE_HEIGHT,
         });
     },
-    [DEFAULT_BUILDING_HEIGHT, vectorScale.y, position?.[1], smoothMoves]
+    [vectorScale.y, position]
   );
 
   useEffect(() => {
@@ -90,7 +80,7 @@ const BouncingBuilding = ({
         setResize(Math.random() * 2);
       }
     }, Math.random() * 5000);
-  }, [resize, meshRef.current, smoothMoves]);
+  }, [resize, smoothMoves, bounce, applyResize]);
 
   const [randomBand, dataArray] = useMemo(() => {
     if (analyserRef?.current) {
@@ -100,7 +90,7 @@ const BouncingBuilding = ({
     }
 
     return [undefined, undefined];
-  }, [analyserRef?.current]);
+  }, [analyserRef]);
 
   useFrame(() => {
     if (meshRef.current) {

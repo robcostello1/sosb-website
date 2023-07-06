@@ -1,9 +1,11 @@
-import { useRef, useEffect, forwardRef, MutableRefObject, memo } from "react";
-import { BufferGeometry, InstancedMesh, Material, Matrix4, Mesh } from "three";
-import ScreenContents from "../City/Screen/ScreenContents";
-import { MeshProps } from "@react-three/fiber";
-import { RigidBody, RigidBodyProps } from "@react-three/rapier";
-import { useFloatation } from "./useFloatation";
+import { forwardRef, memo, MutableRefObject, useEffect } from 'react';
+import { BufferGeometry, InstancedMesh, Material, Matrix4 } from 'three';
+
+import { MeshProps } from '@react-three/fiber';
+import { RigidBody, RigidBodyProps } from '@react-three/rapier';
+
+import ScreenContents from '../City/Screen/ScreenContents';
+import { useFloatation } from './useFloatation';
 
 const InstancedScreen = forwardRef<InstancedMesh, MeshProps>((props, ref) => {
   useEffect(() => {
@@ -13,7 +15,7 @@ const InstancedScreen = forwardRef<InstancedMesh, MeshProps>((props, ref) => {
         Material | Material[]
       > | null>
     ).current?.setMatrixAt(0, new Matrix4());
-  }, []);
+  }, [ref]);
 
   return (
     <instancedMesh

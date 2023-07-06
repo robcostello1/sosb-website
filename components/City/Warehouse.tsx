@@ -1,8 +1,9 @@
-import { ContactShadows } from "@react-three/drei";
-import { useEffect, useMemo, useRef, useState, memo } from "react";
-import { Color } from "three";
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { Color } from 'three';
 
-import BuildingStory from "./BuildingStory";
+import { ContactShadows } from '@react-three/drei';
+
+import BuildingStory from './BuildingStory';
 
 type WarehouseProps = {
   active: boolean;
@@ -38,7 +39,7 @@ const Warehouse = ({ active, onClick }: WarehouseProps) => {
         opacity={0.7}
       />
     ),
-    [windowMaterialColor]
+    [active, windowMaterialColor]
   );
 
   return (

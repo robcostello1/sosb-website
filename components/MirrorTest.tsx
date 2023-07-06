@@ -1,5 +1,8 @@
-import { CubeCamera, useTexture } from "@react-three/drei";
-import { VectorProp } from "../consts";
+import { memo } from 'react';
+
+import { CubeCamera, useTexture } from '@react-three/drei';
+
+import { VectorProp } from '../consts';
 
 const position: VectorProp = [0, -0.1, 1.5];
 

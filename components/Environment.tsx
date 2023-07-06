@@ -1,5 +1,6 @@
-import { useThree } from "@react-three/fiber";
-import { useEffect, memo } from "react";
+import { memo, useEffect } from 'react';
+
+import { useThree } from '@react-three/fiber';
 
 const Environment = () => {
   const { scene } = useThree();
@@ -19,7 +20,9 @@ const Environment = () => {
 
   useEffect(() => {
     scene.background = cubeMap;
-  }, [cubeMap]);
+  }, [cubeMap, scene]);
+
+  return null;
 };
 
 export default memo(Environment);

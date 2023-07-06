@@ -1,20 +1,11 @@
-import { useThree } from "@react-three/fiber";
-import throttle from "lodash/throttle";
-import {
-  useState,
-  useCallback,
-  useMemo,
-  useEffect,
-  SetStateAction,
-  useRef,
-} from "react";
-import { SoundConfig } from "../components/Sounds";
+import throttle from 'lodash/throttle';
+import { SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { useThree } from '@react-three/fiber';
+
+import { SoundConfig } from '../components/Sounds';
 
 type GetNewValues = SetStateAction<{ [key: string]: SoundConfig }>;
-
-// (oldValues: { [key: string]: SoundConfig }) => {
-//   [key: string]: SoundConfig;
-// };
 
 export const useSoundAdjustments = (
   getNewValues: GetNewValues,
@@ -26,7 +17,7 @@ export const useSoundAdjustments = (
 
   useEffect(() => {
     setSoundAdjustments(getNewValues);
-  }, [focus]);
+  }, [focus, getNewValues]);
 
   const handleCameraChange = useCallback(() => {
     setSoundAdjustments(getNewValues);
@@ -52,7 +43,7 @@ export const useSoundAdjustments = (
         controls?.removeEventListener("change", prevCallback.current);
       }
     };
-  }, [controls]);
+  }, [controls, throttledHandleCameraChange]);
 
   return soundAdjustments;
 };

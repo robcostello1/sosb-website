@@ -1,8 +1,9 @@
-import { useSphere, SphereProps, Triplet } from "@react-three/cannon";
-import { Trail } from "@react-three/drei";
+import { memo, useEffect } from 'react';
+import { BufferGeometry, Mesh, Vector3 } from 'three';
 
-import { useEffect, memo } from "react";
-import { Mesh, BufferGeometry, Vector3 } from "three";
+import { SphereProps, Triplet, useSphere } from '@react-three/cannon';
+import { Trail } from '@react-three/drei';
+
 const factor = 0.1;
 
 const Sphere = ({
@@ -31,7 +32,7 @@ const Sphere = ({
         [0, 0, 0]
       );
     });
-  }, [api]);
+  }, [api, attractionPoint]);
 
   return (
     <mesh ref={ref}>

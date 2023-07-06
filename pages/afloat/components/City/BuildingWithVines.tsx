@@ -1,14 +1,12 @@
-import { Triplet } from "../../../../utils/types";
+import { memo, useMemo, useRef } from 'react';
+import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from 'three';
 
-import { MeshProps } from "@react-three/fiber";
-import { useMemo, useRef, memo } from "react";
-import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from "three";
-import BaseBuilding, {
-  DEFAULT_BUILDING_HEIGHT,
-  DEFAULT_BUILDING_WIDTH,
-} from "./BaseBuilding";
-import { TextureProps } from "./types";
-import Vines from "./Vines";
+import { MeshProps } from '@react-three/fiber';
+
+import { Triplet } from '../../../../utils/types';
+import BaseBuilding, { DEFAULT_BUILDING_HEIGHT, DEFAULT_BUILDING_WIDTH } from './BaseBuilding';
+import { TextureProps } from './types';
+import Vines from './Vines';
 
 type BuildingWithVinesProps = Omit<MeshProps, "scale" | "position"> & {
   scale?: Triplet;
@@ -36,7 +34,7 @@ const BuildingWithVines = ({
         position[1] + (DEFAULT_BUILDING_HEIGHT * vectorScale.y) / 2,
         position[2]
       ),
-    [position]
+    [position, vectorScale.y]
   );
 
   const meshRef = useRef<Mesh<BoxGeometry, MeshStandardMaterial>>(null);

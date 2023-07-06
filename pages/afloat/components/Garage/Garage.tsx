@@ -1,18 +1,13 @@
-import { useTexture } from "@react-three/drei";
-import {
-  BoxGeometry,
-  Mesh,
-  MeshStandardMaterial,
-  Object3D,
-  Vector2,
-} from "three";
-import { useEffect, useMemo, useRef, useState, memo } from "react";
-import { Texture } from "three";
-import { Triplet } from "../../../../utils/types";
-import { gsap } from "gsap";
-import Button from "../../../../components/Button";
-import GarageLight from "./GarageLight";
-import { useFrame, useThree } from "@react-three/fiber";
+import { gsap } from 'gsap';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { BoxGeometry, Mesh, MeshStandardMaterial, Object3D, Texture, Vector2 } from 'three';
+
+import { useTexture } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber';
+
+import Button from '../../../../components/Button';
+import { Triplet } from '../../../../utils/types';
+import GarageLight from './GarageLight';
 
 const HEIGHT = 4;
 const WIDTH = 6;
@@ -78,7 +73,7 @@ const Garage = ({
     if (wallsLoaded && shutterLoaded) {
       onLoad?.();
     }
-  }, [wallsLoaded, shutterLoaded]);
+  }, [wallsLoaded, shutterLoaded, onLoad]);
 
   const frameMaterial = useMemo(
     () => (

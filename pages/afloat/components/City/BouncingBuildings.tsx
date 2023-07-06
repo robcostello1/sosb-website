@@ -1,9 +1,10 @@
-import { Triplet } from "../../../../utils/types";
-import { useFrame } from "@react-three/fiber";
+import { memo, useMemo, useRef, useState } from 'react';
 
-import { useState, useMemo, useRef, memo } from "react";
-import BouncingBuilding from "./BouncingBuilding";
-import { TextureProps } from "./types";
+import { useFrame } from '@react-three/fiber';
+
+import { Triplet } from '../../../../utils/types';
+import BouncingBuilding from './BouncingBuilding';
+import { TextureProps } from './types';
 
 type BouncingBuildingsProps = {
   started: boolean;
@@ -50,7 +51,7 @@ const BouncingBuildings = ({
       }
     }
     return buildingArray;
-  }, [textureProps]);
+  }, [debug, size, textureProps]);
 
   const time = useRef(0);
 
@@ -63,8 +64,12 @@ const BouncingBuildings = ({
 
   return (
     <>
-      {buildingParams.map((props) => (
-        <BouncingBuilding {...props} smoothMoves={buildingMovement} />
+      {buildingParams.map((props, index) => (
+        <BouncingBuilding
+          {...props}
+          key={index}
+          smoothMoves={buildingMovement}
+        />
       ))}
     </>
   );

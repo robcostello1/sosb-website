@@ -1,6 +1,7 @@
-import { useRef, memo } from "react";
-import { Mesh } from "three";
-import { VectorProp, RotationProp } from "../consts";
+import { memo, useRef } from 'react';
+import { Mesh } from 'three';
+
+import { RotationProp, VectorProp } from '../../consts';
 
 type StreetLampProps = {
   position?: VectorProp;

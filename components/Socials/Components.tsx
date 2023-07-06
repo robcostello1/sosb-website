@@ -1,18 +1,14 @@
+import { memo, PropsWithChildren, ReactNode, useMemo, useRef } from 'react';
+import { BufferGeometry, Group, Mesh } from 'three';
+
 import {
-  CylinderProps,
-  Triplet,
-  useCylinder,
-  usePlane,
-  useBox,
-  PlaneProps,
-  CompoundBodyProps,
-  useCompoundBody,
-} from "@react-three/cannon";
-import { Text3D } from "@react-three/drei";
-import { Color, MeshProps } from "@react-three/fiber";
-import { PropsWithChildren, ReactNode, useMemo, useRef, memo } from "react";
-import { Mesh, BufferGeometry, Group } from "three";
-import { useSocialShapeSetup } from "./useSocialShapeSetup";
+    CompoundBodyProps, CylinderProps, PlaneProps, Triplet, useBox, useCompoundBody, useCylinder,
+    usePlane
+} from '@react-three/cannon';
+import { Text3D } from '@react-three/drei';
+import { Color, MeshProps } from '@react-three/fiber';
+
+import { useSocialShapeSetup } from './useSocialShapeSetup';
 
 const SLEEP_PROPS = {
   allowSleep: true,
@@ -211,7 +207,14 @@ export const Container = ({
       });
     }
     return faces;
-  }, []);
+  }, [
+    basePosition,
+    baseSize,
+    boxWallArgs,
+    boxWallThickness,
+    falseBasePosition,
+    yPos,
+  ]);
 
   const [ref, api] = useCompoundBody(
     () => ({

@@ -1,9 +1,11 @@
-import { Box, Cylinder, Text3D } from "@react-three/drei";
-import { useLoader } from "@react-three/fiber";
-import { forwardRef, useState, memo } from "react";
-import { Mesh } from "three";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
-import { Triplet } from "../utils/types";
+import { forwardRef, memo, useState } from 'react';
+import { Mesh } from 'three';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+
+import { Box, Cylinder, Text3D } from '@react-three/drei';
+import { useLoader } from '@react-three/fiber';
+
+import { Triplet } from '../utils/types';
 
 type ButtonProps = {
   text: string;

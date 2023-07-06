@@ -1,13 +1,15 @@
-import { useTexture } from "@react-three/drei";
-import { useRef, useEffect, useState, Suspense, memo } from "react";
-import { Group, MirroredRepeatWrapping, RepeatWrapping, Texture } from "three";
-import Building2 from "./BouncingBuilding";
-import gsap, { Power2, Linear, Sine, Power1 } from "gsap";
-import BuildingWithVines from "./BuildingWithVines";
-import VineBuildingGroup from "./VineBuildingGroup";
-import BouncingBuildings from "./BouncingBuildings";
-import Garage from "../Garage/Garage";
-import { ScreenWithVines } from "./Screen";
+import gsap, { Linear, Power1, Power2, Sine } from 'gsap';
+import { memo, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { Group, MirroredRepeatWrapping, RepeatWrapping, Texture } from 'three';
+
+import { useTexture } from '@react-three/drei';
+
+import Garage from '../Garage/Garage';
+import Building2 from './BouncingBuilding';
+import BouncingBuildings from './BouncingBuildings';
+import BuildingWithVines from './BuildingWithVines';
+import { ScreenWithVines } from './Screen';
+import VineBuildingGroup from './VineBuildingGroup';
 
 const START_POSITION_Z = 0.3;
 
@@ -128,7 +130,15 @@ const City2 = ({
         y: -300,
       });
     }
-  }, [groupRef.current, startedMoving]);
+  }, [debug, duration, sinkStart, size, startedMoving]);
+
+  const handleSetMoving = useCallback(() => {
+    setMoving(true);
+  }, [setMoving]);
+
+  const handleGarageLoaded = useCallback(() => {
+    setGarageLoaded(true);
+  }, []);
 
   return (
     <group
@@ -138,8 +148,8 @@ const City2 = ({
       <Garage
         position={[0, 0, size * START_POSITION_Z]}
         doorDisabled={moving}
-        onClickOpen={() => setMoving(true)}
-        onLoad={() => setGarageLoaded(true)}
+        onClickOpen={handleSetMoving}
+        onLoad={handleGarageLoaded}
       />
 
       {garageLoaded && (

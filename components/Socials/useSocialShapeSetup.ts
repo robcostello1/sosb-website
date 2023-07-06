@@ -1,12 +1,7 @@
-import { PublicApi, Triplet } from "@react-three/cannon";
-import { RefObject, useEffect, useCallback } from "react";
-import {
-  Mesh,
-  BufferGeometry,
-  Material,
-  MeshStandardMaterial,
-  Vector3,
-} from "three";
+import { RefObject, useCallback, useEffect } from 'react';
+import { BufferGeometry, Material, Mesh, MeshStandardMaterial, Vector3 } from 'three';
+
+import { PublicApi, Triplet } from '@react-three/cannon';
 
 export const useSocialShapeSetup = (
   ref: RefObject<Mesh<BufferGeometry, Material | Material[]>>,
@@ -24,7 +19,7 @@ export const useSocialShapeSetup = (
       ref.current.geometry.center();
       ref.current.geometry.rotateX(-Math.PI / 2);
     }
-  }, []);
+  }, [ref, scale]);
 
   useEffect(() => {
     if (active) {
@@ -50,10 +45,10 @@ export const useSocialShapeSetup = (
   // This is BAD react
   const handlePointerEnter = useCallback(() => {
     (ref.current?.material as MeshStandardMaterial[])[0].emissiveIntensity = 4;
-  }, [ref.current?.material]);
+  }, [ref]);
   const handlePointerLeave = useCallback(() => {
     (ref.current?.material as MeshStandardMaterial[])[0].emissiveIntensity = 1;
-  }, [ref.current?.material]);
+  }, [ref]);
 
   return {
     handlePointerEnter,

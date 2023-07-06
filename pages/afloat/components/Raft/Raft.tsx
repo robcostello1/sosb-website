@@ -1,10 +1,12 @@
-import { Box, Torus, useTexture } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
-import { memo, useCallback, useEffect } from "react";
-import { RepeatWrapping } from "three";
-import { Triplet } from "../../../../utils/types";
-import Barrel from "./Barrel";
-import Plank from "./Plank";
+import { memo, useCallback, useEffect } from 'react';
+import { RepeatWrapping } from 'three';
+
+import { Box, Torus, useTexture } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
+
+import { Triplet } from '../../../../utils/types';
+import Barrel from './Barrel';
+import Plank from './Plank';
 
 export type RaftProps = {
   setCamera?: boolean;
@@ -66,8 +68,10 @@ const Raft = ({ setCamera = true }: RaftProps) => {
     if (setCamera) {
       // TODO move the camera
       camera.position.set(0, 2, 0);
+
+      console.log("camera.position", camera.position);
     }
-  }, [setCamera]);
+  }, [setCamera, camera.position]);
 
   return <RaftContent />;
 };
@@ -129,7 +133,7 @@ export function RaftContent({}: RaftProps) {
         offsetY={Math.random() * 5}
       />
     ),
-    []
+    [plankTexture]
   );
 
   return (
@@ -145,7 +149,7 @@ export function RaftContent({}: RaftProps) {
         <meshBasicMaterial color={0x000000} />
       </Box>
       {BARREL_SETTINGS.map(({ position, ...barrel }, index) => (
-        <group position={position}>
+        <group position={position} key={index}>
           {[0, 1, 2].map((id) => (
             <Torus
               key={id}

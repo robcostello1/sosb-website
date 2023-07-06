@@ -1,7 +1,8 @@
-import { GroupProps } from "@react-three/fiber";
-import { memo, useMemo } from "react";
+import { memo, useMemo } from 'react';
 
-import { VectorProp } from "../../consts";
+import { GroupProps } from '@react-three/fiber';
+
+import { VectorProp } from '../../consts';
 
 export type BuildingStoryProps = GroupProps & {
   wallWindowMatrix: [number, number, number];
@@ -95,7 +96,7 @@ const BuildingStory = ({
     ];
 
     return strutProps;
-  }, [windowStrutCount, windowStrutMatrix]);
+  }, [lowerWallHeight, windowHeight, windowStrutCount, windowStrutMatrix]);
 
   return (
     <group {...groupProps}>

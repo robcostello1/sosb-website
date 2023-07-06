@@ -1,5 +1,7 @@
-import { Building } from "../components/Building";
-import { useBar } from "../hooks";
+import { memo } from 'react';
+
+import { Building } from '../components/LegacyCity';
+import { useBar } from '../hooks';
 
 const RandomBuilding = () => (
   <Building

@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useRef, memo, ReactElement } from "react";
-import { Group } from "three";
-import gsap, { Linear } from "gsap";
+import gsap, { Linear } from 'gsap';
+import { memo, ReactElement, useEffect, useMemo, useRef } from 'react';
+import { Group } from 'three';
 
-import { useFrame } from "@react-three/fiber";
-import { Physics, RapierRigidBody, RigidBody } from "@react-three/rapier";
-import { FloatingObjectProps } from "./FloatingObject";
-import FloatingTV from "./FloatingTV";
-import { weightedRandom } from "../City/utils";
+import { useFrame } from '@react-three/fiber';
+import { Physics, RapierRigidBody, RigidBody } from '@react-three/rapier';
+
+import { weightedRandom } from '../City/utils';
+import { FloatingObjectProps } from './FloatingObject';
+import FloatingTV from './FloatingTV';
 
 type FloatingStuffProps = {
   from: number;
@@ -64,7 +65,7 @@ const FloatingStuff = ({
     }
 
     return objectArray;
-  }, [numberOfItems, visible]);
+  }, [numberOfItems, spread, visible]);
 
   const worldRef = useRef<Group>(null);
   const raftColliderRef = useRef<RapierRigidBody>(null);

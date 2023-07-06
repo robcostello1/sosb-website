@@ -1,14 +1,9 @@
-import { useRef, useEffect, memo } from "react";
+import { memo, useEffect, useRef } from 'react';
+import { SpotLight as ThreeSpotLight } from 'three';
 
-import { Triplet } from "../../../../utils/types";
-import {
-  BoxGeometry,
-  Mesh,
-  MeshStandardMaterial,
-  SpotLight as ThreeSpotLight,
-  Vector2,
-} from "three";
-import { SpotLight } from "@react-three/drei";
+import { SpotLight } from '@react-three/drei';
+
+import { Triplet } from '../../../../utils/types';
 
 const GarageLight = ({ position }: { position: Triplet }) => {
   const light = useRef<ThreeSpotLight>(null);
@@ -22,7 +17,7 @@ const GarageLight = ({ position }: { position: Triplet }) => {
         position[2] + 2
       );
     }
-  }, [light]);
+  }, [light, position]);
 
   return (
     <group position={position}>
@@ -38,8 +33,6 @@ const GarageLight = ({ position }: { position: Triplet }) => {
       <SpotLight
         ref={light}
         color={0xffffaa}
-        getObjectsByProperty={undefined}
-        map={undefined}
         attenuation={4}
         anglePower={4}
         radiusTop={0.3}

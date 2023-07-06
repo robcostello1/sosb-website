@@ -1,19 +1,13 @@
-import { Triplet } from "../../../../utils/types";
-import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
-import { useRef, useMemo, useEffect, useCallback, memo } from "react";
-import {
-  Mesh,
-  BoxGeometry,
-  RawShaderMaterial,
-  Group,
-  Uniform,
-  Vector3,
-  IUniform,
-} from "three";
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import { BoxGeometry, Group, IUniform, Mesh, RawShaderMaterial, Uniform, Vector3 } from 'three';
+
+import { GroupProps, MeshProps, useFrame } from '@react-three/fiber';
+
+import { Triplet } from '../../../../utils/types';
 // @ts-ignore
-import vertexShader from "../../shaders/vine/vertex.glsl";
+import fragmentShader from '../../shaders/vine/fragment.glsl';
 // @ts-ignore
-import fragmentShader from "../../shaders/vine/fragment.glsl";
+import vertexShader from '../../shaders/vine/vertex.glsl';
 
 type VinesProps = Pick<GroupProps, "scale" | "rotation" | "position"> & {
   debug?: boolean;
@@ -122,7 +116,7 @@ const Vines = ({
         )}
       </mesh>
     );
-  }, [vineComplexity]);
+  }, [debug, geometryDimensions, props.scale, vinesAmount]);
 
   useEffect(() => {
     if (vineRef.current && vineGroup.current && includeSides) {
@@ -131,7 +125,7 @@ const Vines = ({
       vineClone.current.rotation.y = Math.PI / 2;
       vineGroup.current.add(vineClone.current);
     }
-  }, [vineRef.current, vineGroup.current]);
+  }, [includeSides]);
 
   return (
     <group ref={vineGroup} {...props}>

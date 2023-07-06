@@ -1,17 +1,12 @@
-import { MeshProps } from "@react-three/fiber";
-import { useEffect, useRef, memo } from "react";
-import {
-  BufferAttribute,
-  Color,
-  DoubleSide,
-  PlaneGeometry,
-  Vector2,
-} from "three";
+import { memo, useEffect, useRef } from 'react';
+import { BufferAttribute, Color, DoubleSide, PlaneGeometry, Vector2 } from 'three';
+
+import { MeshProps } from '@react-three/fiber';
 
 // @ts-ignore
-import testVertexShader from "../../shaders/test/vertex.glsl";
+import testFragmentShader from '../../shaders/test/fragment.glsl';
 // @ts-ignore
-import testFragmentShader from "../../shaders/test/fragment.glsl";
+import testVertexShader from '../../shaders/test/vertex.glsl';
 
 const uniforms = {
   uFrequency: { value: new Vector2(10, 5) },
@@ -40,7 +35,7 @@ const Land = (props: Omit<MeshProps, "rotation">) => {
       geo.current?.setAttribute("aRandom", new BufferAttribute(randoms, 1));
       //   }, (1000 * 60) / 123);
     }
-  }, [geo.current]);
+  }, [props.scale]);
 
   return (
     <mesh {...props} rotation={[-Math.PI / 2, 0, 0]} position={[0, -30, 0]}>

@@ -1,6 +1,9 @@
-import { MeshProps } from "@react-three/fiber";
-import { RigidBody, RigidBodyProps } from "@react-three/rapier";
-import { useFloatation } from "./useFloatation";
+import { memo } from 'react';
+
+import { MeshProps } from '@react-three/fiber';
+import { RigidBody, RigidBodyProps } from '@react-three/rapier';
+
+import { useFloatation } from './useFloatation';
 
 export type FloatingObjectProps = MeshProps & {
   flotationProps: {

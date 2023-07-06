@@ -1,5 +1,5 @@
-import { useEffect, usememo } from "react";
-import Wad from "web-audio-daw";
+import { memo, useEffect } from 'react';
+import Wad from 'web-audio-daw';
 
 export type SoundConfig = Omit<ConstructorParameters<typeof Wad>[0], "source">;
 

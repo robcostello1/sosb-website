@@ -1,36 +1,21 @@
-import { extend, useFrame, useLoader, useThree } from "@react-three/fiber";
-import {
-  Effects,
-  OrbitControls,
-  PerspectiveCamera,
-  Stats,
-} from "@react-three/drei";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import dynamic from 'next/dynamic';
+import { Fragment, memo, SetStateAction, Suspense, useCallback, useEffect, useState } from 'react';
+import { UnrealBloomPass } from 'three-stdlib';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import { UnrealBloomPass } from "three-stdlib";
+import { Effects, OrbitControls, PerspectiveCamera, Stats } from '@react-three/drei';
+import { extend, useFrame, useLoader, useThree } from '@react-three/fiber';
 
-import {
-  Fragment,
-  memo,
-  SetStateAction,
-  Suspense,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import SOSB from "./SOSB";
-import StreetLamp from "./City/StreetLamp";
-
-import Road from "./City/Road";
-import Warehouse from "./City/Warehouse";
-import TowerBlock from "./City/TowerBlock";
-import dynamic from "next/dynamic";
-import Socials from "./Socials/Socials";
-import { useSoundAdjustments } from "../hooks/useSoundAdjustments";
-import Reset from "./City/Reset";
-import { SFXProps } from "./SFX";
-
-import Camera from "./Camera";
+import { useSoundAdjustments } from '../hooks/useSoundAdjustments';
+import Camera from './Camera';
+import Reset from './City/Reset';
+import Road from './City/Road';
+import StreetLamp from './City/StreetLamp';
+import TowerBlock from './City/TowerBlock';
+import Warehouse from './City/Warehouse';
+import { SFXProps, SoundConfig } from './SFX';
+import Socials from './Socials/Socials';
+import SOSB from './SOSB';
 
 extend({ UnrealBloomPass });
 
@@ -71,7 +56,7 @@ const HomeAnimation = () => {
   const { camera } = useThree();
 
   const getNewSoundValues = useCallback(
-    (current) => {
+    (current: { [key: string]: SoundConfig }) => {
       const warehouseVol = 0.5 - camera.rotation.y * 1.5;
       const adjustments = {
         ...current,

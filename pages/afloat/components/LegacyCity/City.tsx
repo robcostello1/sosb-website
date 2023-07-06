@@ -1,5 +1,6 @@
-import { usememo } from "react";
-import TowerBlock from "../../../../components/City/TowerBlock";
+import { memo, useMemo } from 'react';
+
+import TowerBlock from '../../../../components/City/TowerBlock';
 
 const City = () => {
   const material = useMemo(() => {
