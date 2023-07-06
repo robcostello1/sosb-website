@@ -5,8 +5,8 @@ import { BoxGeometry, Mesh, MeshStandardMaterial, Object3D, Texture, Vector2 } f
 import { useTexture } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 
-import Button from '../../../../components/Button';
 import { Triplet } from '../../../../utils/types';
+import Button from '../../../Button';
 import GarageLight from './GarageLight';
 
 const HEIGHT = 4;

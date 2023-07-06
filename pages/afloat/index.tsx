@@ -1,9 +1,12 @@
-import Head from "next/head";
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 
-import { Canvas } from "@react-three/fiber";
-import AfloatContent from "./AfloatContent";
+import styles from '../../styles/Home.module.css';
 
-import styles from "../../styles/Home.module.css";
+const AfloatContent = dynamic(
+  () => import("../../components/AfloatVid/AfloatContent"),
+  { ssr: false }
+);
 
 export default function Afloat() {
   return (
@@ -15,9 +18,7 @@ export default function Afloat() {
       </Head>
 
       <main className={styles.main}>
-        <Canvas shadows gl={{ precision: "mediump" }}>
-          <AfloatContent />
-        </Canvas>
+        <AfloatContent />
       </main>
     </div>
   );

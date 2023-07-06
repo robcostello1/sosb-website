@@ -1,16 +1,11 @@
-import React, { useState, memo } from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import React, { memo, useState } from 'react';
 
-import Sky from "./Sky";
-import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  PointerLockControls,
-  Stage,
-  Stats,
-  TorusKnot,
-} from "@react-three/drei";
-import Ocean from "../../../../components/Terrain/Ocean";
+import { OrbitControls, PointerLockControls, Stage, Stats, TorusKnot } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import Ocean from '../../../Terrain/Ocean';
+import Sky from './Sky';
 
 export default {
   title: "Sky",

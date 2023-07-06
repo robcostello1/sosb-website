@@ -1,11 +1,12 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import React from 'react';
 
-import BobbingItem from "./BobbingItem";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stats } from "@react-three/drei";
-import Ocean from "../../../../components/Terrain/Ocean";
-import Raft from "../Raft";
+import { OrbitControls, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import Ocean from '../../../Terrain/Ocean';
+import Raft from '../Raft';
+import BobbingItem from './BobbingItem';
 
 export default {
   title: "City/BobbingItem",

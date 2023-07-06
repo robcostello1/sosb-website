@@ -1,10 +1,11 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import React from 'react';
 
-import Garage from "./Garage";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
-import Ocean from "../../../../components/Terrain/Ocean";
+import { OrbitControls } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import Ocean from '../../../Terrain/Ocean';
+import Garage from './Garage';
 
 export default {
   title: "City/Garage",

@@ -1,15 +1,11 @@
-import React, { useState, memo } from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import React, { memo, useState } from 'react';
 
-import Raft from "./Raft";
-import { Canvas } from "@react-three/fiber";
-import {
-  OrbitControls,
-  PointerLockControls,
-  Stage,
-  Stats,
-} from "@react-three/drei";
-import Ocean from "../../../../components/Terrain/Ocean";
+import { OrbitControls, PointerLockControls, Stage, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import Ocean from '../../../Terrain/Ocean';
+import Raft from './Raft';
 
 export default {
   title: "Raft",

@@ -68,8 +68,6 @@ const Raft = ({ setCamera = true }: RaftProps) => {
     if (setCamera) {
       // TODO move the camera
       camera.position.set(0, 2, 0);
-
-      console.log("camera.position", camera.position);
     }
   }, [setCamera, camera.position]);
 

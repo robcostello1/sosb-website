@@ -1,23 +1,11 @@
-import {
-  FirstPersonControls,
-  PointerLockControls,
-  Stats,
-} from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { memo, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
-import {
-  Suspense,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  memo,
-} from "react";
+import { FirstPersonControls, PointerLockControls, Stats } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
 
-import Ocean from "../../components/Terrain/Ocean";
-
-import { City, Islands, Raft, BobbingItem, FloatingStuff } from "./components";
-import Sky from "./components/Sky";
+import Ocean from '../Terrain/Ocean';
+import { BobbingItem, City, FloatingStuff, Islands, Raft } from './components';
+import Sky from './components/Sky';
 
 const parts = {
   intro: 0,
@@ -145,4 +133,10 @@ const AfloatContent = () => {
   );
 };
 
-export default memo(AfloatContent);
+const AfloatContentWrapper = () => (
+  <Canvas shadows gl={{ precision: "mediump" }}>
+    <AfloatContent />
+  </Canvas>
+);
+
+export default AfloatContentWrapper;

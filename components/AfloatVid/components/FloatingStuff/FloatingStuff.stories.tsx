@@ -1,11 +1,12 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import React from 'react';
 
-import FloatingStuff from "./FloatingStuff";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stats } from "@react-three/drei";
-import Ocean from "../../../../components/Terrain/Ocean";
-import { RaftContent } from "../Raft/Raft";
+import { OrbitControls, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import Ocean from '../../../Terrain/Ocean';
+import { RaftContent } from '../Raft/Raft';
+import FloatingStuff from './FloatingStuff';
 
 export default {
   title: "FloatingStuff",
