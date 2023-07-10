@@ -8,7 +8,7 @@ import Ocean from '../../../Terrain/Ocean';
 import Garage from './Garage';
 
 export default {
-  title: "City/Garage",
+  title: "Garage",
   component: Garage,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout

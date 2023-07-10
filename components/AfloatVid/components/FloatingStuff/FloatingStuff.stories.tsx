@@ -5,7 +5,6 @@ import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import Ocean from '../../../Terrain/Ocean';
-import { RaftContent } from '../Raft/Raft';
 import FloatingStuff from './FloatingStuff';
 
 export default {

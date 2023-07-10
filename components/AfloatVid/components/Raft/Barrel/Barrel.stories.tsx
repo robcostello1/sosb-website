@@ -1,12 +1,13 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import React from 'react';
 
-import Barrel from "./Barrel";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stage } from "@react-three/drei";
+import { OrbitControls, Stage } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import Barrel from './Barrel';
 
 export default {
-  title: "City/Barrel",
+  title: "Barrel",
   component: Barrel,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout

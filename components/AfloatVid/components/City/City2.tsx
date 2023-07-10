@@ -9,16 +9,10 @@ import Building2 from './BouncingBuilding';
 import BouncingBuildings from './BouncingBuildings';
 import BuildingWithVines from './BuildingWithVines';
 import { ScreenWithVines } from './Screen';
+import { applyBuildingWrap } from './utils';
 import VineBuildingGroup from './VineBuildingGroup';
 
 const START_POSITION_Z = 0.3;
-
-const applyWrap = (textures: Texture | Texture[]) => {
-  (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-    texture.wrapS = MirroredRepeatWrapping;
-    texture.wrapT = RepeatWrapping;
-  });
-};
 
 const DebugBuildings = ({
   textureProps,
@@ -82,21 +76,21 @@ const City2 = ({
         map: `/maps/building-facade-1.jpg`,
         roughnessMap: `/maps/building-facade-1-roughness.jpg`,
       },
-      applyWrap
+      applyBuildingWrap
     ),
     useTexture(
       {
         map: `/maps/building-facade-2.jpg`,
         roughnessMap: `/maps/building-facade-2-roughness.jpg`,
       },
-      applyWrap
+      applyBuildingWrap
     ),
     useTexture(
       {
         map: `/maps/building-facade-3.jpg`,
         roughnessMap: `/maps/building-facade-3-roughness.jpg`,
       },
-      applyWrap
+      applyBuildingWrap
     ),
   ];
 
