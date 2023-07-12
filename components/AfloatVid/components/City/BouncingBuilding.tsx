@@ -45,12 +45,6 @@ const BouncingBuilding = ({
     (mesh: Mesh<BoxGeometry, MeshStandardMaterial>, size: number) => {
       const targetSize = origVectorScale.y + origVectorScale.y * size;
 
-      console.log("TARGET SIZE", targetSize);
-
-      console.log("CURRENT SCALE", mesh.scale.y);
-      console.log("CURRENT POSITION", mesh.position.y);
-      console.log("CURRENT MAP REPEAT", mesh.material.map?.repeat);
-
       gsap.to(mesh.scale, {
         duration: DURATION,
         ease: EASE,

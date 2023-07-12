@@ -1,5 +1,8 @@
 import { forwardRef, memo, useMemo } from 'react';
-import { BoxGeometry, Mesh, MeshStandardMaterial, RepeatWrapping, Vector2, Vector3 } from 'three';
+import {
+    BoxGeometry, Mesh, MeshStandardMaterial, MirroredRepeatWrapping, RepeatWrapping, Vector2,
+    Vector3
+} from 'three';
 
 import { MeshProps } from '@react-three/fiber';
 
@@ -24,7 +27,6 @@ const BaseBuilding = forwardRef<
   const clonedTextures = useMemo(() => {
     return Object.entries(textureProps).reduce<TextureProps>(
       (acc, [key, value]) => {
-        // const scale = props.scale || new Vector3(1, 1, 1);
         const clonedTexture = value.clone();
 
         clonedTexture.repeat.x =
@@ -32,7 +34,8 @@ const BaseBuilding = forwardRef<
         clonedTexture.repeat.y =
           (DEFAULT_BUILDING_HEIGHT * props.scale.y) / BUILDING_TEXTURE_HEIGHT;
         // TODO needs to be expressly set here
-        clonedTexture.wrapS = RepeatWrapping;
+        // TODO just RepeatWrapping
+        clonedTexture.wrapS = MirroredRepeatWrapping;
         clonedTexture.wrapT = RepeatWrapping;
 
         acc[key as keyof TextureProps] = clonedTexture;
