@@ -6,6 +6,8 @@ import {
 
 import { MeshProps } from '@react-three/fiber';
 
+import { useLog } from '../../../../hooks';
+import { Triplet } from '../../../../utils/types';
 import { TextureProps } from './types';
 
 export type BaseBuildingProps = Pick<MeshProps, "position" | "rotation"> & {
@@ -18,21 +20,22 @@ export const BUILDING_TEXTURE_HEIGHT = 4 * WINDOW_HEIGHT;
 export const BUILDING_TEXTURE_WIDTH = BUILDING_TEXTURE_HEIGHT;
 export const DEFAULT_BUILDING_HEIGHT = 40;
 export const DEFAULT_BUILDING_WIDTH = 20;
+const DEFAULT_SCALE = new Vector3(1, 1, 1);
 const NORMAL_SCALE = new Vector2(0.1, 0.1);
 
 const BaseBuilding = forwardRef<
   Mesh<BoxGeometry, MeshStandardMaterial>,
   BaseBuildingProps
->(({ textureProps, ...props }, ref) => {
+>(({ textureProps, scale = DEFAULT_SCALE, ...props }, ref) => {
   const clonedTextures = useMemo(() => {
     return Object.entries(textureProps).reduce<TextureProps>(
-      (acc, [key, value]) => {
-        const clonedTexture = value.clone();
+      (acc, [key, texture]) => {
+        const clonedTexture = texture.clone();
 
         clonedTexture.repeat.x =
-          (DEFAULT_BUILDING_WIDTH * props.scale.x) / BUILDING_TEXTURE_WIDTH;
+          (DEFAULT_BUILDING_WIDTH * scale.x) / BUILDING_TEXTURE_WIDTH;
         clonedTexture.repeat.y =
-          (DEFAULT_BUILDING_HEIGHT * props.scale.y) / BUILDING_TEXTURE_HEIGHT;
+          (DEFAULT_BUILDING_HEIGHT * scale.y) / BUILDING_TEXTURE_HEIGHT;
         // TODO needs to be expressly set here
         // TODO just RepeatWrapping
         clonedTexture.wrapS = MirroredRepeatWrapping;
@@ -43,10 +46,10 @@ const BaseBuilding = forwardRef<
       },
       {} as TextureProps
     );
-  }, [textureProps, props.scale]);
+  }, [textureProps, scale]);
 
   return (
-    <mesh ref={ref} {...props}>
+    <mesh ref={ref} scale={scale} {...props}>
       <boxGeometry
         args={[
           DEFAULT_BUILDING_WIDTH,

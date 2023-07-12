@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { OrbitControls, Stage, Stats, useTexture } from '@react-three/drei';
+import { OrbitControls, Stage, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import BaseBuilding, { BaseBuildingProps } from './BaseBuilding';
-import { TextureProps } from './types';
-import { applyBuildingWrap } from './utils';
+import { useBuildingTextures } from './hooks';
 
 export default {
   title: "City/BaseBuilding",
@@ -14,6 +13,12 @@ export default {
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
+  },
+  argTypes: {
+    texture: {
+      control: "radio",
+      options: [1, 2, 3],
+    },
   },
 } as ComponentMeta<typeof BaseBuilding>;
 
@@ -23,31 +28,7 @@ const BuildingWrapper = ({
 }: Omit<BaseBuildingProps, "textureProps" | "ref"> & {
   texture: 1 | 2 | 3;
 }) => {
-  const textureProps: TextureProps[] = [
-    useTexture(
-      {
-        map: `/maps/building-facade-1.jpg`,
-        roughnessMap: `/maps/building-facade-1-roughness.jpg`,
-      },
-      applyBuildingWrap
-    ),
-    useTexture(
-      {
-        map: `/maps/building-facade-2.jpg`,
-        roughnessMap: `/maps/building-facade-2-roughness.jpg`,
-        // TODO not working
-        // normalMap: `/maps/building-facade-2-normal.jpg`,
-      },
-      applyBuildingWrap
-    ),
-    useTexture(
-      {
-        map: `/maps/building-facade-3.jpg`,
-        roughnessMap: `/maps/building-facade-3-roughness.jpg`,
-      },
-      applyBuildingWrap
-    ),
-  ];
+  const textureProps = useBuildingTextures();
 
   return <BaseBuilding textureProps={textureProps[texture - 1]} {...props} />;
 };

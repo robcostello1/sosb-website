@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { OrbitControls, Stats, useTexture } from '@react-three/drei';
+import { OrbitControls, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
 import BouncingBuilding, { BouncingBuildingProps } from './BouncingBuilding';
-import { TextureProps } from './types';
-import { applyBuildingWrap } from './utils';
+import { useBuildingTextures } from './hooks';
 
 export default {
   title: "City/BouncingBuilding",
@@ -14,6 +13,15 @@ export default {
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
+  },
+  argTypes: {
+    texture: {
+      control: "radio",
+      options: [1, 2, 3],
+    },
+    bounceSize: {
+      control: { type: "range", min: 0, max: 5, step: 0.1 },
+    },
   },
 } as ComponentMeta<typeof BouncingBuilding>;
 
@@ -23,34 +31,14 @@ const BuildingWrapper = ({
 }: Omit<BouncingBuildingProps, "textureProps" | "ref"> & {
   texture: 1 | 2 | 3;
 }) => {
-  const textureProps: TextureProps[] = [
-    useTexture(
-      {
-        map: `/maps/building-facade-1.jpg`,
-        roughnessMap: `/maps/building-facade-1-roughness.jpg`,
-      },
-      applyBuildingWrap
-    ),
-    useTexture(
-      {
-        map: `/maps/building-facade-2.jpg`,
-        roughnessMap: `/maps/building-facade-2-roughness.jpg`,
-        // TODO not working
-        // normalMap: `/maps/building-facade-2-normal.jpg`,
-      },
-      applyBuildingWrap
-    ),
-    useTexture(
-      {
-        map: `/maps/building-facade-3.jpg`,
-        roughnessMap: `/maps/building-facade-3-roughness.jpg`,
-      },
-      applyBuildingWrap
-    ),
-  ];
+  const textureProps = useBuildingTextures();
 
   return (
-    <BouncingBuilding textureProps={textureProps[texture - 1]} {...props} />
+    <BouncingBuilding
+      key={texture}
+      textureProps={textureProps[texture - 1]}
+      {...props}
+    />
   );
 };
 
@@ -61,7 +49,7 @@ const Template: ComponentStory<typeof BuildingWrapper> = ({
   return (
     <Canvas
       camera={{
-        position: [30, 4, 5],
+        position: [80, 4, 5],
       }}
     >
       <Stats />
@@ -80,5 +68,6 @@ export const Default = Template.bind({});
 
 Default.args = {
   texture: 1,
-  smoothMoves: 3,
+  bounceSize: 3,
+  position: [0, -30, 0],
 };

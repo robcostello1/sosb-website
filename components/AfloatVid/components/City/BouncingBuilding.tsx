@@ -9,7 +9,7 @@ import BaseBuilding, { BUILDING_TEXTURE_HEIGHT, DEFAULT_BUILDING_HEIGHT } from '
 import { TextureProps } from './types';
 
 export type BouncingBuildingProps = Pick<MeshProps, "rotation"> & {
-  smoothMoves?: number;
+  bounceSize?: number;
   scale?: Triplet;
   position?: Triplet;
   textureProps: TextureProps;
@@ -18,11 +18,14 @@ export type BouncingBuildingProps = Pick<MeshProps, "rotation"> & {
 const EASE = Power2.easeInOut;
 const DURATION = 1;
 const MS_DURATION = DURATION * 1000;
+const MOVEMENT_FREQUNCY = MS_DURATION + 2000;
+const DEFAULT_SCALE: Triplet = [1, 1, 1];
+const DEFAULT_POSITION: Triplet = [0, 0, 0];
 
 const BouncingBuilding = ({
-  scale = [1, 1, 1],
-  position = [0, 0, 0],
-  smoothMoves,
+  scale = DEFAULT_SCALE,
+  position = DEFAULT_POSITION,
+  bounceSize,
   textureProps,
   ...props
 }: BouncingBuildingProps) => {
@@ -51,7 +54,6 @@ const BouncingBuilding = ({
         y: targetSize,
       });
 
-      // TODO position 7 != 0 not handled well
       gsap.to(mesh.position, {
         duration: DURATION,
         ease: EASE,
@@ -68,28 +70,21 @@ const BouncingBuilding = ({
     [origVectorScale.y, position]
   );
 
-  // useEffect(() => {
-  //   console.log("RESIZE TO NEXT", resize);
-  // }, [resize]);
-
-  // useEffect(() => {
-  //   console.log("ORIGINAL SCALE", origVectorScale.y);
-  // }, [origVectorScale.y]);
-
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     timeout.current && clearTimeout(timeout.current);
 
-    const nextEvent = MS_DURATION + Math.random() * (5000 - MS_DURATION);
+    const nextEvent =
+      MS_DURATION + Math.random() * (MOVEMENT_FREQUNCY - MS_DURATION);
 
     timeout.current = setTimeout(() => {
-      if (meshRef.current && smoothMoves) {
-        applyResize(meshRef.current, resize * smoothMoves);
+      if (meshRef.current && bounceSize) {
+        applyResize(meshRef.current, resize * bounceSize);
         setResize(Math.random() * 2);
       }
     }, nextEvent);
-  }, [resize, smoothMoves, applyResize]);
+  }, [resize, bounceSize, applyResize]);
 
   return (
     <BaseBuilding
