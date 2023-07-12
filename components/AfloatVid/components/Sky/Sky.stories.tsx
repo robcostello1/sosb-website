@@ -23,7 +23,11 @@ const Template: ComponentStory<typeof Sky> = (args) => {
 
       <PointerLockControls />
 
-      <TorusKnot position={[0, 2, -10]}>
+      <TorusKnot
+        position={[0, 2, -10]}
+        getObjectsByProperty={undefined}
+        getVertexPosition={undefined}
+      >
         <meshStandardMaterial color={0x999999} metalness={1} roughness={0.1} />
       </TorusKnot>
 

@@ -50,10 +50,18 @@ const Button = forwardRef<Mesh, ButtonProps>(
           castShadow={castShadow}
           scale={[0.3, 0.12, 0.4]}
           position={[0, -0.05, 0]}
+          getObjectsByProperty={undefined}
+          getVertexPosition={undefined}
         >
           <meshStandardMaterial color="grey" />
         </Box>
-        <Cylinder args={[0.1, 0.1, 0.1, 16]} name={buttonName} ref={ref}>
+        <Cylinder
+          args={[0.1, 0.1, 0.1, 16]}
+          name={buttonName}
+          ref={ref}
+          getObjectsByProperty={undefined}
+          getVertexPosition={undefined}
+        >
           <meshStandardMaterial
             color="red"
             emissive="red"
@@ -65,6 +73,8 @@ const Button = forwardRef<Mesh, ButtonProps>(
           scale={[0.04, 0.04, 0.08]}
           rotation={[-Math.PI / 2, 0, 0]}
           position={[-0.08, 0.038, 0.02]}
+          getObjectsByProperty={undefined}
+          getVertexPosition={undefined}
         >
           {text}
           <meshStandardMaterial color="black" />

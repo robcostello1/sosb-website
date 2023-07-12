@@ -1,13 +1,8 @@
 import { forwardRef, memo, useMemo } from 'react';
-import {
-    BoxGeometry, Mesh, MeshStandardMaterial, MirroredRepeatWrapping, RepeatWrapping, Vector2,
-    Vector3
-} from 'three';
+import { BoxGeometry, Mesh, MeshStandardMaterial, RepeatWrapping, Vector2, Vector3 } from 'three';
 
 import { MeshProps } from '@react-three/fiber';
 
-import { useLog } from '../../../../hooks';
-import { Triplet } from '../../../../utils/types';
 import { TextureProps } from './types';
 
 export type BaseBuildingProps = Pick<MeshProps, "position" | "rotation"> & {
@@ -37,8 +32,7 @@ const BaseBuilding = forwardRef<
         clonedTexture.repeat.y =
           (DEFAULT_BUILDING_HEIGHT * scale.y) / BUILDING_TEXTURE_HEIGHT;
         // TODO needs to be expressly set here
-        // TODO just RepeatWrapping
-        clonedTexture.wrapS = MirroredRepeatWrapping;
+        clonedTexture.wrapS = RepeatWrapping;
         clonedTexture.wrapT = RepeatWrapping;
 
         acc[key as keyof TextureProps] = clonedTexture;
@@ -57,7 +51,11 @@ const BaseBuilding = forwardRef<
           DEFAULT_BUILDING_WIDTH,
         ]}
       />
-      <meshStandardMaterial {...clonedTextures} normalScale={NORMAL_SCALE} />
+      <meshStandardMaterial
+        {...clonedTextures}
+        normalScale={NORMAL_SCALE}
+        transparent
+      />
     </mesh>
   );
 });

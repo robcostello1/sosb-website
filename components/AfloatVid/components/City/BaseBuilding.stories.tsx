@@ -44,9 +44,6 @@ const Template: ComponentStory<typeof BuildingWrapper> = (args) => {
 
       <OrbitControls />
 
-      {/* <ambientLight intensity={0.1} />
-      <directionalLight position={[10, 3, 5]} /> */}
-
       <Stage preset="portrait" environment="night">
         <BuildingWrapper {...args} />
       </Stage>

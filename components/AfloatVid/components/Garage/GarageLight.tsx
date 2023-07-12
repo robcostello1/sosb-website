@@ -40,6 +40,8 @@ const GarageLight = ({ position }: { position: Triplet }) => {
         distance={6}
         angle={Math.PI * 0.7}
         volumetric
+        map={undefined}
+        getObjectsByProperty={undefined}
       />
     </group>
   );

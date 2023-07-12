@@ -1,8 +1,9 @@
-import { Text3D } from "@react-three/drei";
-import { memo } from "react";
+import { memo } from 'react';
+import { Color } from 'three';
 
-import { Color } from "three";
-import { RotationProp, VectorProp } from "../consts";
+import { Text3D } from '@react-three/drei';
+
+import { RotationProp, VectorProp } from '../consts';
 
 type GlowTextProps = {
   font: any;
@@ -40,6 +41,8 @@ const GlowText = ({
         bevelEnabled
         bevelSize={0.015}
         bevelThickness={0.01}
+        getObjectsByProperty={undefined}
+        getVertexPosition={undefined}
       >
         {children}
         <meshStandardMaterial

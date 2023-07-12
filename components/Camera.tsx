@@ -1,10 +1,10 @@
-import { useFrame, useThree } from "@react-three/fiber";
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { gsap } from 'gsap';
+import { memo, useEffect, useState } from 'react';
 
-import { useEffect, useState, memo } from "react";
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { useFrame, useThree } from '@react-three/fiber';
 
-import { gsap } from "gsap";
-import { Triplet } from "../utils/types";
+import { Triplet } from '../utils/types';
 
 const cameraSettings: Record<
   string,
@@ -81,7 +81,7 @@ const Camera = ({ focus }: CameraProps) => {
 
   return (
     <>
-      <PerspectiveCamera castShadow />
+      <PerspectiveCamera castShadow getObjectsByProperty={undefined} />
 
       <OrbitControls
         key={focus}

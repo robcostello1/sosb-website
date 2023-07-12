@@ -9,24 +9,24 @@ export const useBuildingTextures = (): TextureProps[] => {
   const textures = [
     useTexture(
       {
-        map: `/maps/building-facade-1.jpg`,
-        roughnessMap: `/maps/building-facade-1-roughness.jpg`,
+        map: "/maps/building-facade-1.jpg",
+        roughnessMap: "/maps/building-facade-1-roughness.jpg",
       },
       applyBuildingWrap
     ),
     useTexture(
       {
-        map: `/maps/building-facade-2.jpg`,
-        roughnessMap: `/maps/building-facade-2-roughness.jpg`,
+        map: "/maps/building-facade-2.jpg",
+        roughnessMap: "/maps/building-facade-2-roughness.jpg",
         // TODO not working
-        // normalMap: `/maps/building-facade-2-normal.jpg`,
+        // normalMap: "/maps/building-facade-2-normal.jpg",
       },
       applyBuildingWrap
     ),
     useTexture(
       {
-        map: `/maps/building-facade-3.jpg`,
-        roughnessMap: `/maps/building-facade-3-roughness.jpg`,
+        map: "/maps/building-facade-3.jpg",
+        roughnessMap: "/maps/building-facade-3-roughness.jpg",
       },
       applyBuildingWrap
     ),
