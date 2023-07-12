@@ -15,16 +15,14 @@ export default {
   },
 } as ComponentMeta<typeof {{pascalCase name}}>;
 
-const CAMERA_SETTINGS = { 
-  position: [3, 4, 5] 
-}
-
 const Template: ComponentStory<typeof {{pascalCase name}}> = (args) => {
   return (
     <Canvas
-      camera={{
-        position: [3, 4, 5],
-      }}
+      camera={
+        {
+          position: [3, 4, 5],
+        }
+      }
     >
       <Stats />
 

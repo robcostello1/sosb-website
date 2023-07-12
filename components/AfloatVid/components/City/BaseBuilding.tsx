@@ -24,13 +24,13 @@ const BaseBuilding = forwardRef<
   const clonedTextures = useMemo(() => {
     return Object.entries(textureProps).reduce<TextureProps>(
       (acc, [key, value]) => {
-        const scale = props.scale || new Vector3(1, 1, 1);
+        // const scale = props.scale || new Vector3(1, 1, 1);
         const clonedTexture = value.clone();
 
         clonedTexture.repeat.x =
-          (DEFAULT_BUILDING_WIDTH * scale.x) / BUILDING_TEXTURE_WIDTH;
+          (DEFAULT_BUILDING_WIDTH * props.scale.x) / BUILDING_TEXTURE_WIDTH;
         clonedTexture.repeat.y =
-          (DEFAULT_BUILDING_HEIGHT * scale.y) / BUILDING_TEXTURE_HEIGHT;
+          (DEFAULT_BUILDING_HEIGHT * props.scale.y) / BUILDING_TEXTURE_HEIGHT;
         // TODO needs to be expressly set here
         clonedTexture.wrapS = RepeatWrapping;
         clonedTexture.wrapT = RepeatWrapping;
@@ -51,28 +51,7 @@ const BaseBuilding = forwardRef<
           DEFAULT_BUILDING_WIDTH,
         ]}
       />
-      <meshStandardMaterial
-        attach="material-0"
-        {...clonedTextures}
-        normalScale={NORMAL_SCALE}
-      />
-      <meshStandardMaterial
-        attach="material-1"
-        {...clonedTextures}
-        normalScale={NORMAL_SCALE}
-      />
-      <meshStandardMaterial attach="material-2" color={0xaaaaaa} />
-      <meshStandardMaterial attach="material-3" color={0xaaaaaa} />
-      <meshStandardMaterial
-        attach="material-4"
-        {...clonedTextures}
-        normalScale={NORMAL_SCALE}
-      />
-      <meshStandardMaterial
-        attach="material-5"
-        {...clonedTextures}
-        normalScale={NORMAL_SCALE}
-      />
+      <meshStandardMaterial {...clonedTextures} normalScale={NORMAL_SCALE} />
     </mesh>
   );
 });
