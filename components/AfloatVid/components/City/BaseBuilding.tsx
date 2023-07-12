@@ -1,16 +1,11 @@
-import { MeshProps } from "@react-three/fiber";
-import { forwardRef, useMemo, memo } from "react";
-import {
-  Mesh,
-  BoxGeometry,
-  MeshStandardMaterial,
-  Vector3,
-  MirroredRepeatWrapping,
-  RepeatWrapping,
-} from "three";
-import { TextureProps } from "./types";
+import { forwardRef, memo, useMemo } from 'react';
+import { BoxGeometry, Mesh, MeshStandardMaterial, RepeatWrapping, Vector2, Vector3 } from 'three';
 
-export type BaseBuildingProps = Omit<MeshProps, "scale"> & {
+import { MeshProps } from '@react-three/fiber';
+
+import { TextureProps } from './types';
+
+export type BaseBuildingProps = Pick<MeshProps, "position" | "rotation"> & {
   scale: Vector3;
   textureProps: TextureProps;
 };
@@ -20,22 +15,24 @@ export const BUILDING_TEXTURE_HEIGHT = 4 * WINDOW_HEIGHT;
 export const BUILDING_TEXTURE_WIDTH = BUILDING_TEXTURE_HEIGHT;
 export const DEFAULT_BUILDING_HEIGHT = 40;
 export const DEFAULT_BUILDING_WIDTH = 20;
+const DEFAULT_SCALE = new Vector3(1, 1, 1);
+const NORMAL_SCALE = new Vector2(0.1, 0.1);
 
 const BaseBuilding = forwardRef<
   Mesh<BoxGeometry, MeshStandardMaterial>,
   BaseBuildingProps
->(({ textureProps, ...props }, ref) => {
+>(({ textureProps, scale = DEFAULT_SCALE, ...props }, ref) => {
   const clonedTextures = useMemo(() => {
     return Object.entries(textureProps).reduce<TextureProps>(
-      (acc, [key, value]) => {
-        const clonedTexture = value.clone();
+      (acc, [key, texture]) => {
+        const clonedTexture = texture.clone();
 
         clonedTexture.repeat.x =
-          (DEFAULT_BUILDING_WIDTH * props.scale.x) / BUILDING_TEXTURE_WIDTH;
+          (DEFAULT_BUILDING_WIDTH * scale.x) / BUILDING_TEXTURE_WIDTH;
         clonedTexture.repeat.y =
-          (DEFAULT_BUILDING_HEIGHT * props.scale.y) / BUILDING_TEXTURE_HEIGHT;
+          (DEFAULT_BUILDING_HEIGHT * scale.y) / BUILDING_TEXTURE_HEIGHT;
         // TODO needs to be expressly set here
-        clonedTexture.wrapS = MirroredRepeatWrapping;
+        clonedTexture.wrapS = RepeatWrapping;
         clonedTexture.wrapT = RepeatWrapping;
 
         acc[key as keyof TextureProps] = clonedTexture;
@@ -43,10 +40,10 @@ const BaseBuilding = forwardRef<
       },
       {} as TextureProps
     );
-  }, [textureProps, props.scale]);
+  }, [textureProps, scale]);
 
   return (
-    <mesh ref={ref} {...props}>
+    <mesh ref={ref} scale={scale} {...props}>
       <boxGeometry
         args={[
           DEFAULT_BUILDING_WIDTH,
@@ -54,7 +51,11 @@ const BaseBuilding = forwardRef<
           DEFAULT_BUILDING_WIDTH,
         ]}
       />
-      <meshStandardMaterial {...clonedTextures} />
+      <meshStandardMaterial
+        {...clonedTextures}
+        normalScale={NORMAL_SCALE}
+        transparent
+      />
     </mesh>
   );
 });

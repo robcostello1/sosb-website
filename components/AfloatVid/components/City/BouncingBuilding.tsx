@@ -1,117 +1,97 @@
 import gsap, { Power2 } from 'gsap';
-import { memo, MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from 'three';
 
-import { MeshProps, useFrame } from '@react-three/fiber';
+import { MeshProps } from '@react-three/fiber';
 
 import { Triplet } from '../../../../utils/types';
 import BaseBuilding, { BUILDING_TEXTURE_HEIGHT, DEFAULT_BUILDING_HEIGHT } from './BaseBuilding';
 import { TextureProps } from './types';
 
-type BuildingProps = Omit<MeshProps, "scale" | "position"> & {
-  bounce?: number;
-  smoothMoves?: number;
+export type BouncingBuildingProps = Pick<MeshProps, "rotation"> & {
+  bounceSize?: number;
   scale?: Triplet;
   position?: Triplet;
   textureProps: TextureProps;
-  analyserRef?: MutableRefObject<AnalyserNode | null>;
 };
 
-const ease = Power2.easeInOut;
+const EASE = Power2.easeInOut;
+const DURATION = 1;
+const MS_DURATION = DURATION * 1000;
+const MOVEMENT_FREQUNCY = MS_DURATION + 2000;
+const DEFAULT_SCALE: Triplet = [1, 1, 1];
+const DEFAULT_POSITION: Triplet = [0, 0, 0];
 
 const BouncingBuilding = ({
-  scale = [1, 1, 1],
-  position = [0, 0, 0],
-  analyserRef,
-  bounce,
-  smoothMoves,
+  scale = DEFAULT_SCALE,
+  position = DEFAULT_POSITION,
+  bounceSize,
   textureProps,
   ...props
-}: BuildingProps) => {
+}: BouncingBuildingProps) => {
   const [resize, setResize] = useState(1);
 
-  const vectorScale = useMemo(() => new Vector3(...scale), [scale]);
-  const vectorPosition = useMemo(
+  const origVectorScale = useMemo(() => new Vector3(...scale), [scale]);
+  const origVectorPosition = useMemo(
     () =>
       new Vector3(
         position[0],
-        position[1] + (DEFAULT_BUILDING_HEIGHT * vectorScale.y) / 2,
+        position[1] + (DEFAULT_BUILDING_HEIGHT * origVectorScale.y) / 2,
         position[2]
       ),
-    [position, vectorScale.y]
+    [position, origVectorScale.y]
   );
 
   const meshRef = useRef<Mesh<BoxGeometry, MeshStandardMaterial>>(null);
 
   const applyResize = useCallback(
-    (
-      mesh: Mesh<BoxGeometry, MeshStandardMaterial>,
-      size: number,
-      duration: number
-    ) => {
-      const finalSize = vectorScale.y + vectorScale.y * size;
+    (mesh: Mesh<BoxGeometry, MeshStandardMaterial>, size: number) => {
+      const targetSize = origVectorScale.y + origVectorScale.y * size;
 
       gsap.to(mesh.scale, {
-        duration,
-        ease,
-        y: finalSize,
+        duration: DURATION,
+        ease: EASE,
+        y: targetSize,
       });
 
       gsap.to(mesh.position, {
-        duration,
-        ease,
-        y: position[1] + (DEFAULT_BUILDING_HEIGHT * finalSize) / 2,
+        duration: DURATION,
+        ease: EASE,
+        y: position[1] + (DEFAULT_BUILDING_HEIGHT * targetSize) / 2,
       });
 
-      mesh.material.map &&
-        gsap.to(mesh.material.map?.repeat, {
-          duration,
-          ease,
-          y: (DEFAULT_BUILDING_HEIGHT * finalSize) / BUILDING_TEXTURE_HEIGHT,
+      mesh.material.map?.repeat &&
+        gsap.to(mesh.material.map.repeat, {
+          duration: DURATION,
+          ease: EASE,
+          y: (DEFAULT_BUILDING_HEIGHT * targetSize) / BUILDING_TEXTURE_HEIGHT,
         });
     },
-    [vectorScale.y, position]
+    [origVectorScale.y, position]
   );
 
+  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
-    setTimeout(() => {
-      if (meshRef.current && !bounce && smoothMoves) {
-        applyResize(meshRef.current, resize * smoothMoves, 1);
+    timeout.current && clearTimeout(timeout.current);
+
+    const nextEvent =
+      MS_DURATION + Math.random() * (MOVEMENT_FREQUNCY - MS_DURATION);
+
+    timeout.current = setTimeout(() => {
+      if (meshRef.current && bounceSize) {
+        applyResize(meshRef.current, resize * bounceSize);
         setResize(Math.random() * 2);
       }
-    }, Math.random() * 5000);
-  }, [resize, smoothMoves, bounce, applyResize]);
-
-  const [randomBand, dataArray] = useMemo(() => {
-    if (analyserRef?.current) {
-      const bufferLength = analyserRef.current.frequencyBinCount;
-      const dataArray = new Float32Array(bufferLength);
-      return [Math.floor(dataArray.length * Math.random()), dataArray];
-    }
-
-    return [undefined, undefined];
-  }, [analyserRef]);
-
-  useFrame(() => {
-    if (meshRef.current) {
-      if (analyserRef?.current && dataArray && bounce && randomBand) {
-        analyserRef.current.getFloatTimeDomainData(dataArray);
-
-        const scale = vectorScale.y / 2 + dataArray[randomBand] * bounce;
-        const duration = 0.1;
-
-        applyResize(meshRef.current, scale, duration);
-      }
-    }
-  });
+    }, nextEvent);
+  }, [resize, bounceSize, applyResize]);
 
   return (
     <BaseBuilding
-      // @ts-expect-error
       ref={meshRef}
       textureProps={textureProps}
-      scale={vectorScale}
-      position={vectorPosition}
+      scale={origVectorScale}
+      position={origVectorPosition}
       {...props}
     />
   );

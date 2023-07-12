@@ -102,7 +102,7 @@ const HomeAnimation = () => {
 
       <fog attach="fog" args={["#000000", 1, 5]} />
 
-      <PerspectiveCamera castShadow />
+      <PerspectiveCamera castShadow getObjectsByProperty={undefined} />
 
       <ambientLight intensity={0.2} color="lightblue" />
 

@@ -1,5 +1,7 @@
-import { Texture } from "three";
+import { Texture } from 'three';
 
 export type TextureProps = {
   map: Texture;
+  roughnessMap?: Texture;
+  normalMap?: Texture;
 };

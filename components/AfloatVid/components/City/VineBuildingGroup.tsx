@@ -1,15 +1,12 @@
 import { Fragment, memo, useMemo } from 'react';
-import { Texture } from 'three';
 
 import BuildingWithVines from './BuildingWithVines';
+import { TextureProps } from './types';
 
 type VineBuildingGroupProps = {
   debug?: boolean;
   size: number;
-  textureProps: {
-    map: Texture;
-    roughnessMap: Texture;
-  }[];
+  textureProps: TextureProps[];
 };
 
 const VineBuildingGroup = ({

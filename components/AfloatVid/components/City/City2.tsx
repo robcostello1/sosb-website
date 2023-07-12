@@ -8,26 +8,15 @@ import Garage from '../Garage/Garage';
 import Building2 from './BouncingBuilding';
 import BouncingBuildings from './BouncingBuildings';
 import BuildingWithVines from './BuildingWithVines';
+import { useBuildingTextures } from './hooks';
 import { ScreenWithVines } from './Screen';
+import { TextureProps } from './types';
+import { applyBuildingWrap } from './utils';
 import VineBuildingGroup from './VineBuildingGroup';
 
 const START_POSITION_Z = 0.3;
 
-const applyWrap = (textures: Texture | Texture[]) => {
-  (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-    texture.wrapS = MirroredRepeatWrapping;
-    texture.wrapT = RepeatWrapping;
-  });
-};
-
-const DebugBuildings = ({
-  textureProps,
-}: {
-  textureProps: {
-    map: Texture;
-    roughnessMap: Texture;
-  }[];
-}) => (
+const DebugBuildings = ({ textureProps }: { textureProps: TextureProps[] }) => (
   <>
     <BuildingWithVines
       scale={[1, 2.5, 1]}
@@ -52,7 +41,7 @@ const DebugBuildings = ({
       scale={[1, 1, 1]}
       position={[15, 0, -50]}
       textureProps={textureProps[1]}
-      smoothMoves={1}
+      bounceSize={1}
     />
   </>
 );
@@ -76,29 +65,7 @@ const City2 = ({
 }: City2Props) => {
   const groupRef = useRef<Group>(null);
   const [garageLoaded, setGarageLoaded] = useState(false);
-  const textureProps = [
-    useTexture(
-      {
-        map: `/maps/building-facade-1.jpg`,
-        roughnessMap: `/maps/building-facade-1-roughness.jpg`,
-      },
-      applyWrap
-    ),
-    useTexture(
-      {
-        map: `/maps/building-facade-2.jpg`,
-        roughnessMap: `/maps/building-facade-2-roughness.jpg`,
-      },
-      applyWrap
-    ),
-    useTexture(
-      {
-        map: `/maps/building-facade-3.jpg`,
-        roughnessMap: `/maps/building-facade-3-roughness.jpg`,
-      },
-      applyWrap
-    ),
-  ];
+  const textureProps = useBuildingTextures();
 
   const [startedMoving, setStartedMoving] = useState(false);
 

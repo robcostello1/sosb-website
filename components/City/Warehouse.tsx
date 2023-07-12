@@ -61,15 +61,6 @@ const Warehouse = ({ active, onClick }: WarehouseProps) => {
         windowMaterial={windowMaterial}
       />
 
-      <ContactShadows
-        position={[0, 0, 0]}
-        scale={10}
-        far={3}
-        blur={3}
-        rotation={[Math.PI / 2, 0, 0]}
-        color={"black"}
-      />
-
       {/* Footpath */}
       <mesh
         rotation={[0, Math.PI, 0]}

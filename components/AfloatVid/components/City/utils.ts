@@ -1,4 +1,6 @@
-import { Triplet } from "../../../../utils/types";
+import { MirroredRepeatWrapping, RepeatWrapping, Texture } from 'three';
+
+import { Triplet } from '../../../../utils/types';
 
 export const getBuildingAttributes = (size: number, index: number) => {
   const isEven = index % 2 === 0;
@@ -27,3 +29,10 @@ export function weightedRandom(
   const x = -Math.log(1 - u) / lambda; // Transform the uniform distribution into an exponential distribution
   return x;
 }
+
+export const applyBuildingWrap = (textures: Texture | Texture[]) => {
+  (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
+    texture.wrapS = RepeatWrapping;
+    texture.wrapT = RepeatWrapping;
+  });
+};

@@ -1,13 +1,14 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import React from 'react';
+import { RepeatWrapping } from 'three';
 
-import Plank from "./Plank";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stage, useTexture } from "@react-three/drei";
-import { RepeatWrapping } from "three";
+import { OrbitControls, Stage, useTexture } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import Plank from './Plank';
 
 export default {
-  title: "City/Plank",
+  title: "Plank",
   component: Plank,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout

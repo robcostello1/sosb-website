@@ -1,9 +1,10 @@
-import { Triplet } from "../../../../../utils/types";
-import { useVideoTexture } from "@react-three/drei";
+import { forwardRef, memo, Suspense, useEffect, useRef } from 'react';
+import { MeshBasicMaterial, RepeatWrapping, Vector2 } from 'three';
 
-import { forwardRef, Suspense, useEffect, useRef, memo } from "react";
-import { MeshBasicMaterial, RepeatWrapping, Vector2 } from "three";
-import { MeshProps } from "@react-three/fiber";
+import { useVideoTexture } from '@react-three/drei';
+import { MeshProps } from '@react-three/fiber';
+
+import { Triplet } from '../../../../../utils/types';
 
 type ScreenContentsProps = Pick<MeshProps, "position"> & {
   aspectRatio?: number;
@@ -64,6 +65,7 @@ const ScreenContents = ({
         />
       </Suspense>
       <meshStandardMaterial attach="material-5" color={0x000000} />
+      {/* // TODO - probably don't need 6 */}
       <meshStandardMaterial attach="material-6" color={0x000000} />
     </>
   );

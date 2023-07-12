@@ -58,7 +58,7 @@ const BouncingBuildings = ({
   useFrame((_, delta) => {
     if (started) {
       time.current += delta;
-      setBuildingMovement(Math.floor(time.current / 4) / 12);
+      setBuildingMovement(Math.floor(time.current / 4) / 24);
     }
   });
 
@@ -68,7 +68,7 @@ const BouncingBuildings = ({
         <BouncingBuilding
           {...props}
           key={index}
-          smoothMoves={buildingMovement}
+          bounceSize={buildingMovement}
         />
       ))}
     </>
