@@ -1,12 +1,16 @@
-import { memo, useMemo, useRef } from 'react';
-import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from 'three';
+import { memo, useMemo, useRef } from "react";
+import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from "three";
 
-import { MeshProps } from '@react-three/fiber';
+import { MeshProps } from "@react-three/fiber";
 
-import { Triplet } from '../../../../utils/types';
-import BaseBuilding, { DEFAULT_BUILDING_HEIGHT, DEFAULT_BUILDING_WIDTH } from './BaseBuilding';
-import { TextureProps } from './types';
-import Vines from './Vines';
+import { Triplet } from "../../../../utils/types";
+import BaseBuilding, {
+  DEFAULT_BUILDING_HEIGHT,
+  DEFAULT_BUILDING_WIDTH,
+} from "./BaseBuilding";
+import { useBuildingVectorDimensions } from "./hooks";
+import { TextureProps } from "./types";
+import Vines from "./Vines";
 
 type BuildingWithVinesProps = Omit<MeshProps, "scale" | "position"> & {
   scale?: Triplet;
@@ -18,24 +22,20 @@ type BuildingWithVinesProps = Omit<MeshProps, "scale" | "position"> & {
 };
 
 const BuildingWithVines = ({
-  scale = [1, 1, 1],
-  position = [0, 0, 0],
+  scale,
+  position,
+  rotation,
   textureProps,
   vinesAmount,
   pulsate,
   ...props
 }: BuildingWithVinesProps) => {
-  const vectorScale = useMemo(() => new Vector3(...scale), [scale]);
-  // Needs this for some reason
-  const vectorPosition = useMemo(
-    () =>
-      new Vector3(
-        position[0],
-        position[1] + (DEFAULT_BUILDING_HEIGHT * vectorScale.y) / 2,
-        position[2]
-      ),
-    [position, vectorScale.y]
-  );
+  const { vectorScale, vectorPosition, vectorRotation } =
+    useBuildingVectorDimensions({
+      scale,
+      position,
+      rotation,
+    });
 
   const meshRef = useRef<Mesh<BoxGeometry, MeshStandardMaterial>>(null);
 
@@ -49,6 +49,7 @@ const BuildingWithVines = ({
         ]}
         scale={vectorScale}
         position={vectorPosition}
+        rotation={vectorRotation}
         pulsate={pulsate}
         vinesAmount={vinesAmount}
         {...props}
@@ -59,6 +60,7 @@ const BuildingWithVines = ({
         ref={meshRef}
         scale={vectorScale}
         position={vectorPosition}
+        rotation={vectorRotation}
         textureProps={textureProps}
         {...props}
       />

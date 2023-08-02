@@ -1,12 +1,13 @@
 import gsap, { Power2 } from 'gsap';
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useMemo, useRef } from 'react';
 import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from 'three';
 
 import { MeshProps } from '@react-three/fiber';
 
-import { Triplet } from '../../../../utils/types';
-import BaseBuilding, { BUILDING_TEXTURE_HEIGHT, DEFAULT_BUILDING_HEIGHT } from './BaseBuilding';
-import { TextureProps } from './types';
+import { Triplet } from '../../../../../utils/types';
+import BaseBuilding, { BUILDING_TEXTURE_HEIGHT, DEFAULT_BUILDING_HEIGHT } from '../BaseBuilding';
+import { useRandomlyTimedEvent } from '../hooks';
+import { TextureProps } from '../types';
 
 export type BouncingBuildingProps = Pick<MeshProps, "rotation"> & {
   bounceSize?: number;
@@ -29,8 +30,6 @@ const BouncingBuilding = ({
   textureProps,
   ...props
 }: BouncingBuildingProps) => {
-  const [resize, setResize] = useState(1);
-
   const origVectorScale = useMemo(() => new Vector3(...scale), [scale]);
   const origVectorPosition = useMemo(
     () =>
@@ -70,21 +69,13 @@ const BouncingBuilding = ({
     [origVectorScale.y, position]
   );
 
-  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const resizeCallback = useCallback(() => {
+    if (meshRef.current && bounceSize) {
+      applyResize(meshRef.current, Math.random() * 2 * bounceSize);
+    }
+  }, [applyResize, bounceSize]);
 
-  useEffect(() => {
-    timeout.current && clearTimeout(timeout.current);
-
-    const nextEvent =
-      MS_DURATION + Math.random() * (MOVEMENT_FREQUNCY - MS_DURATION);
-
-    timeout.current = setTimeout(() => {
-      if (meshRef.current && bounceSize) {
-        applyResize(meshRef.current, resize * bounceSize);
-        setResize(Math.random() * 2);
-      }
-    }, nextEvent);
-  }, [resize, bounceSize, applyResize]);
+  useRandomlyTimedEvent(MOVEMENT_FREQUNCY, MS_DURATION, resizeCallback);
 
   return (
     <BaseBuilding

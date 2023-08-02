@@ -1,7 +1,8 @@
-import dynamic from 'next/dynamic';
-import Head from 'next/head';
+import dynamic from "next/dynamic";
+import Head from "next/head";
 
-import styles from '../../styles/Home.module.css';
+import SongProvider from "../../components/AfloatVid/components/SongProvider";
+import styles from "../../styles/Home.module.css";
 
 const AfloatContent = dynamic(
   () => import("../../components/AfloatVid/AfloatContent"),

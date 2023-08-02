@@ -1,15 +1,15 @@
 import React from 'react';
 
-import { OrbitControls, Stats } from '@react-three/drei';
+import { OrbitControls, Stage, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import BouncingBuilding, { BouncingBuildingProps } from './BouncingBuilding';
-import { useBuildingTextures } from './hooks';
+import { useBuildingTextures } from '../hooks';
+import BaseBuilding, { BaseBuildingProps } from './BaseBuilding';
 
 export default {
-  title: "City/BouncingBuilding",
-  component: BouncingBuilding,
+  title: "City/BaseBuilding",
+  component: BaseBuilding,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
@@ -19,22 +19,19 @@ export default {
       control: "radio",
       options: [1, 2, 3],
     },
-    bounceSize: {
-      control: { type: "range", min: 0, max: 5, step: 0.1 },
-    },
   },
-} as ComponentMeta<typeof BouncingBuilding>;
+} as ComponentMeta<typeof BaseBuilding>;
 
 const BuildingWrapper = ({
   texture,
   ...props
-}: Omit<BouncingBuildingProps, "textureProps" | "ref"> & {
+}: Omit<BaseBuildingProps, "textureProps" | "ref"> & {
   texture: 1 | 2 | 3;
 }) => {
   const textureProps = useBuildingTextures();
 
   return (
-    <BouncingBuilding
+    <BaseBuilding
       key={texture}
       textureProps={textureProps[texture - 1]}
       {...props}
@@ -42,24 +39,20 @@ const BuildingWrapper = ({
   );
 };
 
-const Template: ComponentStory<typeof BuildingWrapper> = ({
-  texture,
-  ...args
-}) => {
+const Template: ComponentStory<typeof BuildingWrapper> = (args) => {
   return (
     <Canvas
       camera={{
-        position: [80, 4, 5],
+        position: [30, 4, 5],
       }}
     >
       <Stats />
 
       <OrbitControls />
 
-      <ambientLight intensity={0.1} />
-      <directionalLight position={[10, 3, 5]} />
-
-      <BuildingWrapper texture={texture} {...args} />
+      <Stage preset="portrait" environment="night">
+        <BuildingWrapper {...args} />
+      </Stage>
     </Canvas>
   );
 };
@@ -68,6 +61,4 @@ export const Default = Template.bind({});
 
 Default.args = {
   texture: 1,
-  bounceSize: 3,
-  position: [0, -30, 0],
 };

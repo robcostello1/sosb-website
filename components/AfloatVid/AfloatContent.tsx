@@ -1,11 +1,24 @@
-import { memo, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-import { FirstPersonControls, PointerLockControls, Stats } from '@react-three/drei';
-import { Canvas, useFrame } from '@react-three/fiber';
+import {
+  FirstPersonControls,
+  PointerLockControls,
+  Stats,
+} from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 
-import Ocean from '../Terrain/Ocean';
-import { BobbingItem, City, FloatingStuff, Islands, Raft } from './components';
-import Sky from './components/Sky';
+import Ocean from "../Terrain/Ocean";
+import { BobbingItem, City, FloatingStuff, Islands, Raft } from "./components";
+import Sky from "./components/Sky";
+import { SongContext } from "./components/SongProvider";
+import SongProvider from "./components/SongProvider/SongProvider";
 
 const parts = {
   intro: 0,
@@ -22,35 +35,18 @@ const AfloatContent = () => {
   const [showFloatingStuff, setShowFloatingStuff] = useState(false);
   const [showIslands, setShowIslands] = useState(false);
   const [showCity, setShowCity] = useState(true);
-  const time = 3;
+  // TODO
+  // const time = 3;
 
-  const song = useRef<HTMLAudioElement>();
-  const analyserRef = useRef<AnalyserNode | null>(null);
+  const { songRef, analyserRef, handlePlay } = useContext(SongContext);
 
   const handleSetMoving = useCallback(() => {
-    !debug && song.current?.play();
+    handlePlay();
     setMoving(true);
-  }, []);
-
-  useEffect(() => {
-    song.current = new Audio();
-    song.current.src = "/sound/afloat-full.mp3";
-    const audioCtx = new window.AudioContext();
-    let audioSource = null;
-
-    audioSource = audioCtx.createMediaElementSource(song.current);
-    analyserRef.current = audioCtx.createAnalyser();
-    audioSource.connect(analyserRef.current);
-    analyserRef.current.connect(audioCtx.destination);
-    analyserRef.current.fftSize = 128;
-
-    return () => {
-      song.current?.pause();
-    };
-  }, []);
+  }, [handlePlay]);
 
   useFrame(() => {
-    const time = song.current?.currentTime || 0;
+    const time = songRef.current?.currentTime || 0;
 
     if (time > parts.break1) {
       setShowFloatingStuff(true);
@@ -101,7 +97,6 @@ const AfloatContent = () => {
           size={500}
           moving={moving}
           setMoving={handleSetMoving}
-          // debug={debug}
         />
       )}
 
@@ -135,7 +130,9 @@ const AfloatContent = () => {
 
 const AfloatContentWrapper = () => (
   <Canvas shadows gl={{ precision: "mediump" }}>
-    <AfloatContent />
+    <SongProvider>
+      <AfloatContent />
+    </SongProvider>
   </Canvas>
 );
 

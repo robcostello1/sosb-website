@@ -4,12 +4,12 @@ import { OrbitControls, Stage, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import BaseBuilding, { BaseBuildingProps } from './BaseBuilding';
-import { useBuildingTextures } from './hooks';
+import { useBuildingTextures } from '../hooks';
+import BouncingBuildings, { BouncingBuildingsProps } from './BouncingBuildings';
 
 export default {
-  title: "City/BaseBuilding",
-  component: BaseBuilding,
+  title: "City/BouncingBuildings",
+  component: BouncingBuildings,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
@@ -20,24 +20,21 @@ export default {
       options: [1, 2, 3],
     },
   },
-} as ComponentMeta<typeof BaseBuilding>;
+} as ComponentMeta<typeof BouncingBuildings>;
 
 const BuildingWrapper = ({
-  texture,
   ...props
-}: Omit<BaseBuildingProps, "textureProps" | "ref"> & {
-  texture: 1 | 2 | 3;
-}) => {
+}: Omit<BouncingBuildingsProps, "textureProps">) => {
   const textureProps = useBuildingTextures();
 
-  return <BaseBuilding textureProps={textureProps[texture - 1]} {...props} />;
+  return <BouncingBuildings textureProps={textureProps} {...props} />;
 };
 
 const Template: ComponentStory<typeof BuildingWrapper> = (args) => {
   return (
     <Canvas
       camera={{
-        position: [30, 4, 5],
+        position: [0, 4, 20],
       }}
     >
       <Stats />
@@ -54,5 +51,7 @@ const Template: ComponentStory<typeof BuildingWrapper> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  texture: 1,
+  size: 500,
+  numberOfBuildings: 120,
+  started: true,
 };
