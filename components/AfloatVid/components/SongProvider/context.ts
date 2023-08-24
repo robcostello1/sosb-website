@@ -8,7 +8,5 @@ export const SongContext = createContext<SongContextType>({
   barRef: { current: 0 },
   songRef: { current: null },
   analyserRef: { current: null },
-  handlePlay: function (): void {
-    throw new Error("Function not implemented.");
-  },
+  handlePlay: () => {},
 });

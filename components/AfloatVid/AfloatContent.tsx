@@ -19,26 +19,24 @@ import { BobbingItem, City, FloatingStuff, Islands, Raft } from "./components";
 import Sky from "./components/Sky";
 import { SongContext } from "./components/SongProvider";
 import SongProvider from "./components/SongProvider/SongProvider";
+import { PARTS } from "./consts";
 
+// TODO deprecate in favour of bars
 const parts = {
   intro: 0,
   verse1: 47.176,
   break1: 78.415,
   verse2: 109.634,
-  break2: 140.448,
+  hook: 140.448,
 };
-
-const debug = false;
 
 const AfloatContent = () => {
   const [moving, setMoving] = useState(false);
   const [showFloatingStuff, setShowFloatingStuff] = useState(false);
   const [showIslands, setShowIslands] = useState(false);
   const [showCity, setShowCity] = useState(true);
-  // TODO
-  // const time = 3;
 
-  const { songRef, analyserRef, handlePlay } = useContext(SongContext);
+  const { analyserRef, handlePlay, barRef } = useContext(SongContext);
 
   const handleSetMoving = useCallback(() => {
     handlePlay();
@@ -46,12 +44,11 @@ const AfloatContent = () => {
   }, [handlePlay]);
 
   useFrame(() => {
-    const time = songRef.current?.currentTime || 0;
-
-    if (time > parts.break1) {
+    if (barRef.current > PARTS.break) {
+      // TODO should make visible
       setShowFloatingStuff(true);
     }
-    if (time > parts.verse2) {
+    if (barRef.current > PARTS.verse2) {
       setShowFloatingStuff(false);
       setShowCity(false);
       setShowIslands(true);

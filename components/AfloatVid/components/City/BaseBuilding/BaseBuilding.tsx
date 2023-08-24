@@ -1,4 +1,5 @@
-import { forwardRef, memo, useMemo, useRef } from "react";
+import { forwardRef, memo, RefObject, useMemo, useRef } from "react";
+import { mergeRefs } from "react-merge-refs";
 import {
   BackSide,
   BoxGeometry,
@@ -13,15 +14,14 @@ import {
 import { MeshProps, useFrame } from "@react-three/fiber";
 
 import { TextureProps } from "../types";
+import { OnFrameFunc } from "./types";
 
 export type BaseBuildingProps = Pick<MeshProps, "position" | "rotation"> & {
+  lightRef?: RefObject<Mesh<BoxGeometry, MeshBasicMaterial>>;
   scale: Vector3;
   textureProps: TextureProps;
-  onFrame?: (props: {
-    elapsedTime: number;
-    lightMaterial: MeshBasicMaterial;
-    mesh: Mesh<BoxGeometry, MeshStandardMaterial>;
-  }) => void;
+  useLights?: boolean;
+  onFrame?: OnFrameFunc;
 };
 
 const WINDOW_HEIGHT = 3;
@@ -36,70 +36,92 @@ export const LIT_MESH_INSET = 0.1;
 const BaseBuilding = forwardRef<
   Mesh<BoxGeometry, MeshStandardMaterial>,
   BaseBuildingProps
->(({ textureProps, scale = DEFAULT_SCALE, onFrame, ...props }, ref) => {
-  const clonedTextures = useMemo(() => {
-    return Object.entries(textureProps).reduce<TextureProps>(
-      (acc, [key, texture]) => {
-        const clonedTexture = texture.clone();
+>(
+  (
+    {
+      lightRef,
+      scale = DEFAULT_SCALE,
+      textureProps,
+      useLights,
+      onFrame,
+      ...props
+    },
+    ref
+  ) => {
+    const clonedTextures = useMemo(() => {
+      return Object.entries(textureProps).reduce<TextureProps>(
+        (acc, [key, texture]) => {
+          const clonedTexture = texture.clone();
 
-        clonedTexture.repeat.x =
-          (DEFAULT_BUILDING_WIDTH * scale.x) / BUILDING_TEXTURE_WIDTH;
-        clonedTexture.repeat.y =
-          (DEFAULT_BUILDING_HEIGHT * scale.y) / BUILDING_TEXTURE_HEIGHT;
-        // TODO needs to be expressly set here
-        clonedTexture.wrapS = RepeatWrapping;
-        clonedTexture.wrapT = RepeatWrapping;
+          clonedTexture.repeat.x =
+            (DEFAULT_BUILDING_WIDTH * scale.x) / BUILDING_TEXTURE_WIDTH;
+          clonedTexture.repeat.y =
+            (DEFAULT_BUILDING_HEIGHT * scale.y) / BUILDING_TEXTURE_HEIGHT;
+          // TODO needs to be expressly set here
+          clonedTexture.wrapS = RepeatWrapping;
+          clonedTexture.wrapT = RepeatWrapping;
 
-        acc[key as keyof TextureProps] = clonedTexture;
-        return acc;
-      },
-      {} as TextureProps
+          acc[key as keyof TextureProps] = clonedTexture;
+          return acc;
+        },
+        {} as TextureProps
+      );
+    }, [textureProps, scale]);
+
+    const localLightRef = useRef<Mesh<BoxGeometry, MeshBasicMaterial>>(null);
+
+    useFrame(({ clock: { elapsedTime } }) => {
+      if (
+        localLightRef.current &&
+        // TODO requires outside ref. Merge refs?
+        // @ts-expect-error // TODO typing
+        ref?.current
+      ) {
+        onFrame?.({
+          elapsedTime,
+          light: localLightRef.current,
+          // @ts-expect-error // TODO
+          mesh: ref.current,
+        });
+      }
+    });
+
+    return (
+      <>
+        {useLights ? (
+          <mesh
+            scale={scale}
+            ref={
+              lightRef ? mergeRefs([lightRef, localLightRef]) : localLightRef
+            }
+            {...props}
+          >
+            <boxGeometry
+              args={[
+                DEFAULT_BUILDING_WIDTH - LIT_MESH_INSET,
+                DEFAULT_BUILDING_HEIGHT - LIT_MESH_INSET,
+                DEFAULT_BUILDING_WIDTH - LIT_MESH_INSET,
+              ]}
+            />
+            <meshBasicMaterial color={0x000000} side={BackSide} />
+          </mesh>
+        ) : null}
+        <mesh scale={scale} {...props} ref={ref}>
+          <boxGeometry
+            args={[
+              DEFAULT_BUILDING_WIDTH,
+              DEFAULT_BUILDING_HEIGHT,
+              DEFAULT_BUILDING_WIDTH,
+            ]}
+          />
+          <meshStandardMaterial
+            normalScale={NORMAL_SCALE}
+            {...clonedTextures}
+          />
+        </mesh>
+      </>
     );
-  }, [textureProps, scale]);
-
-  const lightRef = useRef<MeshBasicMaterial>(null);
-
-  useFrame(({ clock: { elapsedTime } }) => {
-    if (
-      lightRef.current &&
-      // TODO requires outside ref. Merge refs?
-      // @ts-expect-error // TODO typing
-      ref?.current
-    ) {
-      onFrame?.({
-        elapsedTime,
-        lightMaterial: lightRef.current,
-        // @ts-expect-error // TODO
-        mesh: ref.current,
-      });
-    }
-  });
-
-  return (
-    <group scale={scale} {...props}>
-      <mesh>
-        <boxGeometry
-          args={[
-            DEFAULT_BUILDING_WIDTH - LIT_MESH_INSET,
-            DEFAULT_BUILDING_HEIGHT - LIT_MESH_INSET,
-            DEFAULT_BUILDING_WIDTH - LIT_MESH_INSET,
-          ]}
-        />
-        <meshBasicMaterial ref={lightRef} color={0x000000} side={BackSide} />
-      </mesh>
-
-      <mesh ref={ref}>
-        <boxGeometry
-          args={[
-            DEFAULT_BUILDING_WIDTH,
-            DEFAULT_BUILDING_HEIGHT,
-            DEFAULT_BUILDING_WIDTH,
-          ]}
-        />
-        <meshStandardMaterial normalScale={NORMAL_SCALE} {...clonedTextures} />
-      </mesh>
-    </group>
-  );
-});
+  }
+);
 
 export default memo(BaseBuilding);
