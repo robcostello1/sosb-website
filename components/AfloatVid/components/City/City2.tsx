@@ -15,42 +15,12 @@ import VineBuildingGroup from "./VineBuildingGroup";
 
 const START_POSITION_Z = 0.3;
 
-const DebugBuildings = ({ textureProps }: { textureProps: TextureProps[] }) => (
-  <>
-    <BuildingWithVines
-      scale={[1, 2.5, 1]}
-      position={[-50, 0, -200]}
-      textureProps={textureProps[0]}
-      vinesAmount={1}
-    />
-    <BuildingWithVines
-      scale={[1, 0.5, 1]}
-      position={[25, 0, -20]}
-      textureProps={textureProps[2]}
-      vinesAmount={1}
-      pulsate={0.2}
-    />
-    <BuildingWithVines
-      scale={[1, 0.5, 1]}
-      position={[25, 0, 20]}
-      textureProps={textureProps[2]}
-      vinesAmount={0.1}
-    />
-    <Building2
-      scale={[1, 1, 1]}
-      position={[15, 0, -50]}
-      textureProps={textureProps[1]}
-      bounceSize={1}
-    />
-  </>
-);
-
 type City2Props = {
   moving: boolean;
   sinkStart: number;
   duration: number;
   size: number;
-
+  visible: boolean;
   setMoving: (moving: boolean) => void;
 };
 
@@ -59,6 +29,7 @@ const City2 = ({
   size,
   sinkStart,
   moving,
+  visible,
   setMoving,
 }: City2Props) => {
   const groupRef = useRef<Group>(null);
@@ -106,7 +77,11 @@ const City2 = ({
   }, []);
 
   return (
-    <group position={[0, 0, -size * START_POSITION_Z]} ref={groupRef}>
+    <group
+      position={[0, 0, -size * START_POSITION_Z]}
+      ref={groupRef}
+      visible={visible}
+    >
       <Garage
         position={[0, 0, size * START_POSITION_Z]}
         doorDisabled={moving}

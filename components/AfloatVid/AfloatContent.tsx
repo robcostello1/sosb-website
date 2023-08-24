@@ -17,6 +17,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import Ocean from "../Terrain/Ocean";
 import { BobbingItem, City, FloatingStuff, Islands, Raft } from "./components";
 import Sky from "./components/Sky";
+import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
 import { SongContext } from "./components/SongProvider";
 import SongProvider from "./components/SongProvider/SongProvider";
 import { PARTS } from "./consts";
@@ -35,8 +36,9 @@ const AfloatContent = () => {
   const [showFloatingStuff, setShowFloatingStuff] = useState(false);
   const [showIslands, setShowIslands] = useState(false);
   const [showCity, setShowCity] = useState(true);
+  const [showSkyStreaks, setShowSkyStreaks] = useState(false);
 
-  const { analyserRef, handlePlay, barRef } = useContext(SongContext);
+  const { handlePlay, barRef } = useContext(SongContext);
 
   const handleSetMoving = useCallback(() => {
     handlePlay();
@@ -45,12 +47,19 @@ const AfloatContent = () => {
 
   useFrame(() => {
     if (barRef.current > PARTS.break) {
-      // TODO should make visible
-      setShowFloatingStuff(true);
+      setShowSkyStreaks(true);
     }
     if (barRef.current > PARTS.verse2) {
-      setShowFloatingStuff(false);
+      setShowFloatingStuff(true);
       setShowCity(false);
+    }
+    if (barRef.current > PARTS.hook) {
+      setShowFloatingStuff(true);
+      setShowCity(false);
+      setShowSkyStreaks(false);
+    }
+    if (barRef.current > PARTS.chorus) {
+      setShowFloatingStuff(false);
       setShowIslands(true);
     }
   });
@@ -87,34 +96,31 @@ const AfloatContent = () => {
         visible={showFloatingStuff}
       />
 
-      {showCity && (
-        <City
-          duration={parts.verse2}
-          sinkStart={parts.break1 - 20}
-          size={500}
-          moving={moving}
-          setMoving={handleSetMoving}
-        />
-      )}
+      <SkyStreaks visible={showSkyStreaks} numStreaks={20} />
+
+      <City
+        visible={showCity}
+        duration={parts.verse2}
+        sinkStart={parts.break1 - 20}
+        size={500}
+        moving={moving}
+        setMoving={handleSetMoving}
+      />
 
       <Stats />
 
-      {showIslands && (
-        <>
-          <Islands
-            scale={200}
-            position={[-105, -3, 0]}
-            bounce={0.6}
-            analyserRef={analyserRef}
-          />
-          <Islands
-            scale={200}
-            position={[105, -3, 0]}
-            bounce={0.6}
-            analyserRef={analyserRef}
-          />
-        </>
-      )}
+      <Islands
+        visible={showIslands}
+        scale={200}
+        position={[-105, -3, 0]}
+        bounce={0.6}
+      />
+      <Islands
+        visible={showIslands}
+        scale={200}
+        position={[105, -3, 0]}
+        bounce={0.6}
+      />
 
       {/* <BuildingGlitch /> */}
 

@@ -1,14 +1,14 @@
-import React from 'react';
+import React from "react";
 
-import { OrbitControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { OrbitControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Ocean from '../../../Terrain/Ocean';
-import FloatingStuff from './FloatingStuff';
+import Ocean from "../../../Terrain/Ocean";
+import FloatingStuff from "./FloatingStuff";
 
 export default {
-  title: "FloatingStuff",
+  title: "Sea/FloatingStuff",
   component: FloatingStuff,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout

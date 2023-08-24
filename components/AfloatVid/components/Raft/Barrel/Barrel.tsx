@@ -1,9 +1,9 @@
-import { MeshProps, useLoader } from "@react-three/fiber";
-import { memo } from "react";
-import { Mesh } from "three";
-
+import { memo, useMemo } from "react";
+import { BufferGeometry, FrontSide, Mesh, MeshStandardMaterial } from "three";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+
+import { InstancedMeshProps, MeshProps, useLoader } from "@react-three/fiber";
 
 const SCALE = 0.2;
 
@@ -19,16 +19,17 @@ const Barrel = (props: Pick<MeshProps, "position" | "rotation">) => {
     }
   );
 
+  const barrelArgs = useMemo<InstancedMeshProps["args"]>(() => {
+    const mesh = barrelModel.scene.children[0] as Mesh<
+      BufferGeometry,
+      MeshStandardMaterial
+    >;
+    mesh.material.side = FrontSide;
+    return [mesh.geometry, mesh.material, 6];
+  }, [barrelModel.scene.children]);
+
   return (
-    <instancedMesh
-      scale={[SCALE, SCALE, SCALE]}
-      args={[
-        (barrelModel.scene.children[0] as Mesh).geometry,
-        (barrelModel.scene.children[0] as Mesh).material,
-        6,
-      ]}
-      {...props}
-    />
+    <instancedMesh scale={[SCALE, SCALE, SCALE]} args={barrelArgs} {...props} />
   );
 };
 

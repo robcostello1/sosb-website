@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import { Fragment, memo, Suspense, useCallback, useState } from "react";
-// import { UnrealBloomPass } from "three-stdlib";
+import { UnrealBloomPass } from "three-stdlib";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 
 import { Effects, PerspectiveCamera } from "@react-three/drei";
@@ -17,7 +17,7 @@ import { SFXProps, SoundConfig } from "./SFX";
 import Socials from "./Socials/Socials";
 import SOSB from "./SOSB";
 
-// extend({ UnrealBloomPass });
+extend({ UnrealBloomPass });
 
 const Sounds = dynamic(() => import("./Sounds"), {
   ssr: false,

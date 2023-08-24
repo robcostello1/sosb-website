@@ -1,7 +1,5 @@
-// @ts-ignore
-import testVertexShader from "../shaders/test/vertex.glsl";
-// @ts-ignore
-import testFragmentShader from "../shaders/test/fragment.glsl";
+import gsap from "gsap";
+import { MutableRefObject, useContext, useRef } from "react";
 import {
   DoubleSide,
   Mesh,
@@ -10,27 +8,35 @@ import {
   Uniform,
   Vector3,
 } from "three";
-import { useFrame } from "@react-three/fiber";
-import { MutableRefObject, useRef } from "react";
-import { Triplet } from "../../../utils/types";
-import gsap from "gsap";
 
-const Islands = ({
-  analyserRef,
-  scale,
-  position,
-  bounce,
-}: {
-  analyserRef: MutableRefObject<AnalyserNode | null>;
+import { useFrame } from "@react-three/fiber";
+
+import { Triplet } from "../../../../utils/types";
+// @ts-ignore
+import testFragmentShader from "../../shaders/test/fragment.glsl";
+// @ts-ignore
+import testVertexShader from "../../shaders/test/vertex.glsl";
+import { SongContext } from "../SongProvider";
+
+type IslandsProps = {
   scale: number;
   position: Triplet;
   bounce: number;
-}) => {
+  visible: boolean;
+};
+
+const Islands = ({
+  scale = 200,
+  position = [0, -1, 0],
+  visible,
+  bounce,
+}: IslandsProps) => {
   const time = useRef(0);
+  const { analyserRef } = useContext(SongContext);
   const meshRef = useRef<Mesh<PlaneGeometry, RawShaderMaterial>>(null);
   const uniformsRef = useRef({
     uSize: { value: 6 },
-    uAmplitude: { value: 1 },
+    uAmplitude: { value: 0.6 },
     uSpeed: { value: 0.04 },
     uPosition: new Uniform(new Vector3(...position)),
     uTime: { value: 0 },
@@ -39,12 +45,20 @@ const Islands = ({
   });
 
   useFrame((_, delta) => {
-    if (meshRef.current) {
+    if (!visible) {
+      time.current = 0;
+    }
+    if (visible && meshRef.current) {
       // Move the time
       time.current += delta;
       meshRef.current.material.uniforms.uTime.value = time.current;
 
       if (analyserRef.current && bounce) {
+        // TODO
+        const finalBounce = bounce;
+        // const finalBounce = (Math.sin(time.current) + 1) * bounce;
+        console.log(finalBounce);
+
         const bufferLength = analyserRef.current.frequencyBinCount;
         const dataArray = new Float32Array(bufferLength);
 
@@ -60,16 +74,20 @@ const Islands = ({
 
         gsap.to(meshRef.current.material.uniforms.uAmplitude, {
           duration: 0.4,
-          value: 0.8 + (Math.sqrt(sumSquares1 / dataArray.length) / 3) * bounce,
+          value:
+            0.8 + (Math.sqrt(sumSquares1 / dataArray.length) / 3) * finalBounce,
         });
         gsap.to(meshRef.current.material.uniforms.uSize, {
           duration: 3,
-          value: 3 + Math.sqrt((sumSquares2 / dataArray.length) * 200) * bounce,
+          value:
+            3 + Math.sqrt((sumSquares2 / dataArray.length) * 200) * finalBounce,
         });
         gsap.to(meshRef.current.material.uniforms.uBulge, {
           duration: 3,
           value:
-            0.005 * Math.sqrt((sumSquares2 / dataArray.length) * 10) * bounce,
+            0.005 *
+            Math.sqrt((sumSquares2 / dataArray.length) * 10) *
+            finalBounce,
         });
       }
     }
@@ -77,6 +95,7 @@ const Islands = ({
 
   return (
     <mesh
+      visible={visible}
       ref={meshRef}
       rotation={[-Math.PI / 2, 0, 0]}
       position={position}

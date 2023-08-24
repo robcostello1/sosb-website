@@ -1,4 +1,4 @@
-import { Color } from 'three';
+import { Color } from "three";
 
 export const getDayNight = (time: number) => {
   const angle = ((time / 24) % 1) * Math.PI;
