@@ -1,12 +1,13 @@
+import { memo, useEffect, useRef } from "react";
+
 import { Environment, Sky as DreiSky } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { memo, useEffect, useRef, useState } from "react";
-import { getDayNight } from "../../../../utils/utils";
+
 import Galaxy from "./Galaxy";
 
-export type SkyProps = { overrideTime: number; timeSpeedMultiplier: number };
+export type SkyProps = { overrideTime?: number; timeSpeedMultiplier?: number };
 
-const Sky = ({ overrideTime, timeSpeedMultiplier }: SkyProps) => {
+const Sky = ({ overrideTime = 0, timeSpeedMultiplier = 1 }: SkyProps) => {
   const timeRef = useRef(0);
 
   useEffect(() => {

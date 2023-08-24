@@ -50,6 +50,7 @@
     "jest-environment-jsdom": "^29.5.0",
     "lodash": "^4.17.21",
     "react-three-gui": "^0.4.2",
+    "storybook-dark-mode": "^3.0.1",
     "web-audio-daw": "^4.13.1"
   }
 }

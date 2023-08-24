@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import { OrbitControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { OrbitControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Ocean from '../../../Terrain/Ocean';
-import Raft from '../Raft';
-import BobbingItem from './BobbingItem';
+import Ocean from "../../../Terrain/Ocean";
+import Raft from "../Raft";
+import BobbingItem from "./BobbingItem";
 
 export default {
-  title: "City/BobbingItem",
+  title: "Sea/BobbingItem",
   component: BobbingItem,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
