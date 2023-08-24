@@ -1,18 +1,17 @@
-import gsap, { Linear, Power1, Power2, Sine } from 'gsap';
-import { memo, Suspense, useCallback, useEffect, useRef, useState } from 'react';
-import { Group, MirroredRepeatWrapping, RepeatWrapping, Texture } from 'three';
+import gsap, { Linear, Power1, Power2 } from "gsap";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { Group } from "three";
 
-import { useTexture } from '@react-three/drei';
-
-import Garage from '../Garage/Garage';
-import Building2 from './BouncingBuilding';
-import BouncingBuildings from './BouncingBuildings';
-import BuildingWithVines from './BuildingWithVines';
-import { useBuildingTextures } from './hooks';
-import { ScreenWithVines } from './Screen';
-import { TextureProps } from './types';
-import { applyBuildingWrap } from './utils';
-import VineBuildingGroup from './VineBuildingGroup';
+import { PARTS } from "../../consts";
+import Garage from "../Garage/Garage";
+import Building2 from "./BouncingBuilding";
+import BouncingBuildings from "./BouncingBuildings/BouncingBuildings";
+import BuildingWithVines from "./BuildingWithVines";
+import { useBuildingTextures } from "./hooks";
+import LitBuildings from "./LitBuildings/LitBuildings";
+import { ScreenWithVines } from "./Screen";
+import { TextureProps } from "./types";
+import VineBuildingGroup from "./VineBuildingGroup";
 
 const START_POSITION_Z = 0.3;
 
@@ -51,12 +50,11 @@ type City2Props = {
   sinkStart: number;
   duration: number;
   size: number;
-  debug?: boolean;
+
   setMoving: (moving: boolean) => void;
 };
 
 const City2 = ({
-  debug,
   duration,
   size,
   sinkStart,
@@ -76,7 +74,7 @@ const City2 = ({
   }, [moving]);
 
   useEffect(() => {
-    if (groupRef.current && !debug && startedMoving) {
+    if (groupRef.current && startedMoving) {
       const tl = gsap.timeline();
 
       tl.to(groupRef.current.position, {
@@ -97,7 +95,7 @@ const City2 = ({
         y: -300,
       });
     }
-  }, [debug, duration, sinkStart, size, startedMoving]);
+  }, [duration, sinkStart, size, startedMoving]);
 
   const handleSetMoving = useCallback(() => {
     setMoving(true);
@@ -108,10 +106,7 @@ const City2 = ({
   }, []);
 
   return (
-    <group
-      position={!debug ? [0, 0, -size * START_POSITION_Z] : undefined}
-      ref={groupRef}
-    >
+    <group position={[0, 0, -size * START_POSITION_Z]} ref={groupRef}>
       <Garage
         position={[0, 0, size * START_POSITION_Z]}
         doorDisabled={moving}
@@ -131,20 +126,19 @@ const City2 = ({
             videoOffset={[0.2, 0.4]}
           />
 
-          {!debug ? (
-            <BouncingBuildings
-              textureProps={textureProps}
-              size={size}
-              started={startedMoving}
-            />
-          ) : (
-            <DebugBuildings textureProps={textureProps} />
-          )}
-          <VineBuildingGroup
-            debug={debug}
+          <BouncingBuildings
             textureProps={textureProps}
             size={size}
+            started={startedMoving}
+            barNumToShowLights={PARTS.verse}
+            numberOfBuildings={80}
           />
+          <LitBuildings
+            textureProps={textureProps}
+            size={size}
+            numberOfBuildings={40}
+          />
+          <VineBuildingGroup textureProps={textureProps} size={size} />
         </>
       )}
     </group>

@@ -3,6 +3,7 @@ import { Color } from 'three';
 
 import { ContactShadows } from '@react-three/drei';
 
+import { getRandomColor } from '../../utils/utils';
 import BuildingStory from './BuildingStory';
 
 type WarehouseProps = {
@@ -19,9 +20,7 @@ const Warehouse = ({ active, onClick }: WarehouseProps) => {
   useEffect(() => {
     clearInterval(interval.current);
     interval.current = setInterval(() => {
-      setWindowMaterialColor(
-        new Color(Math.random(), Math.random(), Math.random())
-      );
+      setWindowMaterialColor(getRandomColor());
     }, 500);
     return () => {
       clearInterval(interval.current);

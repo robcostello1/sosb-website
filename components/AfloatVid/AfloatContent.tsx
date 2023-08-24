@@ -1,61 +1,54 @@
-import { memo, Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  Suspense,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-import { FirstPersonControls, PointerLockControls, Stats } from '@react-three/drei';
-import { Canvas, useFrame } from '@react-three/fiber';
+import {
+  FirstPersonControls,
+  PointerLockControls,
+  Stats,
+} from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 
-import Ocean from '../Terrain/Ocean';
-import { BobbingItem, City, FloatingStuff, Islands, Raft } from './components';
-import Sky from './components/Sky';
+import Ocean from "../Terrain/Ocean";
+import { BobbingItem, City, FloatingStuff, Islands, Raft } from "./components";
+import Sky from "./components/Sky";
+import { SongContext } from "./components/SongProvider";
+import SongProvider from "./components/SongProvider/SongProvider";
+import { PARTS } from "./consts";
 
+// TODO deprecate in favour of bars
 const parts = {
   intro: 0,
   verse1: 47.176,
   break1: 78.415,
   verse2: 109.634,
-  break2: 140.448,
+  hook: 140.448,
 };
-
-const debug = false;
 
 const AfloatContent = () => {
   const [moving, setMoving] = useState(false);
   const [showFloatingStuff, setShowFloatingStuff] = useState(false);
   const [showIslands, setShowIslands] = useState(false);
   const [showCity, setShowCity] = useState(true);
-  const time = 3;
 
-  const song = useRef<HTMLAudioElement>();
-  const analyserRef = useRef<AnalyserNode | null>(null);
+  const { analyserRef, handlePlay, barRef } = useContext(SongContext);
 
   const handleSetMoving = useCallback(() => {
-    !debug && song.current?.play();
+    handlePlay();
     setMoving(true);
-  }, []);
-
-  useEffect(() => {
-    song.current = new Audio();
-    song.current.src = "/sound/afloat-full.mp3";
-    const audioCtx = new window.AudioContext();
-    let audioSource = null;
-
-    audioSource = audioCtx.createMediaElementSource(song.current);
-    analyserRef.current = audioCtx.createAnalyser();
-    audioSource.connect(analyserRef.current);
-    analyserRef.current.connect(audioCtx.destination);
-    analyserRef.current.fftSize = 128;
-
-    return () => {
-      song.current?.pause();
-    };
-  }, []);
+  }, [handlePlay]);
 
   useFrame(() => {
-    const time = song.current?.currentTime || 0;
-
-    if (time > parts.break1) {
+    if (barRef.current > PARTS.break) {
+      // TODO should make visible
       setShowFloatingStuff(true);
     }
-    if (time > parts.verse2) {
+    if (barRef.current > PARTS.verse2) {
       setShowFloatingStuff(false);
       setShowCity(false);
       setShowIslands(true);
@@ -101,7 +94,6 @@ const AfloatContent = () => {
           size={500}
           moving={moving}
           setMoving={handleSetMoving}
-          // debug={debug}
         />
       )}
 
@@ -135,7 +127,9 @@ const AfloatContent = () => {
 
 const AfloatContentWrapper = () => (
   <Canvas shadows gl={{ precision: "mediump" }}>
-    <AfloatContent />
+    <SongProvider>
+      <AfloatContent />
+    </SongProvider>
   </Canvas>
 );
 

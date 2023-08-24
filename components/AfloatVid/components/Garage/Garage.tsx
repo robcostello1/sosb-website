@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BoxGeometry, Mesh, MeshStandardMaterial, Object3D, Texture, Vector2 } from 'three';
 
 import { useTexture } from '@react-three/drei';
@@ -33,12 +33,12 @@ const Garage = ({
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<Mesh>(null);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = useCallback(() => {
     if (!doorDisabled) {
       setOpen((currentOpen) => !currentOpen);
       onClickOpen();
     }
-  };
+  }, [doorDisabled, onClickOpen]);
 
   const [wallsLoaded, setWallsLoaded] = useState(false);
   const textureProps = useTexture(
@@ -89,7 +89,7 @@ const Garage = ({
       handleClickOpen();
       return true;
     };
-  });
+  }, [handleClickOpen]);
 
   useEffect(() => {
     if (doorRef.current) {
