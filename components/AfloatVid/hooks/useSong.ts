@@ -1,3 +1,4 @@
+import { on } from "events";
 import { MutableRefObject, useCallback, useEffect, useRef } from "react";
 
 import { useFrame } from "@react-three/fiber";

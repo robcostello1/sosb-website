@@ -1,7 +1,7 @@
-import { MirroredRepeatWrapping, RepeatWrapping, Texture } from 'three';
+import { MirroredRepeatWrapping, RepeatWrapping, Texture } from "three";
 
-import { Triplet } from '../../../../utils/types';
-import { TextureProps } from './types';
+import { Triplet } from "../../../../utils/types";
+import { TextureProps } from "./types";
 
 export const getBuildingAttributes = (size: number, index: number) => {
   const isEven = index % 2 === 0;
@@ -76,13 +76,14 @@ export const getBuildingGroupParams = ({
     const z = Math.random() * size - size / 2;
     const scale = getRandomBuildingScale(x, z, buildingHeightFactor);
     const position: Triplet = [x, 0, -z];
+    const textureId = Math.floor(Math.random() * textureProps.length);
 
     buildingArray.push({
       key: `${index}-1`,
       scale,
       position,
-      textureProps:
-        textureProps[Math.floor(Math.random() * textureProps.length)],
+      textureProps: textureProps[textureId],
+      textureId,
     });
   }
 

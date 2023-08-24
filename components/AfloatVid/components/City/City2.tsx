@@ -1,16 +1,17 @@
-import gsap, { Linear, Power1, Power2 } from 'gsap';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { Group } from 'three';
+import gsap, { Linear, Power1, Power2 } from "gsap";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { Group } from "three";
 
-import Garage from '../Garage/Garage';
-import Building2 from './BouncingBuilding';
-import BouncingBuildings from './BouncingBuildings/BouncingBuildings';
-import BuildingWithVines from './BuildingWithVines';
-import { useBuildingTextures } from './hooks';
-import LitBuildings from './LitBuildings/LitBuildings';
-import { ScreenWithVines } from './Screen';
-import { TextureProps } from './types';
-import VineBuildingGroup from './VineBuildingGroup';
+import { PARTS } from "../../consts";
+import Garage from "../Garage/Garage";
+import Building2 from "./BouncingBuilding";
+import BouncingBuildings from "./BouncingBuildings/BouncingBuildings";
+import BuildingWithVines from "./BuildingWithVines";
+import { useBuildingTextures } from "./hooks";
+import LitBuildings from "./LitBuildings/LitBuildings";
+import { ScreenWithVines } from "./Screen";
+import { TextureProps } from "./types";
+import VineBuildingGroup from "./VineBuildingGroup";
 
 const START_POSITION_Z = 0.3;
 
@@ -129,6 +130,7 @@ const City2 = ({
             textureProps={textureProps}
             size={size}
             started={startedMoving}
+            barNumToShowLights={PARTS.verse}
             numberOfBuildings={80}
           />
           <LitBuildings

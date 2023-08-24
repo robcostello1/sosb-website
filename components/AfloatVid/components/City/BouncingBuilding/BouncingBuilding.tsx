@@ -1,19 +1,30 @@
-import gsap, { Power2 } from 'gsap';
-import { memo, useCallback, useMemo, useRef } from 'react';
-import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from 'three';
+import gsap, { Power2 } from "gsap";
+import { memo, useCallback, useMemo, useRef } from "react";
+import {
+  BoxGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+  Vector3,
+} from "three";
 
-import { MeshProps } from '@react-three/fiber';
+import { MeshProps } from "@react-three/fiber";
 
-import { Triplet } from '../../../../../utils/types';
-import BaseBuilding, { BUILDING_TEXTURE_HEIGHT, DEFAULT_BUILDING_HEIGHT } from '../BaseBuilding';
-import { useRandomlyTimedEvent } from '../hooks';
-import { TextureProps } from '../types';
+import { Triplet } from "../../../../../utils/types";
+import BaseBuilding, {
+  BaseBuildingProps,
+  BUILDING_TEXTURE_HEIGHT,
+  DEFAULT_BUILDING_HEIGHT,
+} from "../BaseBuilding";
+import { useBuildingVectorDimensions, useRandomlyTimedEvent } from "../hooks";
+import { TextureProps } from "../types";
 
-export type BouncingBuildingProps = Pick<MeshProps, "rotation"> & {
+export type BouncingBuildingProps = Omit<BaseBuildingProps, "scale"> & {
   bounceSize?: number;
   scale?: Triplet;
   position?: Triplet;
   textureProps: TextureProps;
+  onFrame?: BaseBuildingProps["onFrame"];
 };
 
 const EASE = Power2.easeInOut;
@@ -30,21 +41,20 @@ const BouncingBuilding = ({
   textureProps,
   ...props
 }: BouncingBuildingProps) => {
-  const origVectorScale = useMemo(() => new Vector3(...scale), [scale]);
-  const origVectorPosition = useMemo(
-    () =>
-      new Vector3(
-        position[0],
-        position[1] + (DEFAULT_BUILDING_HEIGHT * origVectorScale.y) / 2,
-        position[2]
-      ),
-    [position, origVectorScale.y]
-  );
+  const { vectorScale: origVectorScale, vectorPosition: origVectorPosition } =
+    useBuildingVectorDimensions({
+      scale,
+      position,
+    });
 
+  const lightRef = useRef<Mesh<BoxGeometry, MeshBasicMaterial>>(null);
   const meshRef = useRef<Mesh<BoxGeometry, MeshStandardMaterial>>(null);
 
   const applyResize = useCallback(
-    (mesh: Mesh<BoxGeometry, MeshStandardMaterial>, size: number) => {
+    (
+      mesh: Mesh<BoxGeometry, MeshStandardMaterial | MeshBasicMaterial>,
+      size: number
+    ) => {
       const targetSize = origVectorScale.y + origVectorScale.y * size;
 
       gsap.to(mesh.scale, {
@@ -70,8 +80,10 @@ const BouncingBuilding = ({
   );
 
   const resizeCallback = useCallback(() => {
-    if (meshRef.current && bounceSize) {
-      applyResize(meshRef.current, Math.random() * 2 * bounceSize);
+    if (meshRef.current && lightRef.current && bounceSize) {
+      const targetSize = Math.random() * 2 * bounceSize;
+      applyResize(meshRef.current, targetSize);
+      applyResize(lightRef.current, targetSize);
     }
   }, [applyResize, bounceSize]);
 
@@ -80,6 +92,7 @@ const BouncingBuilding = ({
   return (
     <BaseBuilding
       ref={meshRef}
+      lightRef={lightRef}
       textureProps={textureProps}
       scale={origVectorScale}
       position={origVectorPosition}

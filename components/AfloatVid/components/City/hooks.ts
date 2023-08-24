@@ -91,7 +91,7 @@ export const useBuildingGroupParams = ({
       size,
       numberOfBuildings,
       buildingHeightFactor,
-      textureProps: [textureProps[0]],
+      textureProps,
     });
 
     return params;
