@@ -1,5 +1,6 @@
 import gsap from "gsap";
-import { MutableRefObject, useContext, useRef } from "react";
+import { get } from "lodash";
+import { useContext, useRef, useState } from "react";
 import {
   DoubleSide,
   Mesh,
@@ -25,6 +26,10 @@ type IslandsProps = {
   visible: boolean;
 };
 
+const getPosition = (position: Triplet, visible: boolean): Triplet => {
+  return visible ? position : [position[0], position[1] - 35, position[2]];
+};
+
 const Islands = ({
   scale = 200,
   position = [0, -1, 0],
@@ -34,10 +39,13 @@ const Islands = ({
   const time = useRef(0);
   const { analyserRef } = useContext(SongContext);
   const meshRef = useRef<Mesh<PlaneGeometry, RawShaderMaterial>>(null);
+
+  const [finalPosition] = useState(() => getPosition(position, visible));
+
   const uniformsRef = useRef({
     uSize: { value: 6 },
     uAmplitude: { value: 0.6 },
-    uSpeed: { value: 0.04 },
+    uSpeed: { value: 0.06 },
     uPosition: new Uniform(new Vector3(...position)),
     uTime: { value: 0 },
     uBulge: { value: 0.001 },
@@ -45,20 +53,17 @@ const Islands = ({
   });
 
   useFrame((_, delta) => {
-    if (!visible) {
-      time.current = 0;
-    }
     if (visible && meshRef.current) {
       // Move the time
       time.current += delta;
       meshRef.current.material.uniforms.uTime.value = time.current;
 
-      if (analyserRef.current && bounce) {
-        // TODO
-        const finalBounce = bounce;
-        // const finalBounce = (Math.sin(time.current) + 1) * bounce;
-        console.log(finalBounce);
+      gsap.to(meshRef.current.position, {
+        duration: (32 * 120) / 123,
+        y: getPosition(position, visible)[1],
+      });
 
+      if (analyserRef.current && bounce) {
         const bufferLength = analyserRef.current.frequencyBinCount;
         const dataArray = new Float32Array(bufferLength);
 
@@ -74,20 +79,16 @@ const Islands = ({
 
         gsap.to(meshRef.current.material.uniforms.uAmplitude, {
           duration: 0.4,
-          value:
-            0.8 + (Math.sqrt(sumSquares1 / dataArray.length) / 3) * finalBounce,
+          value: 0.8 + (Math.sqrt(sumSquares1 / dataArray.length) / 3) * bounce,
         });
         gsap.to(meshRef.current.material.uniforms.uSize, {
           duration: 3,
-          value:
-            3 + Math.sqrt((sumSquares2 / dataArray.length) * 200) * finalBounce,
+          value: 3 + Math.sqrt((sumSquares2 / dataArray.length) * 200) * bounce,
         });
         gsap.to(meshRef.current.material.uniforms.uBulge, {
           duration: 3,
           value:
-            0.005 *
-            Math.sqrt((sumSquares2 / dataArray.length) * 10) *
-            finalBounce,
+            0.005 * Math.sqrt((sumSquares2 / dataArray.length) * 10) * bounce,
         });
       }
     }
@@ -98,7 +99,7 @@ const Islands = ({
       visible={visible}
       ref={meshRef}
       rotation={[-Math.PI / 2, 0, 0]}
-      position={position}
+      position={finalPosition}
       scale={[scale, scale, scale]}
     >
       <rawShaderMaterial

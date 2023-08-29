@@ -54,7 +54,6 @@ const AfloatContent = () => {
       setShowCity(false);
     }
     if (barRef.current > PARTS.hook) {
-      setShowFloatingStuff(true);
       setShowCity(false);
       setShowSkyStreaks(false);
     }
