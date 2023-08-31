@@ -28,6 +28,7 @@ export const useBuildingTextures = (): TextureProps[] => {
       {
         map: "/maps/building-facade-2.jpg",
         roughnessMap: "/maps/building-facade-2-roughness.jpg",
+        alphaMap: "/maps/building-facade-2-alpha.jpg",
       },
       applyBuildingWrap
     ),

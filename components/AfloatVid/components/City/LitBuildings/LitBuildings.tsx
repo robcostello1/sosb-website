@@ -1,11 +1,11 @@
-import { memo, useCallback, useContext, useMemo } from "react";
+import { memo, useCallback, useContext, useMemo } from 'react';
 
-import { getRandomColor } from "../../../../../utils/utils";
-import { SongContext } from "../../SongProvider/context";
-import { OnFrameFunc } from "../BaseBuilding";
-import BouncingBuilding from "../BouncingBuilding/BouncingBuilding";
-import { useBuildingGroupParams } from "../hooks";
-import { TextureProps } from "../types";
+import { getRandomColor } from '../../../../../utils/utils';
+import { SongContext } from '../../SongProvider/context';
+import { OnFrameFunc } from '../BaseBuilding';
+import BouncingBuilding from '../BouncingBuilding/BouncingBuilding';
+import { useBuildingGroupParams } from '../hooks';
+import { TextureProps } from '../types';
 
 export type LitBuildingsProps = {
   numberOfBuildings: number;
@@ -40,7 +40,7 @@ const LitBuildings = ({
           mesh.material.transparent = true;
           // TODO this should only be set once per "change"
           mesh.material.needsUpdate = true;
-          light.material.color.set(getRandomColor());
+          light?.material.color.set(getRandomColor());
         }
       } else {
         mesh.material.transparent = false;

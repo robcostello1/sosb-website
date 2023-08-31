@@ -46,15 +46,14 @@ const BouncingBuildings = ({
   return (
     <>
       {buildingParams.map(({ textureId, ...props }, index) => {
-        const useLights = textureId === 0 || textureId === 2;
         return (
           <BouncingBuilding
             {...props}
             key={index}
             active={active}
             bounceSize={buildingMovement}
-            useLights={useLights}
-            onFrame={useLights ? handleLights : undefined}
+            useLights={true}
+            onFrame={handleLights}
           />
         );
       })}

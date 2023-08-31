@@ -40,8 +40,10 @@ const AfloatContent = () => {
     if (barRef.current > PARTS.break - 0.25) {
       setShowSkyStreaks(true);
     }
-    if (barRef.current > PARTS.verse2) {
+    if (barRef.current > PARTS.verse2 - 4) {
       setShowFloatingStuff(true);
+    }
+    if (barRef.current > PARTS.verse2) {
       setShowCity(false);
     }
     if (barRef.current > PARTS.hook) {
@@ -52,11 +54,11 @@ const AfloatContent = () => {
     if (barRef.current > PARTS.chorus - 0.5 && barRef.current < PARTS.chorus) {
       setTimeSpeedMultiplyer(400);
     }
-    if (barRef.current > PARTS.chorus - 0.25) {
-      setShowSkyStreaks(true);
-    }
     if (barRef.current > PARTS.chorus) {
       setTimeSpeedMultiplyer(0.5);
+    }
+    if (barRef.current > PARTS.outro - 0.25) {
+      setShowSkyStreaks(true);
     }
     if (barRef.current > PARTS.outro) {
       setShowSkyStreaks(false);
@@ -83,11 +85,11 @@ const AfloatContent = () => {
         movementSpeed={0}
       />
 
-      {/* <directionalLight
-        color={0x0044ff}
-        intensity={0.1}
-        position={[-10, -2, 0]}
-      /> */}
+      <directionalLight
+        color={0x00aaff}
+        intensity={0.07}
+        position={[-10, -2, 2]}
+      />
       <ambientLight intensity={0.1} />
 
       <Sky overrideTime={0} timeSpeedMultiplier={timeSpeedMultiplyer} />
