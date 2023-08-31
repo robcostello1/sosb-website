@@ -1,26 +1,16 @@
-import {
-  Suspense,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
-import {
-  FirstPersonControls,
-  PointerLockControls,
-  Stats,
-} from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { FirstPersonControls, PointerLockControls, Stats } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
 
-import Ocean from "../Terrain/Ocean";
-import { BobbingItem, City, FloatingStuff, Islands, Raft } from "./components";
-import Sky from "./components/Sky";
-import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
-import { SongContext } from "./components/SongProvider";
-import SongProvider from "./components/SongProvider/SongProvider";
-import { PARTS } from "./consts";
+import { Ocean } from '../Terrain';
+import { BobbingItem, City, Islands, Raft } from './components';
+import { FloatingScene } from './components/FloatingStuff';
+import Sky from './components/Sky';
+import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
+import { SongContext } from './components/SongProvider';
+import SongProvider from './components/SongProvider/SongProvider';
+import { PARTS } from './consts';
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -37,6 +27,7 @@ const AfloatContent = () => {
   const [showIslands, setShowIslands] = useState(false);
   const [showCity, setShowCity] = useState(true);
   const [showSkyStreaks, setShowSkyStreaks] = useState(false);
+  const [timeSpeedMultiplyer, setTimeSpeedMultiplyer] = useState(0.5);
 
   const { handlePlay, barRef } = useContext(SongContext);
 
@@ -46,7 +37,7 @@ const AfloatContent = () => {
   }, [handlePlay]);
 
   useFrame(() => {
-    if (barRef.current > PARTS.break) {
+    if (barRef.current > PARTS.break - 0.25) {
       setShowSkyStreaks(true);
     }
     if (barRef.current > PARTS.verse2) {
@@ -54,12 +45,22 @@ const AfloatContent = () => {
       setShowCity(false);
     }
     if (barRef.current > PARTS.hook) {
-      setShowCity(false);
+      setShowFloatingStuff(false);
       setShowSkyStreaks(false);
+      setShowIslands(true);
+    }
+    if (barRef.current > PARTS.chorus - 0.5 && barRef.current < PARTS.chorus) {
+      setTimeSpeedMultiplyer(400);
+    }
+    if (barRef.current > PARTS.chorus - 0.25) {
+      setShowSkyStreaks(true);
     }
     if (barRef.current > PARTS.chorus) {
-      setShowFloatingStuff(false);
-      setShowIslands(true);
+      setTimeSpeedMultiplyer(0.5);
+    }
+    if (barRef.current > PARTS.outro) {
+      setShowSkyStreaks(false);
+      setTimeSpeedMultiplyer(2);
     }
   });
 
@@ -82,18 +83,18 @@ const AfloatContent = () => {
         movementSpeed={0}
       />
 
-      <Sky overrideTime={0} timeSpeedMultiplier={0.5} />
+      {/* <directionalLight
+        color={0x0044ff}
+        intensity={0.1}
+        position={[-10, -2, 0]}
+      /> */}
+      <ambientLight intensity={0.1} />
+
+      <Sky overrideTime={0} timeSpeedMultiplier={timeSpeedMultiplyer} />
 
       <Ocean />
 
-      <FloatingStuff
-        numberOfItems={100}
-        from={-100}
-        to={1000}
-        duration={300}
-        delay={0}
-        visible={showFloatingStuff}
-      />
+      <FloatingScene visible={showFloatingStuff} />
 
       <SkyStreaks visible={showSkyStreaks} numStreaks={20} />
 
@@ -120,8 +121,6 @@ const AfloatContent = () => {
         position={[105, -3, 0]}
         bounce={0.6}
       />
-
-      {/* <BuildingGlitch /> */}
 
       <BobbingItem>
         <Raft />

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { OrbitControls, Stage, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { getRandomColor } from '../../../../../utils/utils';
 import { useBuildingTextures } from '../hooks';
 import BaseBuilding, { BaseBuildingProps } from './BaseBuilding';
+import { OnFrameFunc } from './types';
 
 export default {
   title: "City/BaseBuilding",
@@ -19,21 +21,52 @@ export default {
       control: "radio",
       options: [1, 2, 3],
     },
+    textureProps: {
+      control: "none",
+    },
+    lightRef: {
+      control: "none",
+    },
+    onFrame: {
+      control: "none",
+    },
   },
 } as ComponentMeta<typeof BaseBuilding>;
 
 const BuildingWrapper = ({
   texture,
+  useLights,
+  onFrame,
   ...props
 }: Omit<BaseBuildingProps, "textureProps" | "ref"> & {
   texture: 1 | 2 | 3;
 }) => {
   const textureProps = useBuildingTextures();
 
+  const handleLights = useCallback<OnFrameFunc>(
+    ({ mesh, light }) => {
+      if (!useLights) {
+        mesh.material.transparent = false;
+        mesh.material.needsUpdate = true;
+        return;
+      }
+      if (Math.random() > 0.9) {
+        mesh.material.transparent = true;
+        mesh.material.needsUpdate = true;
+        if (light) {
+          light.material.color = getRandomColor();
+        }
+      }
+    },
+    [useLights]
+  );
+
   return (
     <BaseBuilding
       key={texture}
+      useLights={useLights}
       textureProps={textureProps[texture - 1]}
+      onFrame={handleLights}
       {...props}
     />
   );
@@ -61,4 +94,5 @@ export const Default = Template.bind({});
 
 Default.args = {
   texture: 1,
+  onFrame: () => {},
 };

@@ -1,20 +1,14 @@
-import { forwardRef, memo, RefObject, useMemo, useRef } from "react";
-import { mergeRefs } from "react-merge-refs";
+import { forwardRef, memo, RefObject, useMemo, useRef } from 'react';
+import { mergeRefs } from 'react-merge-refs';
 import {
-  BackSide,
-  BoxGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  MeshStandardMaterial,
-  RepeatWrapping,
-  Vector2,
-  Vector3,
-} from "three";
+    BackSide, BoxGeometry, Mesh, MeshBasicMaterial, MeshStandardMaterial, RepeatWrapping, Vector2,
+    Vector3
+} from 'three';
 
-import { MeshProps, useFrame } from "@react-three/fiber";
+import { MeshProps, useFrame } from '@react-three/fiber';
 
-import { TextureProps } from "../types";
-import { OnFrameFunc } from "./types";
+import { TextureProps } from '../types';
+import { OnFrameFunc } from './types';
 
 export type BaseBuildingProps = Pick<MeshProps, "position" | "rotation"> & {
   lightRef?: RefObject<Mesh<BoxGeometry, MeshBasicMaterial>>;
@@ -48,6 +42,9 @@ const BaseBuilding = forwardRef<
     },
     ref
   ) => {
+    const localRef = useRef<Mesh<BoxGeometry, MeshStandardMaterial>>(null);
+    const localLightRef = useRef<Mesh<BoxGeometry, MeshBasicMaterial>>(null);
+
     const clonedTextures = useMemo(() => {
       return Object.entries(textureProps).reduce<TextureProps>(
         (acc, [key, texture]) => {
@@ -68,20 +65,13 @@ const BaseBuilding = forwardRef<
       );
     }, [textureProps, scale]);
 
-    const localLightRef = useRef<Mesh<BoxGeometry, MeshBasicMaterial>>(null);
-
     useFrame(({ clock: { elapsedTime } }) => {
-      if (
-        localLightRef.current &&
-        // TODO requires outside ref. Merge refs?
-        // @ts-expect-error // TODO typing
-        ref?.current
-      ) {
+      if (localRef.current) {
+        // console.log(onFrame);
         onFrame?.({
           elapsedTime,
-          light: localLightRef.current,
-          // @ts-expect-error // TODO
-          mesh: ref.current,
+          light: localLightRef.current || undefined,
+          mesh: localRef.current,
         });
       }
     });
@@ -106,7 +96,11 @@ const BaseBuilding = forwardRef<
             <meshBasicMaterial color={0x000000} side={BackSide} />
           </mesh>
         ) : null}
-        <mesh scale={scale} {...props} ref={ref}>
+        <mesh
+          ref={ref ? mergeRefs([ref, localRef]) : localRef}
+          scale={scale}
+          {...props}
+        >
           <boxGeometry
             args={[
               DEFAULT_BUILDING_WIDTH,

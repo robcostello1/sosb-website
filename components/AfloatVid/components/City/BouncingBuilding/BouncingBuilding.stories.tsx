@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { OrbitControls, Stats } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { OrbitControls, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { useBuildingTextures } from "../hooks";
-import BouncingBuilding, { BouncingBuildingProps } from "./BouncingBuilding";
+import { useBuildingTextures } from '../hooks';
+import BouncingBuilding, { BouncingBuildingProps } from './BouncingBuilding';
 
 export default {
   title: "City/BouncingBuilding",
@@ -71,4 +71,5 @@ Default.args = {
   bounceSize: 3,
   position: [0, -30, 0],
   scale: [1, 1, 1],
+  onFrame: () => {},
 };

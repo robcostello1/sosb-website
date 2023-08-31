@@ -1,13 +1,12 @@
-import gsap, { Linear } from "gsap";
-import { memo, ReactElement, useEffect, useMemo, useRef } from "react";
-import { Group } from "three";
+import gsap, { Linear } from 'gsap';
+import { Children, memo, ReactElement, ReactNode, useEffect, useMemo, useRef } from 'react';
+import { Group } from 'three';
 
-import { useFrame } from "@react-three/fiber";
-import { Physics, RapierRigidBody, RigidBody } from "@react-three/rapier";
+import { useFrame } from '@react-three/fiber';
+import { Physics, RapierRigidBody, RigidBody } from '@react-three/rapier';
 
-import { weightedRandom } from "../City/utils";
-import { FloatingObjectProps } from "./FloatingObject";
-import FloatingTV from "./FloatingTV";
+import { weightedRandom } from '../City/utils';
+import FloatingItem, { FloatingItemProps } from './FloatingItem';
 
 type FloatingStuffProps = {
   from: number;
@@ -17,9 +16,12 @@ type FloatingStuffProps = {
   debug?: boolean;
   spread?: [number, number];
   numberOfItems?: number;
-  typesOfItems?: "tv"[];
+  // E.g. <><boxGeometry /><meshBasicMaterial /></>
+  children: ReactNode;
   visible?: boolean;
 };
+
+const DEFAULT_SPREAD: [number, number] = [100, 200];
 
 const FloatingStuff = ({
   from,
@@ -27,41 +29,52 @@ const FloatingStuff = ({
   duration,
   delay,
   debug,
-  spread = [100, 200],
+  spread = DEFAULT_SPREAD,
   numberOfItems = 100,
-  typesOfItems = ["tv"],
+  children,
   visible = true,
 }: FloatingStuffProps) => {
-  const objects = useMemo(() => {
-    const objectArray: ReactElement[] = [];
+  const objects = useMemo(
+    () => {
+      const objectProps: (FloatingItemProps & { contents: ReactNode })[] = [];
+      const childrenArray = Children.toArray(children);
+      const contents =
+        childrenArray[Math.floor(Math.random() * childrenArray.length)];
 
-    for (let index = 0; index < numberOfItems; index++) {
-      const objectProps: FloatingObjectProps = {
-        key: index,
-        position: [
-          weightedRandom(6) * spread[0] * (index % 2 === 0 ? 1 : -1),
-          Math.random() * -50,
-          Math.random() * spread[1] - spread[1] / 2,
-        ],
-        rotation: [
-          Math.random() * Math.PI * 2,
-          Math.random() * Math.PI * 2,
-          Math.random() * Math.PI * 2,
-        ],
-        flotationProps: {
-          liquidLevel: 0,
-          bobbingAmount: 0.2,
-          objectRadius: 1,
-          boyancyFactor: 0.4,
-          liquidDamping: 5,
-        },
-      };
+      for (let index = 0; index < numberOfItems; index++) {
+        const depth = Math.random() * -50;
+        objectProps.push({
+          key: index,
+          // TODO randomise the scale
+          scale: 1,
+          position: [
+            weightedRandom(6) * spread[0] * (index % 2 === 0 ? 1 : -1),
+            depth,
+            Math.random() * spread[1] - spread[1] / 2,
+          ],
+          rotation: [
+            Math.random() * Math.PI * 2,
+            Math.random() * Math.PI * 2,
+            Math.random() * Math.PI * 2,
+          ],
+          flotationProps: {
+            liquidLevel: 0,
+            bobbingAmount: 0.2,
+            objectRadius: 1,
+            boyancyFactor: 0.4,
+            liquidDamping: 5,
+          },
+          delayVisibility: -depth * 200,
+          contents,
+        });
+      }
 
-      objectArray.push(<FloatingTV {...objectProps} />);
-    }
-
-    return objectArray;
-  }, [numberOfItems, spread]);
+      return objectProps;
+    },
+    // Ignore changes to children
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [numberOfItems, spread]
+  );
 
   const worldRef = useRef<Group>(null);
   const raftColliderRef = useRef<RapierRigidBody>(null);
@@ -81,7 +94,7 @@ const FloatingStuff = ({
   }, [from, to, delay, duration, debug, worldRef, visible]);
 
   useFrame(() => {
-    if (raftColliderRef.current && worldRef.current && visible) {
+    if (raftColliderRef.current && worldRef.current) {
       worldRef.current.position.set(0, 0, worldPosition.current);
 
       raftColliderRef.current.setTranslation(
@@ -96,9 +109,13 @@ const FloatingStuff = ({
   });
 
   return (
-    <group ref={worldRef} position={[0, 0, from]} visible={visible}>
+    <group ref={worldRef} position={[0, 0, from]}>
       <Physics debug={debug} paused={!visible}>
-        {objects}
+        {objects.map(({ key, contents, ...props }) => (
+          <FloatingItem visible={visible} key={key} {...props}>
+            {contents}
+          </FloatingItem>
+        ))}
 
         <RigidBody
           ref={raftColliderRef}

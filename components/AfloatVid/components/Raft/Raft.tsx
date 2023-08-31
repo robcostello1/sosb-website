@@ -137,28 +137,13 @@ export function RaftContent({}: RaftProps) {
   return (
     <group scale={1.8}>
       {PLANK_SETTINGS.map(renderPlank)}
-      <Box
-        args={[1.5, 0.01, 0.3]}
-        position={[0, 0.15, 1]}
-        getObjectsByProperty={undefined}
-        getVertexPosition={undefined}
-      >
+      <Box args={[1.5, 0.01, 0.3]} position={[0, 0.15, 1]}>
         <meshBasicMaterial color={0x000000} />
       </Box>
-      <Box
-        args={[1.5, 0.01, 0.4]}
-        position={[0, 0.15, 0]}
-        getObjectsByProperty={undefined}
-        getVertexPosition={undefined}
-      >
+      <Box args={[1.5, 0.01, 0.4]} position={[0, 0.15, 0]}>
         <meshBasicMaterial color={0x000000} />
       </Box>
-      <Box
-        args={[1.5, 0.01, 0.2]}
-        position={[0, 0.15, -1]}
-        getObjectsByProperty={undefined}
-        getVertexPosition={undefined}
-      >
+      <Box args={[1.5, 0.01, 0.2]} position={[0, 0.15, -1]}>
         <meshBasicMaterial color={0x000000} />
       </Box>
       {BARREL_SETTINGS.map(({ position, ...barrel }, index) => (
@@ -168,8 +153,6 @@ export function RaftContent({}: RaftProps) {
               key={id}
               args={[0.3, 0.013, 128, 128]}
               position={[0, 0, 0.4 * Math.random() - 0.2]}
-              getObjectsByProperty={undefined}
-              getVertexPosition={undefined}
             >
               <meshStandardMaterial {...ropeTexture} />
             </Torus>

@@ -1,16 +1,13 @@
-import { memo, useMemo, useRef } from "react";
-import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from "three";
+import { memo, useRef } from 'react';
+import { BoxGeometry, Mesh, MeshStandardMaterial, Vector3 } from 'three';
 
-import { MeshProps } from "@react-three/fiber";
+import { MeshProps } from '@react-three/fiber';
 
-import { Triplet } from "../../../../utils/types";
-import BaseBuilding, {
-  DEFAULT_BUILDING_HEIGHT,
-  DEFAULT_BUILDING_WIDTH,
-} from "./BaseBuilding";
-import { useBuildingVectorDimensions } from "./hooks";
-import { TextureProps } from "./types";
-import Vines from "./Vines";
+import { Triplet } from '../../../../utils/types';
+import BaseBuilding, { DEFAULT_BUILDING_HEIGHT, DEFAULT_BUILDING_WIDTH } from './BaseBuilding';
+import { useBuildingVectorDimensions } from './hooks';
+import { TextureProps } from './types';
+import Vines from './Vines';
 
 type BuildingWithVinesProps = Omit<MeshProps, "scale" | "position"> & {
   scale?: Triplet;
