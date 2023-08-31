@@ -1,7 +1,7 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect } from 'react';
 
-import { useSong } from "../../hooks";
-import { SongContext } from "./context";
+import { useSong } from '../../hooks';
+import { SongContext } from './context';
 
 type SongProviderProps = {
   autoStart?: boolean;
@@ -17,6 +17,9 @@ const SongProvider = ({ autoStart, children }: SongProviderProps) => {
         songValues.handlePlay();
       };
     }
+    return () => {
+      window.onclick = null;
+    };
   }, [autoStart, songValues]);
 
   return (

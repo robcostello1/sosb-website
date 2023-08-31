@@ -38,7 +38,7 @@ const Vines = ({
   const applyPulsate = useCallback(
     (uniforms: Record<string, IUniform>) => {
       if (pulsate) {
-        const pulse = Math.sin(((time.current * 60) / 123) * Math.PI * 4);
+        const pulse = Math.sin((123 / (time.current * 60)) * Math.PI * 4);
 
         uniforms.uAmount.value = vinesAmount + Math.max(pulse, 0) * pulsate;
       }

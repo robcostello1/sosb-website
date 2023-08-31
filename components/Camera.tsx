@@ -81,7 +81,7 @@ const Camera = ({ focus }: CameraProps) => {
 
   return (
     <>
-      <PerspectiveCamera castShadow getObjectsByProperty={undefined} />
+      <PerspectiveCamera castShadow />
 
       <OrbitControls
         key={focus}

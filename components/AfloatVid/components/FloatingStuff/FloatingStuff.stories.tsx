@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { OrbitControls, Stats } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { OrbitControls, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Ocean from "../../../Terrain/Ocean";
-import FloatingStuff from "./FloatingStuff";
+import ScreenContents from '../City/Screen/ScreenContents';
+import FloatingStuff from './FloatingStuff';
 
 export default {
   title: "Sea/FloatingStuff",
@@ -18,14 +18,23 @@ export default {
 
 const Template: ComponentStory<typeof FloatingStuff> = (args) => {
   return (
-    <Canvas camera={{ position: [0, 20, 0] }}>
+    <Canvas camera={{ position: [0, 2, 10] }}>
       <OrbitControls />
       <Stats />
 
       <directionalLight position={[-5, 10, 3]} intensity={0.3} />
 
-      <Ocean position={[0, 0, 0]} waterColor={0x444422} />
-      <FloatingStuff {...args} />
+      {/* <Ocean position={[0, 0, 0]} waterColor={0x444422} /> */}
+      <FloatingStuff {...args}>
+        <ScreenContents
+          // TODO temp
+          url={"/maps/verse1.mp4"}
+          boxArgs={[3, 1, 0.1]}
+          videoOffset={[0, 0.2]}
+          videoScale={1}
+          start={true}
+        />
+      </FloatingStuff>
     </Canvas>
   );
 };

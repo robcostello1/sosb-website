@@ -1,17 +1,17 @@
-import gsap, { Linear, Power1, Power2 } from "gsap";
-import { memo, useCallback, useEffect, useRef, useState } from "react";
-import { Group } from "three";
+import gsap, { Linear, Power1, Power2 } from 'gsap';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { Group } from 'three';
 
-import { PARTS } from "../../consts";
-import Garage from "../Garage/Garage";
-import Building2 from "./BouncingBuilding";
-import BouncingBuildings from "./BouncingBuildings/BouncingBuildings";
-import BuildingWithVines from "./BuildingWithVines";
-import { useBuildingTextures } from "./hooks";
-import LitBuildings from "./LitBuildings/LitBuildings";
-import { ScreenWithVines } from "./Screen";
-import { TextureProps } from "./types";
-import VineBuildingGroup from "./VineBuildingGroup";
+import { PARTS } from '../../consts';
+import Garage from '../Garage/Garage';
+import Building2 from './BouncingBuilding';
+import BouncingBuildings from './BouncingBuildings/BouncingBuildings';
+import BuildingWithVines from './BuildingWithVines';
+import { useBuildingTextures } from './hooks';
+import LitBuildings from './LitBuildings/LitBuildings';
+import { ScreenWithVines } from './Screen';
+import { TextureProps } from './types';
+import VineBuildingGroup from './VineBuildingGroup';
 
 const START_POSITION_Z = 0.3;
 
@@ -36,8 +36,8 @@ const City2 = ({
   const [garageLoaded, setGarageLoaded] = useState(false);
   const textureProps = useBuildingTextures();
 
+  // TODO seems uneccessary
   const [startedMoving, setStartedMoving] = useState(false);
-
   useEffect(() => {
     if (moving) {
       setStartedMoving(true);
@@ -77,11 +77,7 @@ const City2 = ({
   }, []);
 
   return (
-    <group
-      position={[0, 0, -size * START_POSITION_Z]}
-      ref={groupRef}
-      visible={visible}
-    >
+    <group position={[0, 0, -size * START_POSITION_Z]} ref={groupRef}>
       <Garage
         position={[0, 0, size * START_POSITION_Z]}
         doorDisabled={moving}
@@ -105,14 +101,11 @@ const City2 = ({
             textureProps={textureProps}
             size={size}
             started={startedMoving}
-            barNumToShowLights={PARTS.verse}
-            numberOfBuildings={80}
+            barNumToShowLights={PARTS.verse - 1}
+            active={visible}
+            numberOfBuildings={120}
           />
-          <LitBuildings
-            textureProps={textureProps}
-            size={size}
-            numberOfBuildings={40}
-          />
+
           <VineBuildingGroup textureProps={textureProps} size={size} />
         </>
       )}

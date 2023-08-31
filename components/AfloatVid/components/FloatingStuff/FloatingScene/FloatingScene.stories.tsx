@@ -4,24 +4,25 @@ import { OrbitControls, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import SongProvider from '../SongProvider/SongProvider';
-import City2 from './City2';
+import FloatingScene from './FloatingScene';
 
 export default {
-  title: "City/City2",
-  component: City2,
+  title: "FloatingScene",
+  component: FloatingScene,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
   },
-} as ComponentMeta<typeof City2>;
+} as ComponentMeta<typeof FloatingScene>;
 
-const Template: ComponentStory<typeof City2> = (args) => {
+const Template: ComponentStory<typeof FloatingScene> = (args) => {
   return (
     <Canvas
-      camera={{
-        position: [0, 2, 0],
-      }}
+      camera={
+        {
+          position: [3, 4, 5],
+        }
+      }
     >
       <Stats />
 
@@ -30,9 +31,7 @@ const Template: ComponentStory<typeof City2> = (args) => {
       <ambientLight intensity={0.1} />
       <directionalLight position={[10, 3, 5]} />
 
-      <SongProvider autoStart>
-        <City2 {...args} />
-      </SongProvider>
+      <FloatingScene {...args} />
     </Canvas>
   );
 };
@@ -40,8 +39,4 @@ const Template: ComponentStory<typeof City2> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  setMoving: () => {},
-  size: 600,
-  duration: 120,
-  sinkStart: 60,
 };

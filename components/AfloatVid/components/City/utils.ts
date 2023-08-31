@@ -1,7 +1,7 @@
-import { MirroredRepeatWrapping, RepeatWrapping, Texture } from "three";
+import { MirroredRepeatWrapping, RepeatWrapping, Texture } from 'three';
 
-import { Triplet } from "../../../../utils/types";
-import { TextureProps } from "./types";
+import { Triplet } from '../../../../utils/types';
+import { TextureProps } from './types';
 
 export const getBuildingAttributes = (size: number, index: number) => {
   const isEven = index % 2 === 0;

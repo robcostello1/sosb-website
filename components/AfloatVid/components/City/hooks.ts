@@ -1,17 +1,18 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Euler, Vector3 } from "three";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { Euler, Vector3 } from 'three';
 
-import { useTexture } from "@react-three/drei";
+import { useTexture } from '@react-three/drei';
 
-import { Triplet } from "../../../../utils/types";
+import { useLog } from '../../../../hooks';
+import { Triplet } from '../../../../utils/types';
+import { getRandomColor } from '../../../../utils/utils';
+import { SongContext } from '../SongProvider';
+import { OnFrameFunc } from './BaseBuilding';
 import {
-  DEFAULT_BUILDING_HEIGHT,
-  DEFAULT_POSITION,
-  DEFAULT_ROTATION,
-  DEFAULT_SCALE,
-} from "./consts";
-import { TextureProps } from "./types";
-import { applyBuildingWrap, getBuildingGroupParams } from "./utils";
+    DEFAULT_BUILDING_HEIGHT, DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE
+} from './consts';
+import { TextureProps } from './types';
+import { applyBuildingWrap, getBuildingGroupParams } from './utils';
 
 export const useBuildingTextures = (): TextureProps[] => {
   const textures = [
@@ -27,8 +28,6 @@ export const useBuildingTextures = (): TextureProps[] => {
       {
         map: "/maps/building-facade-2.jpg",
         roughnessMap: "/maps/building-facade-2-roughness.jpg",
-        // TODO not working
-        // normalMap: "/maps/building-facade-2-normal.jpg",
       },
       applyBuildingWrap
     ),
@@ -36,6 +35,7 @@ export const useBuildingTextures = (): TextureProps[] => {
       {
         map: "/maps/building-facade-3.jpg",
         roughnessMap: "/maps/building-facade-3-roughness.jpg",
+        alphaMap: "/maps/building-facade-3-alpha.jpg",
       },
       applyBuildingWrap
     ),
@@ -126,4 +126,36 @@ export const useBuildingVectorDimensions = ({
     vectorPosition,
     vectorRotation,
   };
+};
+
+export const useBuildingLights = (barNumToShowLights: number) => {
+  const { barRef } = useContext(SongContext);
+
+  const handleLights = useCallback<OnFrameFunc>(
+    ({ mesh, light }) => {
+      if (barRef.current < barNumToShowLights) {
+        return;
+      }
+
+      const isPlaying = barRef.current >= 0;
+      const isLastOfFour = (Math.floor(barRef.current) + 1) % 4 === 0;
+      const lightChance = barRef.current / 2000;
+
+      if (isPlaying && isLastOfFour) {
+        if (Math.random() > 1 - lightChance) {
+          light?.material.color.set(getRandomColor());
+          if (!mesh.material.transparent) {
+            mesh.material.transparent = true;
+            mesh.material.needsUpdate = true;
+          }
+        }
+      } else if (mesh.material.transparent) {
+        mesh.material.transparent = false;
+        mesh.material.needsUpdate = true;
+      }
+    },
+    [barNumToShowLights, barRef]
+  );
+
+  return handleLights;
 };

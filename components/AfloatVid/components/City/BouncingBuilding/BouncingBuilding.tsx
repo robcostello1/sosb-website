@@ -1,29 +1,22 @@
-import gsap, { Power2 } from "gsap";
-import { memo, useCallback, useMemo, useRef } from "react";
-import {
-  BoxGeometry,
-  Mesh,
-  MeshBasicMaterial,
-  MeshStandardMaterial,
-  Vector3,
-} from "three";
+import gsap, { Power2 } from 'gsap';
+import { memo, useCallback, useMemo, useRef } from 'react';
+import { BoxGeometry, Mesh, MeshBasicMaterial, MeshStandardMaterial, Vector3 } from 'three';
 
-import { MeshProps } from "@react-three/fiber";
+import { MeshProps } from '@react-three/fiber';
 
-import { Triplet } from "../../../../../utils/types";
+import { Triplet } from '../../../../../utils/types';
 import BaseBuilding, {
-  BaseBuildingProps,
-  BUILDING_TEXTURE_HEIGHT,
-  DEFAULT_BUILDING_HEIGHT,
-} from "../BaseBuilding";
-import { useBuildingVectorDimensions, useRandomlyTimedEvent } from "../hooks";
-import { TextureProps } from "../types";
+    BaseBuildingProps, BUILDING_TEXTURE_HEIGHT, DEFAULT_BUILDING_HEIGHT
+} from '../BaseBuilding';
+import { useBuildingVectorDimensions, useRandomlyTimedEvent } from '../hooks';
+import { TextureProps } from '../types';
 
 export type BouncingBuildingProps = Omit<BaseBuildingProps, "scale"> & {
   bounceSize?: number;
   scale?: Triplet;
   position?: Triplet;
   textureProps: TextureProps;
+  active?: boolean;
   onFrame?: BaseBuildingProps["onFrame"];
 };
 
@@ -39,6 +32,7 @@ const BouncingBuilding = ({
   position = DEFAULT_POSITION,
   bounceSize,
   textureProps,
+  active = true,
   ...props
 }: BouncingBuildingProps) => {
   const { vectorScale: origVectorScale, vectorPosition: origVectorPosition } =
@@ -80,12 +74,12 @@ const BouncingBuilding = ({
   );
 
   const resizeCallback = useCallback(() => {
-    if (meshRef.current && lightRef.current && bounceSize) {
+    if (meshRef.current && lightRef.current && bounceSize && active) {
       const targetSize = Math.random() * 2 * bounceSize;
       applyResize(meshRef.current, targetSize);
       applyResize(lightRef.current, targetSize);
     }
-  }, [applyResize, bounceSize]);
+  }, [applyResize, bounceSize, active]);
 
   useRandomlyTimedEvent(MOVEMENT_FREQUNCY, MS_DURATION, resizeCallback);
 
