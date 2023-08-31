@@ -41,8 +41,6 @@ const GlowText = ({
         bevelEnabled
         bevelSize={0.015}
         bevelThickness={0.01}
-        getObjectsByProperty={undefined}
-        getVertexPosition={undefined}
       >
         {children}
         <meshStandardMaterial

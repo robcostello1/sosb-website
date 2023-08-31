@@ -18,25 +18,25 @@ export const useBuildingTextures = (): TextureProps[] => {
   const textures = [
     useTexture(
       {
-        map: "/maps/building-facade-1.jpg",
-        roughnessMap: "/maps/building-facade-1-roughness.jpg",
-        alphaMap: "/maps/building-facade-1-alpha.jpg",
+        map: "/maps/optimised/building-facade-1.jpg",
+        roughnessMap: "/maps/optimised/building-facade-1-roughness.jpg",
+        alphaMap: "/maps/optimised/building-facade-1-alpha.jpg",
       },
       applyBuildingWrap
     ),
     useTexture(
       {
-        map: "/maps/building-facade-2.jpg",
-        roughnessMap: "/maps/building-facade-2-roughness.jpg",
-        alphaMap: "/maps/building-facade-2-alpha.jpg",
+        map: "/maps/optimised/building-facade-2.jpg",
+        roughnessMap: "/maps/optimised/building-facade-2-roughness.jpg",
+        alphaMap: "/maps/optimised/building-facade-2-alpha.jpg",
       },
       applyBuildingWrap
     ),
     useTexture(
       {
-        map: "/maps/building-facade-3.jpg",
-        roughnessMap: "/maps/building-facade-3-roughness.jpg",
-        alphaMap: "/maps/building-facade-3-alpha.jpg",
+        map: "/maps/optimised/building-facade-3.jpg",
+        roughnessMap: "/maps/optimised/building-facade-3-roughness.jpg",
+        alphaMap: "/maps/optimised/building-facade-3-alpha.jpg",
       },
       applyBuildingWrap
     ),

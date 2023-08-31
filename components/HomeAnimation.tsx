@@ -1,21 +1,21 @@
-import dynamic from "next/dynamic";
-import { Fragment, memo, Suspense, useCallback, useState } from "react";
-import { UnrealBloomPass } from "three-stdlib";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import dynamic from 'next/dynamic';
+import { Fragment, memo, Suspense, useCallback, useState } from 'react';
+import { UnrealBloomPass } from 'three-stdlib';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import { Effects, PerspectiveCamera } from "@react-three/drei";
-import { extend, useLoader, useThree } from "@react-three/fiber";
+import { Effects, PerspectiveCamera } from '@react-three/drei';
+import { extend, useLoader, useThree } from '@react-three/fiber';
 
-import { useSoundAdjustments } from "../hooks/useSoundAdjustments";
-import Camera from "./Camera";
-import Reset from "./City/Reset";
-import Road from "./City/Road";
-import StreetLamp from "./City/StreetLamp";
-import TowerBlock from "./City/TowerBlock";
-import Warehouse from "./City/Warehouse";
-import { SFXProps, SoundConfig } from "./SFX";
-import Socials from "./Socials/Socials";
-import SOSB from "./SOSB";
+import { useSoundAdjustments } from '../hooks/useSoundAdjustments';
+import Camera from './Camera';
+import Reset from './City/Reset';
+import Road from './City/Road';
+import StreetLamp from './City/StreetLamp';
+import TowerBlock from './City/TowerBlock';
+import Warehouse from './City/Warehouse';
+import { SFXProps, SoundConfig } from './SFX';
+import Socials from './Socials/Socials';
+import SOSB from './SOSB';
 
 extend({ UnrealBloomPass });
 
@@ -102,7 +102,7 @@ const HomeAnimation = () => {
 
       <fog attach="fog" args={["#000000", 1, 5]} />
 
-      <PerspectiveCamera castShadow getObjectsByProperty={undefined} />
+      <PerspectiveCamera castShadow />
 
       <ambientLight intensity={0.2} color="lightblue" />
 
