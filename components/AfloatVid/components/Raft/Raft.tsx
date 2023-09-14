@@ -77,10 +77,9 @@ const Raft = ({ setCamera = true }: RaftProps) => {
 export function RaftContent({}: RaftProps) {
   const plankTexture = useTexture(
     {
-      map: "/maps/wood_planks_grey_diff_1k.jpg",
-      aoMap: "/maps/wood_planks_grey_ao_1k.jpg",
-      normalMap: "/maps/wood_planks_grey_nor_dx_1k.jpg",
-      roughnessMap: "/maps/wood_planks_grey_rough_1k.jpg",
+      map: "/maps/optimised/wood_planks_grey_diff_1k.jpg",
+      normalMap: "/maps/optimised/wood_planks_grey_nor_dx_1k.jpg",
+      roughnessMap: "/maps/optimised/wood_planks_grey_water_rough_1k.jpg",
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
@@ -91,10 +90,9 @@ export function RaftContent({}: RaftProps) {
 
   const ropeTexture = useTexture(
     {
-      map: "/maps/Rope_001_basecolor.jpg",
-      aoMap: "/maps/Rope_001_height.png",
-      normalMap: "/maps/Rope_001_normal.jpg",
-      roughnessMap: "/maps/Rope_001_roughness.jpg",
+      map: "/maps/optimised/Rope_001_basecolor.jpg",
+      normalMap: "/maps/optimised/Rope_001_normal.jpg",
+      roughnessMap: "/maps/optimised/Rope_001_roughness.jpg",
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {

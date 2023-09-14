@@ -1,17 +1,13 @@
-import { useFrame, useLoader } from "@react-three/fiber";
-import { memo, forwardRef, Ref, useRef, RefObject } from "react";
+import { forwardRef, memo, Ref, RefObject, useRef } from 'react';
 import {
-  BackSide,
-  DirectionalLight,
-  Group,
-  Mesh,
-  MeshBasicMaterial,
-  MeshPhongMaterial,
-  SphereGeometry,
-  TextureLoader,
-} from "three";
-import { Triplet } from "../../../../utils/types";
-import { getDayNight } from "../../../../utils/utils";
+    BackSide, DirectionalLight, Group, Mesh, MeshBasicMaterial, MeshPhongMaterial, SphereGeometry,
+    TextureLoader
+} from 'three';
+
+import { useFrame, useLoader } from '@react-three/fiber';
+
+import { Triplet } from '../../../../utils/types';
+import { getDayNight } from '../../../../utils/utils';
 
 const MOON_LIGHT_INTENSITY = 0.4;
 const INITIAL_ROTATION: Triplet = [1, -Math.PI / 2, 0];
@@ -21,7 +17,7 @@ const GALAXY_ROTATION: Triplet = [-Math.PI * 0.2, Math.PI * 1.3, 0];
 type GalaxyRef = { timeRef: RefObject<number> };
 
 const Galaxy = ({ timeRef }: GalaxyRef) => {
-  const galaxyTexture = useLoader(TextureLoader, "/maps/galaxy.jpg");
+  const galaxyTexture = useLoader(TextureLoader, "/maps/optimised/galaxy.jpg");
   const moonTexture = useLoader(TextureLoader, "/maps/moon.jpg");
 
   const groupRef = useRef<Group>(null);

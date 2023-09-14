@@ -42,10 +42,10 @@ const Garage = ({
   const [wallsLoaded, setWallsLoaded] = useState(false);
   const textureProps = useTexture(
     {
-      map: `/maps/concrete_layers_02_diff_1k.jpg`,
-      roughnessMap: `/maps/concrete_layers_02_rough_1k.jpg`,
-      aoMap: `/maps/concrete_layers_02_ao_1k.jpg`,
-      normalMap: `/maps/concrete_layers_02_nor_dx_1k.jpg`,
+      map: `/maps/optimised/concrete_layers_02_diff_1k.jpg`,
+      roughnessMap: `/maps/optimised/concrete_layers_02_rough_1k.jpg`,
+      aoMap: `/maps/optimised/concrete_layers_02_ao_1k.jpg`,
+      normalMap: `/maps/optimised/concrete_layers_02_nor_dx_1k.jpg`,
     },
     () => {
       setWallsLoaded(true);
@@ -55,10 +55,10 @@ const Garage = ({
   const [shutterLoaded, setShutterLoaded] = useState(false);
   const shutterTextureProps = useTexture(
     {
-      map: `/maps/painted_metal_shutter_diff_1k.jpg`,
-      roughnessMap: `/maps/painted_metal_shutter_rough_1k.jpg`,
-      aoMap: `/maps/painted_metal_shutter_ao_1k.jpg`,
-      normalMap: `/maps/painted_metal_shutter_nor_dx_1k.jpg`,
+      map: `/maps/optimised/painted_metal_shutter_diff_1k.jpg`,
+      roughnessMap: `/maps/optimised/painted_metal_shutter_rough_1k.jpg`,
+      aoMap: `/maps/optimised/painted_metal_shutter_ao_1k.jpg`,
+      normalMap: `/maps/optimised/painted_metal_shutter_nor_dx_1k.jpg`,
     },
     (texture) => {
       (Array.isArray(texture) ? texture : [texture]).forEach((texture) => {

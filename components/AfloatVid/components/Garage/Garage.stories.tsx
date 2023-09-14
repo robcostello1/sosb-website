@@ -21,6 +21,8 @@ const Template: ComponentStory<typeof Garage> = (args) => {
     <Canvas camera={{ position: [0, 0, 2] }}>
       <OrbitControls />
 
+      <ambientLight intensity={0.1} />
+
       <Ocean position={[0, -2, 0]} waterColor={0x444422} />
       <Garage {...args} />
     </Canvas>
