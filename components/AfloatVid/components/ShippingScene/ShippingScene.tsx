@@ -3,8 +3,8 @@ import { useEffect, useRef } from 'react';
 import { Group } from 'three';
 
 import { Triplet } from '../../../../utils/types';
-import Ship from '../Ship/Ship';
-import ShippingContainer from '../ShippingContainer';
+import Ship from './Ship';
+import ShippingContainer from './ShippingContainer';
 
 type ShippingSceneProps = {
   position?: Triplet;

@@ -4,8 +4,8 @@ import { OrbitControls, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Ocean } from '../../../../components/Terrain';
-import Raft from '../Raft';
+import { Ocean } from '../../../../Terrain';
+import Raft from '../../Raft';
 import Ship from './Ship';
 
 export default {
