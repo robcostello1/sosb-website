@@ -1,19 +1,13 @@
-import gsap, { Linear, Power1, Power2 } from 'gsap';
+import gsap, { Power2 } from 'gsap';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Group } from 'three';
 
-import { PARTS } from '../../consts';
+import { PARTS, START_POSITION_Z } from '../../consts';
 import Garage from '../Garage/Garage';
-import Building2 from './BouncingBuilding';
 import BouncingBuildings from './BouncingBuildings/BouncingBuildings';
-import BuildingWithVines from './BuildingWithVines';
 import { useBuildingTextures } from './hooks';
-import LitBuildings from './LitBuildings/LitBuildings';
 import { ScreenWithVines } from './Screen';
-import { TextureProps } from './types';
 import VineBuildingGroup from './VineBuildingGroup';
-
-const START_POSITION_Z = 0.3;
 
 type City2Props = {
   moving: boolean;
@@ -36,37 +30,16 @@ const City2 = ({
   const [garageLoaded, setGarageLoaded] = useState(false);
   const textureProps = useBuildingTextures();
 
-  // TODO seems uneccessary
-  const [startedMoving, setStartedMoving] = useState(false);
   useEffect(() => {
-    if (moving) {
-      setStartedMoving(true);
-    }
-  }, [moving]);
-
-  useEffect(() => {
-    if (groupRef.current && startedMoving) {
-      const tl = gsap.timeline();
-
-      tl.to(groupRef.current.position, {
-        duration: 7,
-        ease: Power1.easeIn,
-        z: -size * START_POSITION_Z + 10,
-      });
-      tl.to(groupRef.current.position, {
-        duration: duration - 5,
-        ease: Linear.easeIn,
-        z: size / 2,
-      });
-
+    if (groupRef.current && moving) {
       gsap.to(groupRef.current.position, {
         delay: sinkStart,
-        duration: duration - sinkStart,
+        duration: 60,
         ease: Power2.easeIn,
         y: -300,
       });
     }
-  }, [duration, sinkStart, size, startedMoving]);
+  }, [duration, sinkStart, size, moving]);
 
   const handleSetMoving = useCallback(() => {
     setMoving(true);
@@ -77,7 +50,7 @@ const City2 = ({
   }, []);
 
   return (
-    <group position={[0, 0, -size * START_POSITION_Z]} ref={groupRef}>
+    <group ref={groupRef}>
       <Garage
         position={[0, 0, size * START_POSITION_Z]}
         doorDisabled={moving}
@@ -100,7 +73,7 @@ const City2 = ({
           <BouncingBuildings
             textureProps={textureProps}
             size={size}
-            started={startedMoving}
+            started={moving}
             barNumToShowLights={PARTS.verse - 1}
             active={visible}
             numberOfBuildings={120}

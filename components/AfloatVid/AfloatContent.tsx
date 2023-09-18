@@ -4,13 +4,13 @@ import { FirstPersonControls, PointerLockControls, Stats } from '@react-three/dr
 import { Canvas, useFrame } from '@react-three/fiber';
 
 import { Ocean } from '../Terrain';
-import { BobbingItem, City, Islands, Raft } from './components';
+import { BobbingItem, City, Islands, Movement, Raft, ShippingScene } from './components';
 import { FloatingScene } from './components/FloatingStuff';
 import Sky from './components/Sky';
 import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
 import { SongContext } from './components/SongProvider';
 import SongProvider from './components/SongProvider/SongProvider';
-import { PARTS } from './consts';
+import { PARTS, START_POSITION_Z } from './consts';
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -28,6 +28,7 @@ const AfloatContent = () => {
   const [showCity, setShowCity] = useState(true);
   const [showSkyStreaks, setShowSkyStreaks] = useState(false);
   const [timeSpeedMultiplyer, setTimeSpeedMultiplyer] = useState(0.5);
+  const [showShippingScene, setShowShippingScene] = useState(false);
 
   const { handlePlay, barRef } = useContext(SongContext);
 
@@ -37,10 +38,13 @@ const AfloatContent = () => {
   }, [handlePlay]);
 
   useFrame(() => {
+    if (barRef.current > PARTS.verse) {
+      setShowShippingScene(true);
+    }
     if (barRef.current > PARTS.break - 0.25) {
       setShowSkyStreaks(true);
     }
-    if (barRef.current > PARTS.verse2 - 4) {
+    if (barRef.current > PARTS.verse2 - 6) {
       setShowFloatingStuff(true);
     }
     if (barRef.current > PARTS.verse2) {
@@ -50,6 +54,7 @@ const AfloatContent = () => {
       setShowFloatingStuff(false);
       setShowSkyStreaks(false);
       setShowIslands(true);
+      setShowShippingScene(false);
     }
     if (barRef.current > PARTS.chorus - 0.5 && barRef.current < PARTS.chorus) {
       setTimeSpeedMultiplyer(400);
@@ -77,6 +82,8 @@ const AfloatContent = () => {
 
   return (
     <Suspense fallback={<></>}>
+      <Stats />
+
       <PointerLockControls enabled={moving} makeDefault ref={controls} />
 
       <FirstPersonControls
@@ -100,16 +107,22 @@ const AfloatContent = () => {
 
       <SkyStreaks visible={showSkyStreaks} numStreaks={20} />
 
-      <City
-        visible={showCity}
-        duration={parts.verse2}
-        sinkStart={parts.break1 - 20}
-        size={500}
+      <Movement
+        start={-500 * START_POSITION_Z}
+        end={1100}
+        duration={300}
         moving={moving}
-        setMoving={handleSetMoving}
-      />
-
-      <Stats />
+      >
+        <ShippingScene visible={showShippingScene} position={[0, 0, -320]} />
+        <City
+          visible={showCity}
+          duration={300}
+          sinkStart={parts.break1 - 20}
+          size={500}
+          moving={moving}
+          setMoving={handleSetMoving}
+        />
+      </Movement>
 
       <Islands
         visible={showIslands}

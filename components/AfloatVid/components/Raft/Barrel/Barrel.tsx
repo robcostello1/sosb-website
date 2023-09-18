@@ -1,9 +1,9 @@
-import { memo, useMemo } from "react";
-import { BufferGeometry, FrontSide, Mesh, MeshStandardMaterial } from "three";
-import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { memo, useMemo } from 'react';
+import { BufferGeometry, FrontSide, Mesh, MeshStandardMaterial } from 'three';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import { InstancedMeshProps, MeshProps, useLoader } from "@react-three/fiber";
+import { InstancedMeshProps, MeshProps, useLoader } from '@react-three/fiber';
 
 const SCALE = 0.2;
 

@@ -1,16 +1,10 @@
-import React, { useRef, useMemo, memo } from "react";
-import {
-  extend,
-  useThree,
-  useLoader,
-  useFrame,
-  Object3DNode,
-} from "@react-three/fiber";
-import * as THREE from "three";
+import React, { memo, useMemo, useRef } from 'react';
+import * as THREE from 'three';
+import { Water, WaterOptions } from 'three/examples/jsm/objects/Water.js';
 
-import { Water, WaterOptions } from "three/examples/jsm/objects/Water.js";
-import { RGBA_ASTC_10x10_Format } from "three";
-import { Triplet } from "../../utils/types";
+import { extend, Object3DNode, useFrame, useLoader, useThree } from '@react-three/fiber';
+
+import { Triplet } from '../../utils/types';
 
 extend({ Water });
 declare global {
@@ -31,10 +25,7 @@ const Ocean = ({
 }) => {
   const ref = useRef<Water>(null);
   const gl = useThree((state) => state.gl);
-  const waterNormals = useLoader(
-    THREE.TextureLoader,
-    "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/waternormals.jpg"
-  );
+  const waterNormals = useLoader(THREE.TextureLoader, "/waternormals.jpg");
 
   waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
   const geom = useMemo(() => new THREE.PlaneGeometry(30000, 30000), []);

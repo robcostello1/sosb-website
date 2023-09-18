@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import { Box, OrbitControls, Stats } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Box, OrbitControls, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import Ocean from "../../../Terrain/Ocean";
-import SongProvider from "../SongProvider";
-import Islands from "./Islands";
+import Ocean from '../../../Terrain/Ocean';
+import SongProvider from '../SongProvider';
+import Islands from './Islands';
 
 export default {
   title: "Islands",
@@ -21,7 +21,7 @@ const Template: ComponentStory<typeof Islands> = (args) => {
   return (
     <Canvas
       camera={{
-        position: [3, 4, 5],
+        position: [3, 4, 100],
       }}
     >
       <Stats />
@@ -29,9 +29,13 @@ const Template: ComponentStory<typeof Islands> = (args) => {
       <OrbitControls />
 
       <ambientLight intensity={0.1} />
-      <directionalLight position={[10, 3, 5]} />
+      <directionalLight position={[100, 30, 50]} />
 
-      <Ocean />
+      {/* <Ocean /> */}
+
+      {/* <Box args={[50, 50, 50]} rotation={[1, 1, 1]}>
+        <meshStandardMaterial />
+      </Box> */}
 
       <SongProvider autoStart>
         <Islands {...args} />
@@ -46,4 +50,12 @@ Default.args = {
   visible: true,
   scale: 200,
   bounce: 0.6,
+};
+
+export const Static = Template.bind({});
+
+Static.args = {
+  visible: true,
+  scale: 200,
+  bounce: 0,
 };
