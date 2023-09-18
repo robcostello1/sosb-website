@@ -1,5 +1,5 @@
 import gsap, { Linear } from 'gsap';
-import { Children, memo, ReactElement, ReactNode, useEffect, useMemo, useRef } from 'react';
+import { Children, memo, ReactNode, useEffect, useMemo, useRef } from 'react';
 import { Group } from 'three';
 
 import { useFrame } from '@react-three/fiber';

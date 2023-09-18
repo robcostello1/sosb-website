@@ -7,3 +7,5 @@ export const PARTS = {
   chorus: 88,
   outro: 104,
 };
+
+export const START_POSITION_Z = 0.3;
