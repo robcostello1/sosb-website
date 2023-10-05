@@ -1,12 +1,12 @@
-import gsap, { Linear } from 'gsap';
-import { Children, memo, ReactNode, useEffect, useMemo, useRef } from 'react';
-import { Group } from 'three';
+import gsap, { Linear } from "gsap";
+import { Children, memo, ReactNode, useEffect, useMemo, useRef } from "react";
+import { Group } from "three";
 
-import { useFrame } from '@react-three/fiber';
-import { Physics, RapierRigidBody, RigidBody } from '@react-three/rapier';
+import { useFrame } from "@react-three/fiber";
+import { Physics, RapierRigidBody, RigidBody } from "@react-three/rapier";
 
-import { weightedRandom } from '../City/utils';
-import FloatingItem, { FloatingItemProps } from './FloatingItem';
+import { weightedRandom } from "../City/utils";
+import FloatingItem, { FloatingItemProps } from "./FloatingItem";
 
 type FloatingStuffProps = {
   from: number;
@@ -38,10 +38,11 @@ const FloatingStuff = ({
     () => {
       const objectProps: (FloatingItemProps & { contents: ReactNode })[] = [];
       const childrenArray = Children.toArray(children);
-      const contents =
-        childrenArray[Math.floor(Math.random() * childrenArray.length)];
 
       for (let index = 0; index < numberOfItems; index++) {
+        const randomIndex = Math.floor(Math.random() * childrenArray.length);
+        const contents = childrenArray[randomIndex];
+
         const depth = Math.random() * -50;
         objectProps.push({
           key: index,

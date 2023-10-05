@@ -1,16 +1,23 @@
-import gsap from 'gsap';
-import { useRef, useState } from 'react';
-import { DoubleSide, Mesh, PlaneGeometry, RawShaderMaterial, Uniform, Vector3 } from 'three';
+import gsap from "gsap";
+import { useRef, useState } from "react";
+import {
+  DoubleSide,
+  Mesh,
+  PlaneGeometry,
+  RawShaderMaterial,
+  Uniform,
+  Vector3,
+} from "three";
 
-import { useFrame } from '@react-three/fiber';
+import { useFrame } from "@react-three/fiber";
 
-import { Triplet } from '../../../../utils/types';
+import { Triplet } from "../../../../utils/types";
 // @ts-ignore
-import testFragmentShader from '../../shaders/test/fragment.glsl';
+import testFragmentShader from "../../shaders/test/fragment.glsl";
 // @ts-ignore
-import testVertexShader from '../../shaders/test/vertex.glsl';
-import { useSongContext } from '../SongProvider';
-import { getPosition } from './utils';
+import testVertexShader from "../../shaders/test/vertex.glsl";
+import { useSongContext } from "../SongProvider";
+import { getPosition } from "./utils";
 
 type IslandsProps = {
   scale: number;

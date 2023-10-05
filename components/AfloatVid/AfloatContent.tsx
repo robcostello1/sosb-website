@@ -1,18 +1,30 @@
-import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 
-import { FirstPersonControls, PointerLockControls, Stats } from '@react-three/drei';
-import { Canvas, useFrame } from '@react-three/fiber';
+import {
+  FirstPersonControls,
+  PointerLockControls,
+  Stats,
+} from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 
-import { Ocean } from '../Terrain';
-import { BobbingItem, City, Islands, Movement, Raft, ShippingScene } from './components';
-import GlitchBuildings from './components/City/GlitchBuildings';
-import { useBuildingTextures } from './components/City/hooks';
-import { FloatingScene } from './components/FloatingStuff';
-import Sky from './components/Sky';
-import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
-import { useSongContext } from './components/SongProvider';
-import SongProvider from './components/SongProvider/SongProvider';
-import { PARTS, START_POSITION_Z } from './consts';
+import { Ocean } from "../Terrain";
+import {
+  BobbingItem,
+  City,
+  Islands,
+  Movement,
+  Raft,
+  ShippingScene,
+} from "./components";
+import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
+import GlitchBuildings from "./components/City/GlitchBuildings";
+import { useBuildingTextures } from "./components/City/hooks";
+import { FloatingScene } from "./components/FloatingStuff";
+import Sky from "./components/Sky";
+import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
+import { useSongContext } from "./components/SongProvider";
+import SongProvider from "./components/SongProvider/SongProvider";
+import { PARTS, START_POSITION_Z } from "./consts";
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -33,9 +45,6 @@ const AfloatContent = () => {
   const [showShippingScene, setShowShippingScene] = useState(false);
   const [showGlitch, setGlitch] = useState(false);
 
-  // TODO duplicated in City2
-  const textureProps = useBuildingTextures();
-
   const { handlePlay, barRef } = useSongContext();
 
   const handleSetMoving = useCallback(() => {
@@ -44,7 +53,7 @@ const AfloatContent = () => {
   }, [handlePlay]);
 
   useFrame(() => {
-    if (barRef.current > PARTS.verse) {
+    if (barRef.current > PARTS.verse - 4) {
       setShowShippingScene(true);
     }
     if (barRef.current > PARTS.break - 0.25) {
@@ -73,6 +82,7 @@ const AfloatContent = () => {
       setShowSkyStreaks(true);
     }
     if (barRef.current > PARTS.outro) {
+      setGlitch(false);
       setShowSkyStreaks(false);
       setTimeSpeedMultiplyer(2);
     }
@@ -114,37 +124,39 @@ const AfloatContent = () => {
 
       <SkyStreaks visible={showSkyStreaks} numStreaks={20} />
 
-      <Movement
-        start={-500 * START_POSITION_Z}
-        end={1100}
-        duration={300}
-        moving={moving}
-      >
-        <ShippingScene visible={showShippingScene} position={[0, 0, -320]} />
-        <City
-          visible={showCity}
+      <BuildingTextureProvider>
+        <Movement
+          start={-500 * START_POSITION_Z}
+          end={1100}
           duration={300}
-          sinkStart={parts.break1 - 20}
-          size={500}
           moving={moving}
-          setMoving={handleSetMoving}
-        />
-      </Movement>
+        >
+          <ShippingScene visible={showShippingScene} position={[0, 0, -320]} />
+          <City
+            visible={showCity}
+            duration={300}
+            sinkStart={parts.break1 - 20}
+            size={500}
+            moving={moving}
+            setMoving={handleSetMoving}
+          />
+        </Movement>
+
+        <GlitchBuildings visible={showGlitch} />
+      </BuildingTextureProvider>
 
       <Islands
         visible={showIslands}
         scale={200}
         position={[-105, -3, 0]}
-        bounce={0.6}
+        bounce={0.2}
       />
       <Islands
         visible={showIslands}
         scale={200}
         position={[105, -3, 0]}
-        bounce={0.6}
+        bounce={0.2}
       />
-
-      <GlitchBuildings textures={textureProps} visible={showGlitch} />
 
       <BobbingItem>
         <Raft />

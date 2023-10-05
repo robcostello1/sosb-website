@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { OrbitControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { OrbitControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import ScreenContents from '../City/Screen/ScreenContents';
-import FloatingStuff from './FloatingStuff';
+import ScreenContents from "../City/Screen/ScreenContents";
+import Fridge from "../Fridge";
+import FloatingStuff from "./FloatingStuff";
 
 export default {
   title: "Sea/FloatingStuff",
@@ -34,6 +35,7 @@ const Template: ComponentStory<typeof FloatingStuff> = (args) => {
           videoScale={1}
           start={true}
         />
+        <Fridge />
       </FloatingStuff>
     </Canvas>
   );

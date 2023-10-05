@@ -1,5 +1,8 @@
-import ScreenContents from '../../City/Screen/ScreenContents';
-import FloatingStuff from '../FloatingStuff';
+import { useLoader } from "@react-three/fiber";
+
+import ScreenContents from "../../City/Screen/ScreenContents";
+import Fridge from "../../Fridge";
+import FloatingStuff from "../FloatingStuff";
 
 type FloatingSceneProps = {
   visible: boolean;
@@ -24,6 +27,7 @@ const FloatingScene = ({ visible }: FloatingSceneProps) => {
         // TODO align with song
         start={true}
       />
+      <Fridge />
     </FloatingStuff>
   );
 };

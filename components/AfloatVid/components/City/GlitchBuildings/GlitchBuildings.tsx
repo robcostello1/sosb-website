@@ -1,24 +1,25 @@
-import { useMemo } from 'react';
-import { Vector3 } from 'three';
+import { memo, useContext, useMemo } from "react";
+import { Vector3 } from "three";
 
-import { TextureProps } from '../types';
-import GlitchBuilding from './GlitchBuilding/GlitchBuilding';
+import { BuildingTextureContext } from "../BuildingTextureProvider/BuildingTextureProvider";
+import { TextureProps } from "../types";
+import GlitchBuilding from "./GlitchBuilding/GlitchBuilding";
 
 type GlitchBuildingsProps = {
   numberOfBuildings?: number;
-  textures: TextureProps[];
   spacingX?: number;
   spacingZ?: number;
   visible?: boolean;
 };
 
 const GlitchBuildings = ({
-  textures,
   numberOfBuildings = 20,
   spacingX = 100,
   spacingZ = 500,
   visible,
 }: GlitchBuildingsProps) => {
+  const textures = useContext(BuildingTextureContext);
+
   const buildingParams = useMemo(() => {
     const params: { position: Vector3 }[] = [];
     for (let index = 0; index < numberOfBuildings; index++) {
@@ -49,4 +50,4 @@ const GlitchBuildings = ({
   );
 };
 
-export default GlitchBuildings;
+export default memo(GlitchBuildings);

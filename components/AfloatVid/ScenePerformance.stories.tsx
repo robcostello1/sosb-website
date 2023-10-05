@@ -1,13 +1,15 @@
-import React, { useEffect, useRef } from 'react';
-import { Mesh } from 'three';
+import React, { useRef } from "react";
+import { Mesh } from "three";
 
-import { OrbitControls, PointerLockControls, Sphere, StatsGl } from '@react-three/drei';
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { PointerLockControls, Sphere, StatsGl } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 
-import { Ocean } from '../Terrain';
-import { City, Islands } from './components';
-import { FloatingScene } from './components/FloatingStuff';
-import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
+import { Ocean } from "../Terrain";
+import { City, Islands, ShippingScene } from "./components";
+import { GlitchBuildings } from "./components/City";
+import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
+import { FloatingScene } from "./components/FloatingStuff";
+import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
 
 export default {
   title: "Scene Performance",
@@ -17,7 +19,14 @@ export default {
   },
   argTypes: {
     selectedScene: {
-      options: ["city", "floating", "islands", "sky streaks"],
+      options: [
+        "city",
+        "floating",
+        "islands",
+        "sky streaks",
+        "glitch buildings",
+        "shipping",
+      ],
       control: { type: "check" },
     },
   },
@@ -25,7 +34,14 @@ export default {
 
 type TemplateProps = {
   showOcean: boolean;
-  selectedScene: ("city" | "floating" | "islands" | "sky streaks")[];
+  selectedScene: (
+    | "city"
+    | "floating"
+    | "islands"
+    | "sky streaks"
+    | "glitch buildings"
+    | "shipping"
+  )[];
 };
 
 const handleSetMoving = () => {};
@@ -49,6 +65,9 @@ const Demo = () => {
 };
 
 const Template = (args: TemplateProps) => {
+  const shouldShow = (scene: TemplateProps["selectedScene"][number]) =>
+    args.selectedScene.includes(scene);
+
   return (
     <Canvas
       camera={{
@@ -65,35 +84,38 @@ const Template = (args: TemplateProps) => {
       <Demo />
       {args.showOcean && <Ocean />}
 
-      <City
-        visible={args.selectedScene.includes("city")}
-        duration={1000}
-        sinkStart={500}
-        size={500}
-        moving={true}
-        setMoving={handleSetMoving}
-      />
+      <BuildingTextureProvider>
+        <City
+          visible={shouldShow("city")}
+          duration={1000}
+          sinkStart={500}
+          size={500}
+          moving={true}
+          setMoving={handleSetMoving}
+        />
 
-      <Islands
-        visible={args.selectedScene.includes("islands")}
-        scale={200}
-        position={[-105, -3, 0]}
-        bounce={0.6}
-      />
+        <Islands
+          visible={shouldShow("islands")}
+          scale={200}
+          position={[-105, -3, 0]}
+          bounce={0.6}
+        />
 
-      <Islands
-        visible={args.selectedScene.includes("islands")}
-        scale={200}
-        position={[105, -3, 0]}
-        bounce={0.6}
-      />
+        <Islands
+          visible={shouldShow("islands")}
+          scale={200}
+          position={[105, -3, 0]}
+          bounce={0.6}
+        />
 
-      <FloatingScene visible={args.selectedScene.includes("floating")} />
+        <ShippingScene visible={shouldShow("shipping")} />
 
-      <SkyStreaks
-        visible={args.selectedScene.includes("sky streaks")}
-        numStreaks={20}
-      />
+        <FloatingScene visible={shouldShow("floating")} />
+
+        <SkyStreaks visible={shouldShow("sky streaks")} numStreaks={20} />
+
+        <GlitchBuildings visible={shouldShow("glitch buildings")} />
+      </BuildingTextureProvider>
     </Canvas>
   );
 };
