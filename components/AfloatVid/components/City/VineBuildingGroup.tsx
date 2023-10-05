@@ -1,8 +1,8 @@
-import { Fragment, memo, useContext, useMemo, useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 
 import { useFrame } from '@react-three/fiber';
 
-import { SongContext } from '../SongProvider';
+import { useSongContext } from '../SongProvider';
 import BuildingWithVines from './BuildingWithVines';
 import { useBuildingGroupParams } from './hooks';
 import { TextureProps } from './types';
@@ -27,7 +27,7 @@ const VineBuildingGroup = ({ textureProps, size }: VineBuildingGroupProps) => {
     }))
   );
 
-  const { barRef } = useContext(SongContext);
+  const { barRef } = useSongContext();
   const lastBarRef = useRef(barRef.current);
 
   useFrame(() => {

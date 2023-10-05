@@ -8,6 +8,7 @@ import {
 import { MeshProps, useFrame } from '@react-three/fiber';
 
 import { TextureProps } from '../types';
+import { applyScaledTexture } from '../utils';
 import { OnFrameFunc } from './types';
 
 export type BaseBuildingProps = Pick<MeshProps, "position" | "rotation"> & {
@@ -15,6 +16,7 @@ export type BaseBuildingProps = Pick<MeshProps, "position" | "rotation"> & {
   scale: Vector3;
   textureProps: TextureProps;
   useLights?: boolean;
+  visible?: boolean;
   onFrame?: OnFrameFunc;
 };
 
@@ -45,29 +47,13 @@ const BaseBuilding = forwardRef<
     const localRef = useRef<Mesh<BoxGeometry, MeshStandardMaterial>>(null);
     const localLightRef = useRef<Mesh<BoxGeometry, MeshBasicMaterial>>(null);
 
-    const clonedTextures = useMemo(() => {
-      return Object.entries(textureProps).reduce<TextureProps>(
-        (acc, [key, texture]) => {
-          const clonedTexture = texture.clone();
-
-          clonedTexture.repeat.x =
-            (DEFAULT_BUILDING_WIDTH * scale.x) / BUILDING_TEXTURE_WIDTH;
-          clonedTexture.repeat.y =
-            (DEFAULT_BUILDING_HEIGHT * scale.y) / BUILDING_TEXTURE_HEIGHT;
-          // TODO needs to be expressly set here
-          clonedTexture.wrapS = RepeatWrapping;
-          clonedTexture.wrapT = RepeatWrapping;
-
-          acc[key as keyof TextureProps] = clonedTexture;
-          return acc;
-        },
-        {} as TextureProps
-      );
-    }, [textureProps, scale]);
+    const clonedTextures = useMemo(
+      () => applyScaledTexture(textureProps, scale),
+      [textureProps, scale]
+    );
 
     useFrame(({ clock: { elapsedTime } }) => {
       if (localRef.current) {
-        // console.log(onFrame);
         onFrame?.({
           elapsedTime,
           light: localLightRef.current || undefined,

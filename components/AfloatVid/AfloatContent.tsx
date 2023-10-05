@@ -1,14 +1,16 @@
-import { Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 
 import { FirstPersonControls, PointerLockControls, Stats } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 
 import { Ocean } from '../Terrain';
 import { BobbingItem, City, Islands, Movement, Raft, ShippingScene } from './components';
+import GlitchBuildings from './components/City/GlitchBuildings';
+import { useBuildingTextures } from './components/City/hooks';
 import { FloatingScene } from './components/FloatingStuff';
 import Sky from './components/Sky';
 import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
-import { SongContext } from './components/SongProvider';
+import { useSongContext } from './components/SongProvider';
 import SongProvider from './components/SongProvider/SongProvider';
 import { PARTS, START_POSITION_Z } from './consts';
 
@@ -29,8 +31,12 @@ const AfloatContent = () => {
   const [showSkyStreaks, setShowSkyStreaks] = useState(false);
   const [timeSpeedMultiplyer, setTimeSpeedMultiplyer] = useState(0.5);
   const [showShippingScene, setShowShippingScene] = useState(false);
+  const [showGlitch, setGlitch] = useState(false);
 
-  const { handlePlay, barRef } = useContext(SongContext);
+  // TODO duplicated in City2
+  const textureProps = useBuildingTextures();
+
+  const { handlePlay, barRef } = useSongContext();
 
   const handleSetMoving = useCallback(() => {
     handlePlay();
@@ -61,6 +67,7 @@ const AfloatContent = () => {
     }
     if (barRef.current > PARTS.chorus) {
       setTimeSpeedMultiplyer(0.5);
+      setGlitch(true);
     }
     if (barRef.current > PARTS.outro - 0.25) {
       setShowSkyStreaks(true);
@@ -136,6 +143,8 @@ const AfloatContent = () => {
         position={[105, -3, 0]}
         bounce={0.6}
       />
+
+      <GlitchBuildings textures={textureProps} visible={showGlitch} />
 
       <BobbingItem>
         <Raft />

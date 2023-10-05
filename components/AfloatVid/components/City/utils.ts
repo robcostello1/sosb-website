@@ -1,6 +1,9 @@
-import { MirroredRepeatWrapping, RepeatWrapping, Texture } from 'three';
+import { MirroredRepeatWrapping, RepeatWrapping, Texture, Vector3 } from 'three';
 
 import { Triplet } from '../../../../utils/types';
+import {
+    BUILDING_TEXTURE_HEIGHT, BUILDING_TEXTURE_WIDTH, DEFAULT_BUILDING_HEIGHT, DEFAULT_BUILDING_WIDTH
+} from './consts';
 import { TextureProps } from './types';
 
 export const getBuildingAttributes = (size: number, index: number) => {
@@ -89,3 +92,27 @@ export const getBuildingGroupParams = ({
 
   return buildingArray;
 };
+
+export const getScaledTexture = (scale: Vector3) => ({
+  x: (DEFAULT_BUILDING_WIDTH * scale.x) / BUILDING_TEXTURE_WIDTH,
+  y: (DEFAULT_BUILDING_HEIGHT * scale.y) / BUILDING_TEXTURE_HEIGHT,
+});
+
+export const applyScaledTexture = (
+  textureProps: TextureProps,
+  scale: Vector3
+) =>
+  Object.entries(textureProps).reduce<TextureProps>((acc, [key, texture]) => {
+    const clonedTexture = texture.clone();
+
+    const { x, y } = getScaledTexture(scale);
+
+    clonedTexture.repeat.x = x;
+    clonedTexture.repeat.y = y;
+    // TODO needs to be expressly set here
+    clonedTexture.wrapS = RepeatWrapping;
+    clonedTexture.wrapT = RepeatWrapping;
+
+    acc[key as keyof TextureProps] = clonedTexture;
+    return acc;
+  }, {} as TextureProps);

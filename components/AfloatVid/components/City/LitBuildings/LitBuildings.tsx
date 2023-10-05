@@ -1,7 +1,7 @@
-import { memo, useCallback, useContext, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
 import { getRandomColor } from '../../../../../utils/utils';
-import { SongContext } from '../../SongProvider/context';
+import { useSongContext } from '../../SongProvider';
 import { OnFrameFunc } from '../BaseBuilding';
 import BouncingBuilding from '../BouncingBuilding/BouncingBuilding';
 import { useBuildingGroupParams } from '../hooks';
@@ -31,7 +31,7 @@ const LitBuildings = ({
     textureProps: limitedTextures,
   });
 
-  const { barRef } = useContext(SongContext);
+  const { barRef } = useSongContext();
 
   const handleFrame = useCallback<OnFrameFunc>(
     ({ mesh, light }) => {

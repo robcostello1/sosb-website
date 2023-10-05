@@ -1,5 +1,5 @@
 import gsap from 'gsap';
-import { useContext, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { DoubleSide, Mesh, PlaneGeometry, RawShaderMaterial, Uniform, Vector3 } from 'three';
 
 import { useFrame } from '@react-three/fiber';
@@ -9,7 +9,7 @@ import { Triplet } from '../../../../utils/types';
 import testFragmentShader from '../../shaders/test/fragment.glsl';
 // @ts-ignore
 import testVertexShader from '../../shaders/test/vertex.glsl';
-import { SongContext } from '../SongProvider';
+import { useSongContext } from '../SongProvider';
 import { getPosition } from './utils';
 
 type IslandsProps = {
@@ -28,7 +28,7 @@ const Islands = ({
   bounce,
 }: IslandsProps) => {
   const time = useRef(0);
-  const { analyserRef } = useContext(SongContext);
+  const { analyserRef } = useSongContext();
   const meshRef = useRef<Mesh<PlaneGeometry, RawShaderMaterial>>(null);
 
   const [finalPosition] = useState(() => getPosition(position, visible));
