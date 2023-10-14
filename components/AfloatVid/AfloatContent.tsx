@@ -1,30 +1,21 @@
-import { Suspense, useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import {
-  FirstPersonControls,
-  PointerLockControls,
-  Stats,
-} from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Box, FirstPersonControls, PointerLockControls, Stats } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
 
-import { Ocean } from "../Terrain";
+import { Triplet } from '../../utils/types';
+import { Ocean } from '../Terrain';
+import styles from './AfloatContent.module.css';
 import {
-  BobbingItem,
-  City,
-  Islands,
-  Movement,
-  Raft,
-  ShippingScene,
-} from "./components";
-import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
-import GlitchBuildings from "./components/City/GlitchBuildings";
-import { useBuildingTextures } from "./components/City/hooks";
-import { FloatingScene } from "./components/FloatingStuff";
-import Sky from "./components/Sky";
-import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
-import { useSongContext } from "./components/SongProvider";
-import SongProvider from "./components/SongProvider/SongProvider";
-import { PARTS, START_POSITION_Z } from "./consts";
+    BobbingItem, BuildingOrb, City, Islands, Movement, Raft, ShippingScene
+} from './components';
+import BuildingTextureProvider from './components/City/BuildingTextureProvider/BuildingTextureProvider';
+import { FloatingScene } from './components/FloatingStuff';
+import Sky from './components/Sky';
+import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
+import { useSongContext } from './components/SongProvider';
+import SongProvider from './components/SongProvider/SongProvider';
+import { PARTS, START_POSITION_Z } from './consts';
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -35,6 +26,14 @@ const parts = {
   hook: 140.448,
 };
 
+const BUILDING_ORB_POSITION: Triplet = [0, 40, -100];
+
+const raft = (
+  <BobbingItem>
+    <Raft />
+  </BobbingItem>
+);
+
 const AfloatContent = () => {
   const [moving, setMoving] = useState(false);
   const [showFloatingStuff, setShowFloatingStuff] = useState(false);
@@ -43,7 +42,7 @@ const AfloatContent = () => {
   const [showSkyStreaks, setShowSkyStreaks] = useState(false);
   const [timeSpeedMultiplyer, setTimeSpeedMultiplyer] = useState(0.5);
   const [showShippingScene, setShowShippingScene] = useState(false);
-  const [showGlitch, setGlitch] = useState(false);
+  const [showOrb, setShowOrb] = useState(false);
 
   const { handlePlay, barRef } = useSongContext();
 
@@ -71,20 +70,21 @@ const AfloatContent = () => {
       setShowIslands(true);
       setShowShippingScene(false);
     }
-    if (barRef.current > PARTS.chorus - 0.5 && barRef.current < PARTS.chorus) {
-      setTimeSpeedMultiplyer(400);
-    }
-    if (barRef.current > PARTS.chorus) {
+    // if (barRef.current > PARTS.chorus - 0.5 && barRef.current < PARTS.chorus) {
+    //   setTimeSpeedMultiplyer(400);
+    // }
+    if (barRef.current > PARTS.chorus - 3) {
       setTimeSpeedMultiplyer(0.5);
-      setGlitch(true);
+      setShowOrb(true);
     }
     if (barRef.current > PARTS.outro - 0.25) {
       setShowSkyStreaks(true);
     }
     if (barRef.current > PARTS.outro) {
-      setGlitch(false);
+      // setShowOrb(false);
       setShowSkyStreaks(false);
       setTimeSpeedMultiplyer(2);
+      setShowOrb(false);
     }
   });
 
@@ -96,6 +96,33 @@ const AfloatContent = () => {
       controls.current?.lock();
     }
   }, [controls, moving]);
+
+  const buildingOrb = useMemo(
+    () => <BuildingOrb position={BUILDING_ORB_POSITION} active={showOrb} />,
+    [showOrb]
+  );
+
+  const city = useMemo(
+    () => (
+      <Movement
+        start={-500 * START_POSITION_Z}
+        end={1100}
+        duration={300}
+        moving={moving}
+      >
+        <ShippingScene visible={showShippingScene} position={[0, 0, -320]} />
+        <City
+          visible={showCity}
+          duration={300}
+          sinkStart={parts.break1 - 20}
+          size={500}
+          moving={moving}
+          setMoving={handleSetMoving}
+        />
+      </Movement>
+    ),
+    [handleSetMoving, moving, showCity, showShippingScene]
+  );
 
   return (
     <Suspense fallback={<></>}>
@@ -125,24 +152,8 @@ const AfloatContent = () => {
       <SkyStreaks visible={showSkyStreaks} numStreaks={20} />
 
       <BuildingTextureProvider>
-        <Movement
-          start={-500 * START_POSITION_Z}
-          end={1100}
-          duration={300}
-          moving={moving}
-        >
-          <ShippingScene visible={showShippingScene} position={[0, 0, -320]} />
-          <City
-            visible={showCity}
-            duration={300}
-            sinkStart={parts.break1 - 20}
-            size={500}
-            moving={moving}
-            setMoving={handleSetMoving}
-          />
-        </Movement>
-
-        <GlitchBuildings visible={showGlitch} />
+        {city}
+        {buildingOrb}
       </BuildingTextureProvider>
 
       <Islands
@@ -158,15 +169,13 @@ const AfloatContent = () => {
         bounce={0.2}
       />
 
-      <BobbingItem>
-        <Raft />
-      </BobbingItem>
+      {raft}
     </Suspense>
   );
 };
 
 const AfloatContentWrapper = () => (
-  <Canvas shadows gl={{ precision: "mediump" }}>
+  <Canvas className={styles.container} shadows gl={{ precision: "mediump" }}>
     <SongProvider>
       <AfloatContent />
     </SongProvider>

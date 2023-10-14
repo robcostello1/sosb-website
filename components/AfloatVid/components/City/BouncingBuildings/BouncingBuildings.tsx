@@ -1,10 +1,7 @@
-import { memo, useCallback, useContext, useRef, useState } from 'react';
+import { memo, useRef, useState } from 'react';
 
 import { useFrame } from '@react-three/fiber';
 
-import { getRandomColor } from '../../../../../utils/utils';
-import { SongContext } from '../../SongProvider';
-import { OnFrameFunc } from '../BaseBuilding';
 import BouncingBuilding from '../BouncingBuilding';
 import { useBuildingGroupParams, useBuildingLights } from '../hooks';
 import { TextureProps } from '../types';

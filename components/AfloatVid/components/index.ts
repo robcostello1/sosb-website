@@ -6,4 +6,4 @@ export { default as FloatingStuff } from "./FloatingStuff";
 export { default as ShippingScene } from "./ShippingScene";
 export { default as Movement } from "./Movement";
 export { default as Fridge } from "./Fridge";
-export { City, Building, BuildingWithVines } from "./City";
+export { City, Building, BuildingWithVines, BuildingOrb } from "./City";

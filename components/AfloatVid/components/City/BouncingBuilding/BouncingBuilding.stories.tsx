@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { OrbitControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { OrbitControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { useBuildingTextures } from '../hooks';
-import BouncingBuilding, { BouncingBuildingProps } from './BouncingBuilding';
+import { useBuildingTextures } from "../hooks";
+import BouncingBuilding, { BouncingBuildingProps } from "./BouncingBuilding";
 
 export default {
   title: "City/BouncingBuilding",
@@ -34,11 +34,7 @@ const BuildingWrapper = ({
   const textureProps = useBuildingTextures();
 
   return (
-    <BouncingBuilding
-      key={texture}
-      textureProps={textureProps[texture - 1]}
-      {...props}
-    />
+    <BouncingBuilding textureProps={textureProps[texture - 1]} {...props} />
   );
 };
 

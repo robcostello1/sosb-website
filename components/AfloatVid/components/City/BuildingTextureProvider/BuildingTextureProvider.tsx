@@ -1,7 +1,7 @@
-import { createContext, ReactNode } from "react";
+import { createContext, memo, ReactNode } from 'react';
 
-import { useBuildingTextures } from "../hooks";
-import { TextureProps } from "../types";
+import { useBuildingTextures } from '../hooks';
+import { TextureProps } from '../types';
 
 type BuildingTextureProviderProps = {
   children: ReactNode;
@@ -21,4 +21,4 @@ const BuildingTextureProvider = ({
   );
 };
 
-export default BuildingTextureProvider;
+export default memo(BuildingTextureProvider);

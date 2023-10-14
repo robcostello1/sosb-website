@@ -1,5 +1,5 @@
 import gsap, { Linear, Power1 } from 'gsap';
-import { ReactNode, useEffect, useRef } from 'react';
+import { memo, ReactNode, useEffect, useRef } from 'react';
 import { Group } from 'three';
 
 type MovementProps = {
@@ -43,4 +43,4 @@ const Movement = ({
   );
 };
 
-export default Movement;
+export default memo(Movement);

@@ -35,31 +35,17 @@ const Ocean = ({
       textureHeight: 1024,
       waterNormals,
       sunDirection: new THREE.Vector3(),
-      // sunColor: 0xeb8934,
       waterColor: waterColor,
       distortionScale: 0.3,
       fog: false,
       // @ts-ignore
       format: gl.encoding,
-
-      // textureWidth?: number;
-      // textureHeight?: number;
-      // clipBias?: number;
-      // alpha?: number;
-      // time?: number;
-      // waterNormals?: Texture;
-      // sunDirection?: Vector3;
-      // sunColor?: ColorRepresentation;
-      // waterColor?: ColorRepresentation;
-      // eye?: Vector3;
-      // distortionScale?: number;
-      // side?: Side;
-      // fog?: boolean;
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [waterNormals]
   );
-  useFrame((state, delta) => {
+
+  useFrame((_, delta) => {
     if (ref.current) {
       ref.current.material.uniforms.time.value += delta / 5;
     }

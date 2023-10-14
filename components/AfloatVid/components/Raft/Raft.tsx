@@ -74,7 +74,7 @@ const Raft = ({ setCamera = true }: RaftProps) => {
   return <RaftContent />;
 };
 
-export function RaftContent({}: RaftProps) {
+export const RaftContent = memo(() => {
   const plankTexture = useTexture(
     {
       map: "/maps/optimised/wood_planks_grey_diff_1k.jpg",
@@ -160,6 +160,6 @@ export function RaftContent({}: RaftProps) {
       ))}
     </group>
   );
-}
+});
 
 export default memo(Raft);

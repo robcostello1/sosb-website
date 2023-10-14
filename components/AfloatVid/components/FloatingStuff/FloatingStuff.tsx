@@ -1,12 +1,12 @@
-import gsap, { Linear } from "gsap";
-import { Children, memo, ReactNode, useEffect, useMemo, useRef } from "react";
-import { Group } from "three";
+import gsap, { Linear } from 'gsap';
+import { Children, memo, ReactNode, useEffect, useMemo, useRef } from 'react';
+import { Group } from 'three';
 
-import { useFrame } from "@react-three/fiber";
-import { Physics, RapierRigidBody, RigidBody } from "@react-three/rapier";
+import { useFrame } from '@react-three/fiber';
+import { Physics, RapierRigidBody, RigidBody } from '@react-three/rapier';
 
-import { weightedRandom } from "../City/utils";
-import FloatingItem, { FloatingItemProps } from "./FloatingItem";
+import { weightedRandom } from '../City/utils';
+import FloatingItem, { FloatingItemProps } from './FloatingItem';
 
 type FloatingStuffProps = {
   from: number;
@@ -84,7 +84,6 @@ const FloatingStuff = ({
   useEffect(() => {
     if (worldRef.current && visible) {
       gsap.to(worldPosition, {
-        from,
         current: to,
         delay,
         duration,
@@ -109,14 +108,34 @@ const FloatingStuff = ({
     }
   });
 
+  const raftCollider = useMemo(
+    () => (
+      <mesh position={[0, 0, from / 2]}>
+        <boxGeometry args={[4.7, 2, 5.3]} />
+        <meshBasicMaterial
+          transparent
+          color={0xff0000}
+          opacity={debug ? 1 : 0}
+        />
+      </mesh>
+    ),
+    [debug, from]
+  );
+
+  const items = useMemo(
+    () =>
+      objects.map(({ key, contents, ...props }) => (
+        <FloatingItem visible={visible} key={key} {...props}>
+          {contents}
+        </FloatingItem>
+      )),
+    [objects, visible]
+  );
+
   return (
     <group ref={worldRef} position={[0, 0, from]}>
       <Physics debug={debug} paused={!visible}>
-        {objects.map(({ key, contents, ...props }) => (
-          <FloatingItem visible={visible} key={key} {...props}>
-            {contents}
-          </FloatingItem>
-        ))}
+        {items}
 
         <RigidBody
           ref={raftColliderRef}
@@ -124,14 +143,7 @@ const FloatingStuff = ({
           angularDamping={Infinity}
           colliders={"ball"}
         >
-          <mesh position={[0, 0, from / 2]}>
-            <boxGeometry args={[4.7, 2, 5.3]} />
-            <meshBasicMaterial
-              transparent
-              color={0xff0000}
-              opacity={debug ? 1 : 0}
-            />
-          </mesh>
+          {raftCollider}
         </RigidBody>
       </Physics>
     </group>

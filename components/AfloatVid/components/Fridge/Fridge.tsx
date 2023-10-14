@@ -1,6 +1,6 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo } from 'react';
 
-import { useTexture } from "@react-three/drei";
+import { useTexture } from '@react-three/drei';
 
 type FridgeProps = {};
 
@@ -48,7 +48,7 @@ const FridgeContents = (_: FridgeProps) => {
 
   return (
     <>
-      <boxBufferGeometry args={[0.6, 1.5, 0.6]} />
+      <boxGeometry args={[0.6, 1.5, 0.6]} />
       <meshStandardMaterial
         map={rightSideMap}
         attach="material-0"

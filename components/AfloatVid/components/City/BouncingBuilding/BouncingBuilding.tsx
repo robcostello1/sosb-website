@@ -1,17 +1,28 @@
-import gsap, { Power2 } from 'gsap';
-import { memo, useCallback, useMemo, useRef } from 'react';
-import { BoxGeometry, Mesh, MeshBasicMaterial, MeshStandardMaterial, Vector3 } from 'three';
+import gsap, { Power2 } from "gsap";
+import { memo, useCallback, useMemo, useRef } from "react";
+import {
+  BoxGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+  Vector3,
+} from "three";
 
-import { MeshProps } from '@react-three/fiber';
+import { MeshProps } from "@react-three/fiber";
 
-import { Triplet } from '../../../../../utils/types';
+import { Triplet } from "../../../../../utils/types";
 import BaseBuilding, {
-    BaseBuildingProps, BUILDING_TEXTURE_HEIGHT, DEFAULT_BUILDING_HEIGHT
-} from '../BaseBuilding';
-import { useBuildingVectorDimensions, useRandomlyTimedEvent } from '../hooks';
-import { TextureProps } from '../types';
+  BaseBuildingProps,
+  BUILDING_TEXTURE_HEIGHT,
+  DEFAULT_BUILDING_HEIGHT,
+} from "../BaseBuilding";
+import { useBuildingVectorDimensions, useRandomlyTimedEvent } from "../hooks";
+import { TextureProps } from "../types";
 
-export type BouncingBuildingProps = Omit<BaseBuildingProps, "scale"> & {
+export type BouncingBuildingProps = Omit<
+  BaseBuildingProps,
+  "scale" | "position"
+> & {
   bounceSize?: number;
   scale?: Triplet;
   position?: Triplet;
@@ -74,10 +85,12 @@ const BouncingBuilding = ({
   );
 
   const resizeCallback = useCallback(() => {
-    if (meshRef.current && lightRef.current && bounceSize && active) {
+    if (meshRef.current && bounceSize && active) {
       const targetSize = Math.random() * 2 * bounceSize;
       applyResize(meshRef.current, targetSize);
-      applyResize(lightRef.current, targetSize);
+      if (lightRef.current) {
+        applyResize(lightRef.current, targetSize);
+      }
     }
   }, [applyResize, bounceSize, active]);
 

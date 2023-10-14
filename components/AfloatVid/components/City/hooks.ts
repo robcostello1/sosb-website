@@ -42,7 +42,10 @@ export const useBuildingTextures = (): TextureProps[] => {
   ];
 
   // This prevents the textures from being re-created on every render
-  const textureEq = JSON.stringify(textures);
+  const textureEq = JSON.stringify(
+    textures.map((tg) => Object.values(tg).map((t) => t.image.src))
+  );
+
   return useMemo(
     () => textures,
     // eslint-disable-next-line react-hooks/exhaustive-deps
