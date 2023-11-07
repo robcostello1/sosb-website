@@ -112,7 +112,7 @@ const AfloatContent = () => {
   useEffect(() => {
     if (controls.current && moving) {
       // @ts-expect-error // TODO
-      controls.current?.lock();
+      controls.current?.lock?.();
     }
   }, [controls, moving]);
 
