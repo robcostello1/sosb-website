@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
-import { Camera, Euler, EventDispatcher, Vector3 } from 'three';
+import { Camera, Euler, EventDispatcher, Vector3 } from "three";
 
-const _changeEvent = { type: 'change' };
-const _lockEvent = { type: 'lock' };
-const _unlockEvent = { type: 'unlock' };
+const _changeEvent = { type: "change" };
+const _lockEvent = { type: "lock" };
+const _unlockEvent = { type: "unlock" };
 
 const _PI_2 = Math.PI / 2;
 
@@ -16,7 +16,7 @@ class PointerLockControls extends EventDispatcher {
   maxPolarAngle = Math.PI; // radians
 
   vector = new Vector3();
-  euler = new Euler(0, 0, 0, 'YXZ');
+  euler = new Euler(0, 0, 0, "YXZ");
 
   previousTouch?: Touch;
 
@@ -79,12 +79,10 @@ class PointerLockControls extends EventDispatcher {
     if (this.isLocked === false) return;
 
     const movementX: number =
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-ignore // TODO
       event.movementX || event.mozMovementX || event.webkitMovementX || 0;
     const movementY: number =
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+      // @ts-ignore // TODO
       event.movementY || event.mozMovementY || event.webkitMovementY || 0;
 
     this.updatePosition(movementX, movementY, 0.002);
@@ -119,43 +117,43 @@ class PointerLockControls extends EventDispatcher {
   }
 
   onPointerlockError() {
-    console.error('THREE.PointerLockControls: Unable to use Pointer Lock API');
+    console.error("THREE.PointerLockControls: Unable to use Pointer Lock API");
   }
 
   connect() {
-    this.domElement.addEventListener('touchmove', this.onTouchMoveBind, false);
-    this.domElement.addEventListener('touchend', this.onTouchEndBind, false);
+    this.domElement.addEventListener("touchmove", this.onTouchMoveBind, false);
+    this.domElement.addEventListener("touchend", this.onTouchEndBind, false);
     this.domElement.ownerDocument.addEventListener(
-      'mousemove',
+      "mousemove",
       this.onMouseMoveBind
     );
     this.domElement.ownerDocument.addEventListener(
-      'pointerlockchange',
+      "pointerlockchange",
       this.onPointerlockChangeBind
     );
     this.domElement.ownerDocument.addEventListener(
-      'pointerlockerror',
+      "pointerlockerror",
       this.onPointerlockErrorBind
     );
   }
 
   disconnect() {
     this.domElement.removeEventListener(
-      'touchmove',
+      "touchmove",
       this.onTouchMoveBind,
       false
     );
-    this.domElement.removeEventListener('touchend', this.onTouchEndBind, false);
+    this.domElement.removeEventListener("touchend", this.onTouchEndBind, false);
     this.domElement.ownerDocument.removeEventListener(
-      'mousemove',
+      "mousemove",
       this.onMouseMoveBind
     );
     this.domElement.ownerDocument.removeEventListener(
-      'pointerlockchange',
+      "pointerlockchange",
       this.onPointerlockChangeBind
     );
     this.domElement.ownerDocument.removeEventListener(
-      'pointerlockerror',
+      "pointerlockerror",
       this.onPointerlockErrorBind
     );
   }
@@ -191,12 +189,12 @@ class PointerLockControls extends EventDispatcher {
   }
 
   lock() {
-    if (typeof this.domElement.requestPointerLock !== 'undefined')
+    if (typeof this.domElement.requestPointerLock !== "undefined")
       this.domElement.requestPointerLock();
   }
 
   unlock() {
-    if (typeof this.domElement.requestPointerLock !== 'undefined')
+    if (typeof this.domElement.requestPointerLock !== "undefined")
       this.domElement.ownerDocument.exitPointerLock();
   }
 }
