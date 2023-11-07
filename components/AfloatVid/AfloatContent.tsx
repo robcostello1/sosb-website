@@ -9,6 +9,7 @@ import {
 
 import {
   Box,
+  DeviceOrientationControls,
   FirstPersonControls,
   PointerLockControls,
   Stats,
@@ -146,7 +147,10 @@ const AfloatContent = () => {
     <Suspense fallback={<></>}>
       <Stats />
 
-      <PointerLockControls enabled={moving} makeDefault ref={controls} />
+      {/* <PointerLockControls enabled={moving} makeDefault ref={controls} />
+       */}
+
+      <DeviceOrientationControls enabled={moving} makeDefault ref={controls} />
 
       <FirstPersonControls
         enabled={!moving}
