@@ -1,12 +1,18 @@
-import { gsap } from 'gsap';
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BoxGeometry, Mesh, MeshStandardMaterial, Texture, Vector2 } from 'three';
+import { gsap } from "gsap";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  BoxGeometry,
+  Mesh,
+  MeshStandardMaterial,
+  Texture,
+  Vector2,
+} from "three";
 
-import { useTexture } from '@react-three/drei';
+import { useTexture } from "@react-three/drei";
 
-import { Triplet } from '../../../../utils/types';
-import Button from '../../../Button';
-import GarageLight from './GarageLight';
+import { Triplet } from "../../../../utils/types";
+import Button from "../../../Button";
+import GarageLight from "./GarageLight";
 
 const HEIGHT = 4;
 const WIDTH = 6;
@@ -34,7 +40,7 @@ const Garage = ({
 
   const handleClickOpen = useCallback(() => {
     if (!doorDisabled) {
-      setOpen((currentOpen) => !currentOpen);
+      setOpen(true);
       onClickOpen();
     }
   }, [doorDisabled, onClickOpen]);
@@ -84,13 +90,6 @@ const Garage = ({
   const doorRef = useRef<Mesh<BoxGeometry, MeshStandardMaterial>>(null);
 
   useEffect(() => {
-    window.onclick = function () {
-      handleClickOpen();
-      return true;
-    };
-  }, [handleClickOpen]);
-
-  useEffect(() => {
     if (doorRef.current) {
       const mesh = doorRef.current;
       gsap.to(mesh.scale, {
@@ -119,6 +118,7 @@ const Garage = ({
         rotation={[Math.PI / 2, 0, Math.PI / 2]}
         scale={[1.2, 1.2, 1.2]}
         buttonName="garage-door-button" // TODO const
+        onClick={handleClickOpen}
       />
 
       <group position={[0, HEIGHT / 2 - 0.1, -LENGTH / 2]}>

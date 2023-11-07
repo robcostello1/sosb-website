@@ -1,13 +1,20 @@
-import gsap, { Power2 } from 'gsap';
-import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Group } from 'three';
+import gsap, { Power2 } from "gsap";
+import {
+  memo,
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Group } from "three";
 
-import { PARTS, START_POSITION_Z } from '../../consts';
-import Garage from '../Garage/Garage';
-import BouncingBuildings from './BouncingBuildings/BouncingBuildings';
-import { BuildingTextureContext } from './BuildingTextureProvider/BuildingTextureProvider';
-import { ScreenWithVines } from './Screen';
-import VineBuildingGroup from './VineBuildingGroup';
+import { PARTS, START_POSITION_Z } from "../../consts";
+import Garage from "../Garage/Garage";
+import BouncingBuildings from "./BouncingBuildings/BouncingBuildings";
+import { BuildingTextureContext } from "./BuildingTextureProvider/BuildingTextureProvider";
+import { ScreenWithVines } from "./Screen";
+import VineBuildingGroup from "./VineBuildingGroup";
 
 type City2Props = {
   moving: boolean;
@@ -53,7 +60,7 @@ const City2 = ({
     <group ref={groupRef}>
       <Garage
         position={[0, 0, size * START_POSITION_Z]}
-        doorDisabled={moving}
+        doorDisabled={false}
         onClickOpen={handleSetMoving}
         onLoad={handleGarageLoaded}
       />
