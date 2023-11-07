@@ -66,10 +66,7 @@ const AfloatContent = () => {
 
   const handleSetMoving = useCallback(() => {
     setMoving(true);
-
-    setTimeout(() => {
-      handlePlay();
-    }, 100);
+    handlePlay();
   }, [handlePlay]);
 
   useFrame(() => {

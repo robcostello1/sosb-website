@@ -19,16 +19,17 @@ export const useSong = (): UseSongReturnType => {
   const songRef = useRef<HTMLAudioElement>(new Audio());
   const analyserRef = useRef<AnalyserNode | null>(null);
   const barRef = useRef(0);
+  const audioCtx = useRef<AudioContext>();
 
   useEffect(() => {
     songRef.current.src = "/sound/afloat-full.mp3";
-    const audioCtx = new window.AudioContext();
+    audioCtx.current = new window.AudioContext();
     let audioSource = null;
 
-    audioSource = audioCtx.createMediaElementSource(songRef.current);
-    analyserRef.current = audioCtx.createAnalyser();
+    audioSource = audioCtx.current.createMediaElementSource(songRef.current);
+    analyserRef.current = audioCtx.current.createAnalyser();
     audioSource.connect(analyserRef.current);
-    analyserRef.current.connect(audioCtx.destination);
+    analyserRef.current.connect(audioCtx.current.destination);
     analyserRef.current.fftSize = 128;
 
     const song = songRef.current;
@@ -46,6 +47,7 @@ export const useSong = (): UseSongReturnType => {
   });
 
   const handlePlay = useCallback(() => {
+    audioCtx.current?.resume();
     songRef.current.play();
   }, []);
 
