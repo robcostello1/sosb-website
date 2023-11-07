@@ -1,21 +1,39 @@
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
-import { Box, FirstPersonControls, PointerLockControls, Stats } from '@react-three/drei';
-import { Canvas, useFrame } from '@react-three/fiber';
-
-import { Triplet } from '../../utils/types';
-import { Ocean } from '../Terrain';
-import styles from './AfloatContent.module.css';
 import {
-    BobbingItem, BuildingOrb, City, Islands, Movement, Raft, ShippingScene
-} from './components';
-import BuildingTextureProvider from './components/City/BuildingTextureProvider/BuildingTextureProvider';
-import { FloatingScene } from './components/FloatingStuff';
-import Sky from './components/Sky';
-import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
-import { useSongContext } from './components/SongProvider';
-import SongProvider from './components/SongProvider/SongProvider';
-import { PARTS, START_POSITION_Z } from './consts';
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+
+import {
+  Box,
+  FirstPersonControls,
+  PointerLockControls,
+  Stats,
+} from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+
+import { Triplet } from "../../utils/types";
+import { Ocean } from "../Terrain";
+import styles from "./AfloatContent.module.css";
+import {
+  BobbingItem,
+  BuildingOrb,
+  City,
+  Islands,
+  Movement,
+  Raft,
+  ShippingScene,
+} from "./components";
+import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
+import { FloatingScene } from "./components/FloatingStuff";
+import Sky from "./components/Sky";
+import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
+import { useSongContext } from "./components/SongProvider";
+import SongProvider from "./components/SongProvider/SongProvider";
+import { PARTS, START_POSITION_Z } from "./consts";
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -47,8 +65,11 @@ const AfloatContent = () => {
   const { handlePlay, barRef } = useSongContext();
 
   const handleSetMoving = useCallback(() => {
-    handlePlay();
     setMoving(true);
+
+    setTimeout(() => {
+      handlePlay();
+    }, 100);
   }, [handlePlay]);
 
   useFrame(() => {
