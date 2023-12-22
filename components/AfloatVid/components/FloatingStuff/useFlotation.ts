@@ -1,13 +1,10 @@
-import { useFrame } from "@react-three/fiber";
-import {
-  RapierRigidBody,
-  useAfterPhysicsStep,
-  vec3,
-} from "@react-three/rapier";
-import { useRef } from "react";
-import { InstancedMesh, Mesh } from "three";
+import { useRef } from 'react';
+import { InstancedMesh, Mesh } from 'three';
 
-export type UseFloatationProps = {
+import { useFrame } from '@react-three/fiber';
+import { RapierRigidBody, useAfterPhysicsStep, vec3 } from '@react-three/rapier';
+
+export type UseFlotationProps = {
   liquidLevel: number;
   objectRadius?: number;
   liquidDamping?: number;
@@ -15,13 +12,12 @@ export type UseFloatationProps = {
   boyancyFactor?: number;
 };
 
-export const useFloatation = <T extends Mesh | InstancedMesh>({
+export const useFlotation = ({
   objectRadius = 1,
   liquidDamping = 5,
   bobbingAmount = 0.1,
   boyancyFactor = 0.13,
-}: UseFloatationProps) => {
-  const meshRef = useRef<T>(null);
+}: UseFlotationProps) => {
   const bodyRef = useRef<RapierRigidBody>(null);
 
   const time = useRef(0);
@@ -31,7 +27,7 @@ export const useFloatation = <T extends Mesh | InstancedMesh>({
   });
 
   useAfterPhysicsStep(() => {
-    if (meshRef.current && bodyRef.current) {
+    if (bodyRef.current) {
       const body = bodyRef.current;
 
       const position = vec3(body.translation());
@@ -77,5 +73,5 @@ export const useFloatation = <T extends Mesh | InstancedMesh>({
     }
   });
 
-  return { meshRef, bodyRef };
+  return { bodyRef };
 };

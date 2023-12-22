@@ -5,7 +5,7 @@ import { BufferGeometry, InstancedMesh, Material, Matrix4 } from 'three';
 import { MeshProps } from '@react-three/fiber';
 import { RigidBody, RigidBodyProps } from '@react-three/rapier';
 
-import { useFloatation, UseFloatationProps } from './useFloatation';
+import { useFlotation, UseFlotationProps } from '../useFlotation';
 
 const InstancedItem = forwardRef<InstancedMesh, MeshProps>(
   ({ children, ...props }, ref) => {
@@ -34,7 +34,7 @@ const InstancedItem = forwardRef<InstancedMesh, MeshProps>(
 export type FloatingItemProps = MeshProps & {
   colliders?: RigidBodyProps["colliders"];
   delayVisibility?: number;
-  flotationProps: UseFloatationProps;
+  flotationProps: UseFlotationProps;
 };
 
 const FloatingItem = ({
@@ -46,7 +46,8 @@ const FloatingItem = ({
   visible = true,
   ...meshProps
 }: FloatingItemProps) => {
-  const { meshRef, bodyRef } = useFloatation<InstancedMesh>(flotationProps);
+  const { bodyRef } = useFlotation(flotationProps);
+  const meshRef = useRef<InstancedMesh>(null);
 
   const timeout = useRef<ReturnType<typeof setTimeout>>();
 
