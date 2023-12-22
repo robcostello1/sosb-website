@@ -28,6 +28,21 @@ export const DEFAULT_BUILDING_WIDTH = 20;
 const DEFAULT_SCALE = new Vector3(1, 1, 1);
 const NORMAL_SCALE = new Vector2(0.1, 0.1);
 export const LIT_MESH_INSET = 0.1;
+// TODO
+const LIT_BUILDING_SCALE = new Vector3(
+  DEFAULT_BUILDING_WIDTH - LIT_MESH_INSET / DEFAULT_BUILDING_WIDTH,
+  DEFAULT_BUILDING_HEIGHT - (DEFAULT_BUILDING_HEIGHT - LIT_MESH_INSET),
+  DEFAULT_BUILDING_WIDTH - LIT_MESH_INSET / DEFAULT_BUILDING_WIDTH
+);
+const buildingGeometry = new BoxGeometry(
+  DEFAULT_BUILDING_WIDTH,
+  DEFAULT_BUILDING_HEIGHT,
+  DEFAULT_BUILDING_WIDTH
+);
+const lightMaterial = new MeshBasicMaterial({
+  color: 0x000000,
+  side: BackSide,
+});
 
 const BaseBuilding = forwardRef<
   Mesh<BoxGeometry, MeshStandardMaterial>,

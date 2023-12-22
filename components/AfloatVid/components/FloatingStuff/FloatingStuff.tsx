@@ -6,7 +6,8 @@ import { useFrame } from '@react-three/fiber';
 import { Physics, RapierRigidBody, RigidBody } from '@react-three/rapier';
 
 import { weightedRandom } from '../City/utils';
-import FloatingItem, { FloatingItemProps } from './FloatingItem';
+import FloatingItem, { FloatingItemProps } from './deprecated/FloatingItem';
+import FloatingItemV2 from './FloatingItems';
 
 type FloatingStuffProps = {
   from: number;
@@ -23,60 +24,27 @@ type FloatingStuffProps = {
 
 const DEFAULT_SPREAD: [number, number] = [100, 200];
 
+const DEFAULT_FLOTATION_PROPS: FloatingItemProps["flotationProps"] = {
+  liquidLevel: 0,
+  bobbingAmount: 0.2,
+  objectRadius: 1,
+  boyancyFactor: 0.4,
+  liquidDamping: 5,
+};
+
 const FloatingStuff = ({
   from,
   to,
   duration,
   delay,
   debug,
+  // TODO
   spread = DEFAULT_SPREAD,
   numberOfItems = 100,
   children,
   visible = true,
 }: FloatingStuffProps) => {
-  const objects = useMemo(
-    () => {
-      const objectProps: (FloatingItemProps & { contents: ReactNode })[] = [];
-      const childrenArray = Children.toArray(children);
-
-      for (let index = 0; index < numberOfItems; index++) {
-        const randomIndex = Math.floor(Math.random() * childrenArray.length);
-        const contents = childrenArray[randomIndex];
-
-        const depth = Math.random() * -50;
-        objectProps.push({
-          key: index,
-          // TODO randomise the scale
-          scale: 1,
-          position: [
-            weightedRandom(6) * spread[0] * (index % 2 === 0 ? 1 : -1),
-            depth,
-            Math.random() * spread[1] - spread[1] / 2,
-          ],
-          rotation: [
-            Math.random() * Math.PI * 2,
-            Math.random() * Math.PI * 2,
-            Math.random() * Math.PI * 2,
-          ],
-          flotationProps: {
-            liquidLevel: 0,
-            bobbingAmount: 0.2,
-            objectRadius: 1,
-            boyancyFactor: 0.4,
-            liquidDamping: 5,
-          },
-          delayVisibility: -depth * 200,
-          contents,
-        });
-      }
-
-      return objectProps;
-    },
-    // Ignore changes to children
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [numberOfItems, spread]
-  );
-
+  const childrenArray = useMemo(() => Children.toArray(children), [children]);
   const worldRef = useRef<Group>(null);
   const raftColliderRef = useRef<RapierRigidBody>(null);
   const worldPosition = useRef(from);
@@ -122,20 +90,19 @@ const FloatingStuff = ({
     [debug, from]
   );
 
-  const items = useMemo(
-    () =>
-      objects.map(({ key, contents, ...props }) => (
-        <FloatingItem visible={visible} key={key} {...props}>
-          {contents}
-        </FloatingItem>
-      )),
-    [objects, visible]
-  );
-
   return (
     <group ref={worldRef} position={[0, 0, from]}>
       <Physics debug={debug} paused={!visible}>
-        {items}
+        {childrenArray.map((child, index) => (
+          <FloatingItemV2
+            key={index}
+            flotationProps={DEFAULT_FLOTATION_PROPS}
+            numberOfItems={numberOfItems / childrenArray.length}
+            spread={spread}
+          >
+            {child}
+          </FloatingItemV2>
+        ))}
 
         <RigidBody
           ref={raftColliderRef}
