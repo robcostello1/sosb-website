@@ -23,9 +23,9 @@ const FloatingItems = ({
   const instances = useMemo(() => {
     const instances: InstancedRigidBodyProps[] = [];
 
-    const depth = Math.random() * -50;
-
     for (let i = 0; i < numberOfItems; i++) {
+      const depth = Math.random() * -50;
+
       instances.push({
         key: "instance_" + Math.random(),
         position: [
