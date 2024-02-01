@@ -29,7 +29,7 @@ const Template: ComponentStory<typeof FloatingStuff> = (args) => {
       <FloatingStuff {...args}>
         <ScreenContents
           // TODO temp
-          url={"/maps/verse1.mp4"}
+          url={"/videos/verse1.mp4"}
           boxArgs={[3, 1, 0.1]}
           videoOffset={[0, 0.2]}
           videoScale={1}

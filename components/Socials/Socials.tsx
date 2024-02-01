@@ -1,17 +1,19 @@
-import { GroupProps, useLoader } from "@react-three/fiber";
-import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import { memo, useState } from 'react';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 
-import { Physics } from "@react-three/cannon";
+import { GradientTexture, Plane } from '@react-three/drei';
+import { useLoader } from '@react-three/fiber';
+import { Physics, RigidBody } from '@react-three/rapier';
 
-import { useState, memo } from "react";
-import { Container, Plane, Social, SquareSocial } from "./Components";
-import { GradientTexture } from "@react-three/drei";
+import { Triplet } from '../../utils/types';
+import PhysicsContainer from './PhysicsContainer';
+import { Social } from './Social';
 
 const SOCIAL_ICON_SIZE = 0.04;
 const SOCIAL_ICON_SCALE: [number, number, number] = [
   SOCIAL_ICON_SIZE,
   SOCIAL_ICON_SIZE,
-  SOCIAL_ICON_SIZE,
+  SOCIAL_ICON_SIZE / 10,
 ];
 const BIN_WALL_THICKNESS = 0.003;
 const BIN_BASE_POSITION = 0.01;
@@ -19,7 +21,11 @@ const BIN_FALSE_BASE_POSITION = 0.1;
 const BIN_BASE_SIZE = 0.09;
 const BIN_HEIGHT = 0.15;
 
-type SocialsProps = GroupProps & { onBin: (full: boolean) => void };
+type SocialsProps = {
+  position?: Triplet;
+  rotation?: Triplet;
+  onBin: (full: boolean) => void;
+};
 
 const Socials = ({ onBin, ...props }: SocialsProps) => {
   const [active, setActive] = useState(false);
@@ -31,10 +37,8 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
 
   return (
     <group {...props}>
-      {/* <StreetLamp position={[0.3, 0.5, 0.3]} rotation={[0, Math.PI, 0]} /> */}
-
-      <Physics gravity={[0, -1, 0]} allowSleep>
-        <Container
+      <Physics gravity={[0, -1, 0]} debug>
+        <PhysicsContainer
           boxWallThickness={BIN_WALL_THICKNESS}
           basePosition={BIN_BASE_POSITION}
           baseSize={BIN_BASE_SIZE}
@@ -53,7 +57,7 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
               colors={["#999999", "#666666", "#333333"]} // Colors need to match the number of stops
             />
           </meshStandardMaterial>
-        </Container>
+        </PhysicsContainer>
 
         {/* FB */}
         <Social
@@ -71,7 +75,7 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
         </Social>
 
         {/* Insta */}
-        <SquareSocial
+        {/* <SquareSocial
           font={font}
           color="#EF426F"
           position={[0, BIN_FALSE_BASE_POSITION + 0.1, 0]}
@@ -83,10 +87,10 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
           }}
         >
           {"\uf16d"}
-        </SquareSocial>
+        </SquareSocial> */}
 
         {/* Spotify */}
-        <Social
+        {/* <Social
           font={font}
           color="#1DB954"
           position={[0, BIN_FALSE_BASE_POSITION + 0.15, 0]}
@@ -101,9 +105,16 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
           }}
         >
           {"\uf1bc"}
-        </Social>
+        </Social> */}
 
-        <Plane position={[0, 0.0085, 0]} />
+        <RigidBody includeInvisible>
+          <Plane
+            position={[0, 0.0085, 0]}
+            rotation={[Math.PI / 2, 0, 0]}
+            args={[10, 10]}
+            visible={false}
+          />
+        </RigidBody>
       </Physics>
     </group>
   );

@@ -11,7 +11,7 @@ type FloatingSceneProps = {
 const screen = (
   <ScreenContents
     // TODO temp
-    url={"/maps/verse1.mp4"}
+    url={"/videos/verse1.mp4"}
     boxArgs={[3, 1, 0.1]}
     videoOffset={[0, 0.2]}
     videoScale={1}
@@ -26,8 +26,8 @@ const FloatingScene = ({ visible }: FloatingSceneProps) => {
     <FloatingStuff
       numberOfItems={100}
       from={-100}
-      to={1000}
-      duration={300}
+      to={2000}
+      duration={240}
       delay={0}
       visible={visible}
     >

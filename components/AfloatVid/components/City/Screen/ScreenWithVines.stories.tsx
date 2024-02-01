@@ -1,9 +1,10 @@
-import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import React from 'react';
 
-import ScreenWithVines from "./ScreenWithVines";
-import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Stage } from "@react-three/drei";
+import { OrbitControls, Stage } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import ScreenWithVines from './ScreenWithVines';
 
 export default {
   title: "City/ScreenWithVines",
@@ -28,7 +29,7 @@ const Template: ComponentStory<typeof ScreenWithVines> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  url: "/maps/verse1.mp4",
+  url: "/videos/verse1.mp4",
   boxArgs: [3, 1, 0.1],
   videoOffset: [0, 0.2],
   videoScale: 1,

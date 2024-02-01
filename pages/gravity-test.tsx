@@ -1,11 +1,9 @@
-import Head from "next/head";
+import Head from 'next/head';
 
-import { Canvas } from "@react-three/fiber";
-import styles from "../styles/Home.module.css";
+import { Canvas } from '@react-three/fiber';
 
-import HomeAnimation from "../components/HomeAnimation";
-import { useEffect, useState, memo } from "react";
-import Gravity from "../components/Gravity";
+import Gravity from '../components/Gravity';
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
   return (

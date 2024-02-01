@@ -19,7 +19,7 @@ export default {
 const PlankWrapper: ComponentStory<typeof Plank> = (args) => {
   const textures = useTexture(
     {
-      map: "/maps/wood_planks_grey_diff_1k.jpg",
+      map: "/maps/optimised/wood_planks_grey_diff_1k.jpg",
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {

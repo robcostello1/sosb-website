@@ -12,7 +12,7 @@ const materialProps = {
 const FridgeContents = (_: FridgeProps) => {
   const { map: backMap } = useTexture(
     {
-      map: "/maps/fridge.jpg",
+      map: "/maps/optimised/fridge.jpg",
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {

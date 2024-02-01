@@ -1,34 +1,21 @@
-import {
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { Suspense, useCallback, useMemo, useState } from 'react';
 
-import { CameraControls, FirstPersonControls, Stats } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { CameraControls, Stats } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
 
-import { Triplet } from "../../utils/types";
-import { Ocean } from "../Terrain";
-import styles from "./AfloatContent.module.css";
+import { Triplet } from '../../utils/types';
+import { Ocean } from '../Terrain';
+import styles from './AfloatContent.module.css';
 import {
-  BobbingItem,
-  BuildingOrb,
-  City,
-  Islands,
-  Movement,
-  Raft,
-  ShippingScene,
-} from "./components";
-import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
-import { FloatingScene } from "./components/FloatingStuff";
-import Sky from "./components/Sky";
-import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
-import { useSongContext } from "./components/SongProvider";
-import SongProvider from "./components/SongProvider/SongProvider";
-import { PARTS, START_POSITION_Z } from "./consts";
+    BobbingItem, BuildingOrb, City, Islands, Movement, Raft, ShippingScene
+} from './components';
+import BuildingTextureProvider from './components/City/BuildingTextureProvider/BuildingTextureProvider';
+import { FloatingScene } from './components/FloatingStuff';
+import Sky from './components/Sky';
+import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
+import { useSongContext } from './components/SongProvider';
+import SongProvider from './components/SongProvider/SongProvider';
+import { PARTS, START_POSITION_Z } from './consts';
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -133,6 +120,9 @@ const AfloatContent = () => {
       <Stats />
 
       <CameraControls
+        // - value to invert
+        // azimuthRotateSpeed={0.66}
+        // polarRotateSpeed={0.66}
         distance={0.01}
         makeDefault
         ref={(controls) => {
@@ -179,7 +169,11 @@ const AfloatContent = () => {
 };
 
 const AfloatContentWrapper = () => (
-  <Canvas className={styles.container} gl={{ precision: "mediump" }}>
+  <Canvas
+    className={styles.container}
+    shadows
+    // gl={{ precision: "mediump" }}á
+  >
     <SongProvider>
       <AfloatContent />
     </SongProvider>

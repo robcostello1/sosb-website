@@ -1,9 +1,9 @@
-import { Physics } from "@react-three/cannon";
-import { PerspectiveCamera } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
-import { useEffect, memo } from "react";
+import { memo, useEffect } from 'react';
 
-import Sphere from "./PhysicsPrimitives/Sphere";
+import { useThree } from '@react-three/fiber';
+import { Physics } from '@react-three/rapier';
+
+import Sphere from './PhysicsPrimitives/Sphere';
 
 const getRand = (size: number) => (Math.random() - 0.5) * size;
 const factor = 40;

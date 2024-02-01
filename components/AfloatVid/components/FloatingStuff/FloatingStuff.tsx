@@ -5,8 +5,7 @@ import { Group } from 'three';
 import { useFrame } from '@react-three/fiber';
 import { Physics, RapierRigidBody, RigidBody } from '@react-three/rapier';
 
-import { weightedRandom } from '../City/utils';
-import FloatingItem, { FloatingItemProps } from './deprecated/FloatingItem';
+import { FloatingItemProps } from './deprecated/FloatingItem';
 import FloatingItemV2 from './FloatingItems';
 
 type FloatingStuffProps = {
