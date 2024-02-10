@@ -14,9 +14,12 @@ const INITIAL_ROTATION: Triplet = [1, -Math.PI / 2, 0];
 
 const GALAXY_ROTATION: Triplet = [-Math.PI * 0.2, Math.PI * 1.3, 0];
 
-type GalaxyRef = { timeRef: RefObject<number> };
+type GalaxyRef = {
+  castShadow?: boolean;
+  timeRef: RefObject<number>;
+};
 
-const Galaxy = ({ timeRef }: GalaxyRef) => {
+const Galaxy = ({ castShadow, timeRef }: GalaxyRef) => {
   const galaxyTexture = useLoader(TextureLoader, "/maps/optimised/galaxy.jpg");
   const moonTexture = useLoader(TextureLoader, "/maps/moon.jpg");
 
@@ -62,7 +65,22 @@ const Galaxy = ({ timeRef }: GalaxyRef) => {
             />
           </mesh>
 
-          <directionalLight intensity={MOON_LIGHT_INTENSITY} ref={lightRef} />
+          <directionalLight
+            intensity={MOON_LIGHT_INTENSITY}
+            ref={lightRef}
+            {...(castShadow
+              ? {
+                  castShadow: true,
+                  "shadow-mapSize-height": 512,
+                  "shadow-mapSize-width": 512,
+                  "shadow-camera-far": 1000,
+                  "shadow-camera-left": -200,
+                  "shadow-camera-right": 200,
+                  "shadow-camera-top": 200,
+                  "shadow-camera-bottom": -200,
+                }
+              : {})}
+          />
         </group>
 
         <mesh rotation={GALAXY_ROTATION} ref={galaxyRef}>

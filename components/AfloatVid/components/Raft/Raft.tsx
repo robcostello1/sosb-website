@@ -1,12 +1,13 @@
-import { memo, useCallback, useEffect } from 'react';
-import { RepeatWrapping } from 'three';
+import { memo, useCallback, useEffect } from "react";
+import { RepeatWrapping } from "three";
 
-import { Box, Torus, useTexture } from '@react-three/drei';
-import { useThree } from '@react-three/fiber';
+import { Box, Torus } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
 
-import { Triplet } from '../../../../utils/types';
-import Barrel from './Barrel';
-import Plank from './Plank';
+import { Triplet } from "../../../../utils/types";
+import { useTexture } from "../../hooks/useTexture";
+import Barrel from "./Barrel";
+import Plank from "./Plank";
 
 export type RaftProps = {
   setCamera?: boolean;

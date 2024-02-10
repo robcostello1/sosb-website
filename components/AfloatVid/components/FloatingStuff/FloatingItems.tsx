@@ -27,6 +27,7 @@ const FloatingItems = ({
       const depth = Math.random() * -50;
 
       instances.push({
+        linearDamping: 0.9,
         key: "instance_" + Math.random(),
         position: [
           weightedRandom(6) * spread[0] * (i % 2 === 0 ? 1 : -1),

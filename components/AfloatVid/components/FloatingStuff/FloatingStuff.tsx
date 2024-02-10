@@ -27,7 +27,7 @@ const DEFAULT_FLOTATION_PROPS: FloatingItemProps["flotationProps"] = {
   liquidLevel: 0,
   bobbingAmount: 0.2,
   objectRadius: 1,
-  boyancyFactor: 0.4,
+  boyancyFactor: 0.36,
   liquidDamping: 5,
 };
 

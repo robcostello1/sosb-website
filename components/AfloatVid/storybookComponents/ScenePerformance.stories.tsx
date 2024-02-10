@@ -1,18 +1,19 @@
-import React, { useRef } from "react";
-import { Mesh } from "three";
+import React, { useRef } from 'react';
+import { Mesh } from 'three';
 
-import { PointerLockControls, Sphere, StatsGl } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { PointerLockControls, Sphere, StatsGl } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
 
-import { Ocean } from "../Terrain";
-import { City, Islands, ShippingScene } from "./components";
-import { GlitchBuildings } from "./components/City";
-import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
-import { FloatingScene } from "./components/FloatingStuff";
-import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
+import { Ocean } from '../../Terrain';
+import { City, Islands, ShippingScene } from '../components';
+import { GlitchBuildings } from '../components/City';
+import BuildingTextureProvider from '../components/City/BuildingTextureProvider/BuildingTextureProvider';
+import { FloatingScene } from '../components/FloatingStuff';
+import SkyStreaks from '../components/Sky/SkyStreaks/SkyStreaks';
+import PerformanceDemo from './PerformanceDemo';
 
 export default {
-  title: "Scene Performance",
+  title: "Tests/Scene Performance",
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
@@ -46,24 +47,6 @@ type TemplateProps = {
 
 const handleSetMoving = () => {};
 
-const Demo = () => {
-  const ref = useRef<Mesh>(null);
-
-  useFrame((_, delta) => {
-    if (ref.current) {
-      ref.current.rotation.x += delta;
-      ref.current.rotation.y += delta / 2;
-      ref.current.rotation.z += delta / 4;
-    }
-  });
-
-  return (
-    <Sphere ref={ref} position={[0, 2, -10]}>
-      <meshBasicMaterial wireframe />
-    </Sphere>
-  );
-};
-
 const Template = (args: TemplateProps) => {
   const shouldShow = (scene: TemplateProps["selectedScene"][number]) =>
     args.selectedScene.includes(scene);
@@ -81,7 +64,7 @@ const Template = (args: TemplateProps) => {
       <ambientLight intensity={0.1} />
       <directionalLight position={[10, 3, 5]} />
 
-      <Demo />
+      <PerformanceDemo position={[0, 2, -10]} />
       {args.showOcean && <Ocean />}
 
       <BuildingTextureProvider>

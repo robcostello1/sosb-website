@@ -1,6 +1,6 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo } from "react";
 
-import { useTexture } from '@react-three/drei';
+import { useTexture } from "../../hooks/useTexture";
 
 type FridgeProps = {};
 

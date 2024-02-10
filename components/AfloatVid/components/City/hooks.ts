@@ -1,17 +1,19 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Euler, Vector3 } from 'three';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Euler, Vector3 } from "three";
 
-import { useTexture } from '@react-three/drei';
-
-import { Triplet } from '../../../../utils/types';
-import { getRandomColor } from '../../../../utils/utils';
-import { useSongContext } from '../SongProvider';
-import { OnFrameFunc } from './BaseBuilding';
+import { Triplet } from "../../../../utils/types";
+import { getRandomColor } from "../../../../utils/utils";
+import { useTexture } from "../../hooks/useTexture";
+import { useSongContext } from "../SongProvider";
+import { OnFrameFunc } from "./BaseBuilding";
 import {
-    DEFAULT_BUILDING_HEIGHT, DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE
-} from './consts';
-import { TextureProps } from './types';
-import { applyBuildingWrap, getBuildingGroupParams } from './utils';
+  DEFAULT_BUILDING_HEIGHT,
+  DEFAULT_POSITION,
+  DEFAULT_ROTATION,
+  DEFAULT_SCALE,
+} from "./consts";
+import { TextureProps } from "./types";
+import { applyBuildingWrap, getBuildingGroupParams } from "./utils";
 
 export const useBuildingTextures = (): TextureProps[] => {
   const textures = [

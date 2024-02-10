@@ -1,13 +1,14 @@
-import { useMemo } from 'react';
-import { RepeatWrapping, Vector2 } from 'three';
+import { useMemo } from "react";
+import { RepeatWrapping, Vector2 } from "three";
 
-import { Cylinder, useTexture } from '@react-three/drei';
-import { MeshStandardMaterialProps } from '@react-three/fiber';
+import { Cylinder } from "@react-three/drei";
+import { MeshStandardMaterialProps } from "@react-three/fiber";
 
-import { Triplet } from '../../../../../utils/types';
+import { Triplet } from "../../../../../utils/types";
+import { useTexture } from "../../../hooks/useTexture";
 // TODO move
-import { TextureProps } from '../../City/types';
-import MeshWithAo from '../../MeshWithAo';
+import { TextureProps } from "../../City/types";
+import MeshWithAo from "../../MeshWithAo";
 
 type ShippingContainerProps = {
   position?: Triplet;

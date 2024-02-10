@@ -1,7 +1,4 @@
-import { Triplet } from "../../../../utils/types";
-import { useTexture } from "@react-three/drei";
-import { MeshProps, useFrame } from "@react-three/fiber";
-import { useMemo, useRef, memo } from "react";
+import { memo, useMemo, useRef } from "react";
 import {
   BoxGeometry,
   Mesh,
@@ -12,6 +9,11 @@ import {
 } from "three";
 // @ts-ignore
 import { LoopSubdivision } from "three-subdivide";
+
+import { MeshProps, useFrame } from "@react-three/fiber";
+
+import { Triplet } from "../../../../utils/types";
+import { useTexture } from "../../hooks/useTexture";
 
 type BuildingProps = Omit<MeshProps, "scale"> & { scale: Triplet };
 

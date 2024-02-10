@@ -1,11 +1,12 @@
-import React from 'react';
-import { RepeatWrapping } from 'three';
+import React from "react";
+import { RepeatWrapping } from "three";
 
-import { OrbitControls, Stage, useTexture } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { OrbitControls, Stage } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Plank from './Plank';
+import { useTexture } from "../../../hooks/useTexture";
+import Plank from "./Plank";
 
 export default {
   title: "Plank",

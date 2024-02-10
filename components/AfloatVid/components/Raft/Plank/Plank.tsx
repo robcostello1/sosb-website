@@ -1,21 +1,14 @@
-import { useTexture } from "@react-three/drei";
-import {
-  BoxGeometryProps,
-  MeshProps,
-  MeshStandardMaterialProps,
-} from "@react-three/fiber";
-import { clone } from "lodash";
-import { useMemo, useRef, memo } from "react";
+import { memo, useMemo, useRef } from "react";
 import {
   BoxGeometry,
-  Material,
   Mesh,
   MeshStandardMaterial,
-  MirroredRepeatWrapping,
-  ObjectSpaceNormalMap,
   RepeatWrapping,
   Vector2,
 } from "three";
+
+import { MeshProps, MeshStandardMaterialProps } from "@react-three/fiber";
+
 import { TextureProps } from "../../City/types";
 
 type PlankProps = Pick<MeshProps, "position" | "rotation"> & {

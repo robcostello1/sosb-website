@@ -4,6 +4,7 @@ import { OrbitControls, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import { Ocean } from '../../../../Terrain';
 import FloatingScene from './FloatingScene';
 
 export default {
@@ -18,15 +19,15 @@ export default {
 const Template: ComponentStory<typeof FloatingScene> = (args) => {
   return (
     <Canvas
-      camera={
-        {
-          position: [3, 4, 5],
-        }
-      }
+      camera={{
+        position: [3, 4, 5],
+      }}
     >
       <Stats />
 
       <OrbitControls />
+
+      <Ocean />
 
       <ambientLight intensity={0.1} />
       <directionalLight position={[10, 3, 5]} />
@@ -38,5 +39,4 @@ const Template: ComponentStory<typeof FloatingScene> = (args) => {
 
 export const Default = Template.bind({});
 
-Default.args = {
-};
+Default.args = {};

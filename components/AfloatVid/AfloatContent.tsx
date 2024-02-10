@@ -1,4 +1,5 @@
-import { Suspense, useCallback, useMemo, useState } from 'react';
+import { memo, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { Vector3 } from 'three';
 
 import { CameraControls, Stats } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
@@ -9,7 +10,10 @@ import styles from './AfloatContent.module.css';
 import {
     BobbingItem, BuildingOrb, City, Islands, Movement, Raft, ShippingScene
 } from './components';
-import BuildingTextureProvider from './components/City/BuildingTextureProvider/BuildingTextureProvider';
+import BaseBuilding from './components/City/BaseBuilding';
+import BuildingTextureProvider, {
+    BuildingTextureContext
+} from './components/City/BuildingTextureProvider/BuildingTextureProvider';
 import { FloatingScene } from './components/FloatingStuff';
 import Sky from './components/Sky';
 import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
@@ -34,7 +38,8 @@ const raft = (
   </BobbingItem>
 );
 
-const AfloatContent = () => {
+const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
+  const [loaded, setLoaded] = useState(false);
   const [moving, setMoving] = useState(false);
   const [showFloatingStuff, setShowFloatingStuff] = useState(false);
   const [showIslands, setShowIslands] = useState(false);
@@ -43,6 +48,13 @@ const AfloatContent = () => {
   const [timeSpeedMultiplyer, setTimeSpeedMultiplyer] = useState(0.5);
   const [showShippingScene, setShowShippingScene] = useState(false);
   const [showOrb, setShowOrb] = useState(false);
+
+  useEffect(() => {
+    if (!loaded) {
+      setLoaded(true);
+      onLoad();
+    }
+  }, [loaded, onLoad]);
 
   const { handlePlay, barRef } = useSongContext();
 
@@ -102,6 +114,7 @@ const AfloatContent = () => {
         moving={moving}
       >
         <ShippingScene visible={showShippingScene} position={[0, 0, -320]} />
+
         <City
           visible={showCity}
           duration={300}
@@ -116,8 +129,8 @@ const AfloatContent = () => {
   );
 
   return (
-    <Suspense fallback={<></>}>
-      <Stats />
+    <>
+      {process.env.NODE_ENV === "development" ? <Stats /> : null}
 
       <CameraControls
         // - value to invert
@@ -136,48 +149,61 @@ const AfloatContent = () => {
         position={[-10, -2, 2]}
       />
       <ambientLight intensity={0.1} />
+      <Suspense
+        fallback={
+          <BuildingTextureProvider>
+            <BuildingTextureContext.Consumer>
+              {(texturesProps) => (
+                <BaseBuilding
+                  position={new Vector3(0, 0, 0)}
+                  scale={new Vector3(0.05, 0.05, 0.05)}
+                  textureProps={texturesProps[0]}
+                />
+              )}
+            </BuildingTextureContext.Consumer>
+          </BuildingTextureProvider>
+        }
+      >
+        <Sky overrideTime={0} timeSpeedMultiplier={timeSpeedMultiplyer} />
 
-      <Sky overrideTime={0} timeSpeedMultiplier={timeSpeedMultiplyer} />
+        <Ocean />
 
-      <Ocean />
+        <FloatingScene visible={showFloatingStuff} />
 
-      <FloatingScene visible={showFloatingStuff} />
+        <SkyStreaks visible={showSkyStreaks} numStreaks={20} />
 
-      <SkyStreaks visible={showSkyStreaks} numStreaks={20} />
+        <BuildingTextureProvider>
+          {city}
+          {buildingOrb}
+        </BuildingTextureProvider>
 
-      <BuildingTextureProvider>
-        {city}
-        {buildingOrb}
-      </BuildingTextureProvider>
+        <Islands
+          visible={showIslands}
+          scale={200}
+          position={[-105, -3, 0]}
+          bounce={0.35}
+        />
+        <Islands
+          visible={showIslands}
+          scale={200}
+          position={[105, -3, 0]}
+          bounce={0.35}
+        />
 
-      <Islands
-        visible={showIslands}
-        scale={200}
-        position={[-105, -3, 0]}
-        bounce={0.2}
-      />
-      <Islands
-        visible={showIslands}
-        scale={200}
-        position={[105, -3, 0]}
-        bounce={0.2}
-      />
-
-      {raft}
-    </Suspense>
+        {raft}
+      </Suspense>
+    </>
   );
 };
 
-const AfloatContentWrapper = () => (
-  <Canvas
-    className={styles.container}
-    shadows
-    // gl={{ precision: "mediump" }}á
-  >
-    <SongProvider>
-      <AfloatContent />
-    </SongProvider>
-  </Canvas>
-);
+const AfloatContentWrapper = ({ onLoad }: { onLoad: () => void }) => {
+  return (
+    <Canvas className={styles.container}>
+      <SongProvider>
+        <AfloatContent onLoad={onLoad} />
+      </SongProvider>
+    </Canvas>
+  );
+};
 
-export default AfloatContentWrapper;
+export default memo(AfloatContentWrapper);

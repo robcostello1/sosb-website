@@ -1,5 +1,3 @@
-import { useLoader } from '@react-three/fiber';
-
 import ScreenContents from '../../City/Screen/ScreenContents';
 import Fridge from '../../Fridge';
 import FloatingStuff from '../FloatingStuff';
@@ -26,7 +24,7 @@ const FloatingScene = ({ visible }: FloatingSceneProps) => {
     <FloatingStuff
       numberOfItems={100}
       from={-100}
-      to={2000}
+      to={1200}
       duration={240}
       delay={0}
       visible={visible}
