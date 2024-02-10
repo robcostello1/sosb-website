@@ -20,6 +20,7 @@ const screen = (
 const fridge = <Fridge />;
 
 const FloatingScene = ({ visible }: FloatingSceneProps) => {
+  console.log("VISIBLE", visible);
   return (
     <FloatingStuff
       numberOfItems={100}
