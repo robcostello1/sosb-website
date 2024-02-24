@@ -1,12 +1,13 @@
-import React from "react";
+import React from 'react';
 
-import { OrbitControls, Stage, Stats } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { OrbitControls, Stage, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import SongProvider from "../../SongProvider";
-import { useBuildingTextures } from "../hooks";
-import LitBuildings, { LitBuildingsProps } from "./LitBuildings";
+import SongProvider from '../../SongProvider';
+import VideoProvider from '../../Video/VideoProvider';
+import { useBuildingTextures } from '../hooks';
+import LitBuildings, { LitBuildingsProps } from './LitBuildings';
 
 export default {
   title: "City/LitBuildings",
@@ -43,9 +44,9 @@ const Template: ComponentStory<typeof BuildingWrapper> = (args) => {
       <OrbitControls />
 
       <Stage preset="portrait" environment="night">
-        <SongProvider autoStart>
+        <VideoProvider autoStart>
           <BuildingWrapper {...args} />
-        </SongProvider>
+        </VideoProvider>
       </Stage>
     </Canvas>
   );

@@ -4,6 +4,7 @@ import { OrbitControls, Stage } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
+import VideoProvider from '../../Video/VideoProvider';
 import Screen from './Screen';
 
 export default {
@@ -21,7 +22,9 @@ const Template: ComponentStory<typeof Screen> = (args) => {
       <OrbitControls autoRotate />
 
       <Stage adjustCamera={false}>
-        <Screen {...args} />
+        <VideoProvider autoStart>
+          <Screen {...args} />
+        </VideoProvider>
       </Stage>
     </Canvas>
   );
@@ -30,10 +33,9 @@ const Template: ComponentStory<typeof Screen> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  url: "/videos/verse1.mp4",
-  boxArgs: [3, 1, 0.1],
-  videoOffset: [0, 0.2],
-  videoScale: 1,
+  boxArgs: [20, 10, 0.1],
   start: true,
+  videoScale: 1.7,
+  videoOffset: [0.2, 0.4],
   position: [0, 10, 0],
 };

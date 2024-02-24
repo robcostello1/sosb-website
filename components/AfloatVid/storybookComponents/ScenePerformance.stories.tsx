@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Mesh } from 'three';
 
-import { PointerLockControls, Sphere, StatsGl } from '@react-three/drei';
+import { CameraControls, PointerLockControls, Sphere, StatsGl } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 
 import { Ocean } from '../../Terrain';
@@ -10,6 +10,7 @@ import { GlitchBuildings } from '../components/City';
 import BuildingTextureProvider from '../components/City/BuildingTextureProvider/BuildingTextureProvider';
 import { FloatingScene } from '../components/FloatingStuff';
 import SkyStreaks from '../components/Sky/SkyStreaks/SkyStreaks';
+import VideoProvider from '../components/Video/VideoProvider';
 import PerformanceDemo from './PerformanceDemo';
 
 export default {
@@ -59,7 +60,17 @@ const Template = (args: TemplateProps) => {
     >
       <StatsGl />
 
-      <PointerLockControls />
+      <CameraControls
+        dollySpeed={0}
+        // - value to invert
+        // azimuthRotateSpeed={0.66}
+        // polarRotateSpeed={0.66}
+        distance={0.01}
+        makeDefault
+        ref={(controls) => {
+          controls?.moveTo(0, 2, 0);
+        }}
+      />
 
       <ambientLight intensity={0.1} />
       <directionalLight position={[10, 3, 5]} />
@@ -68,14 +79,16 @@ const Template = (args: TemplateProps) => {
       {args.showOcean && <Ocean />}
 
       <BuildingTextureProvider>
-        <City
-          visible={shouldShow("city")}
-          duration={1000}
-          sinkStart={500}
-          size={500}
-          moving={true}
-          setMoving={handleSetMoving}
-        />
+        <VideoProvider autoStart>
+          <City
+            visible={shouldShow("city")}
+            duration={1000}
+            sinkStart={500}
+            size={500}
+            moving={true}
+            setMoving={handleSetMoving}
+          />
+        </VideoProvider>
 
         <Islands
           visible={shouldShow("islands")}

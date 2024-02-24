@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { Euler, Vector3 } from 'three';
 
-import { useSongContext } from '../../../SongProvider';
+import { useVideoContext } from '../../../Video';
 import BaseBuilding, { BaseBuildingProps, OnFrameFunc } from '../../BaseBuilding';
 import { DEFAULT_BUILDING_HEIGHT } from '../../consts';
 
@@ -29,7 +29,7 @@ const GlitchBuilding = ({
   visible,
   ...props
 }: GlitchBuildingProps) => {
-  const { barRef } = useSongContext();
+  const { barRef } = useVideoContext();
   const initScale = getScale();
   const [rotation, setRotation] = useState(getRotation());
   const [scale, setScale] = useState(initScale);

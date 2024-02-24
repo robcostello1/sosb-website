@@ -4,6 +4,7 @@ import { useFrame } from '@react-three/fiber';
 
 import BouncingBuilding from '../BouncingBuilding';
 import { useBuildingGroupParams, useBuildingLights } from '../hooks';
+import InstancedScreens from '../InstancedScreens';
 import { TextureProps } from '../types';
 
 export type BouncingBuildingsProps = {
@@ -28,6 +29,7 @@ const BouncingBuildings = ({
     numberOfBuildings,
     textureProps,
   });
+
   const [buildingMovement, setBuildingMovement] = useState(0);
   const time = useRef(0);
 
@@ -42,6 +44,8 @@ const BouncingBuildings = ({
 
   return (
     <>
+      <InstancedScreens count={60} params={buildingParams} />
+
       {buildingParams.map(({ textureId, ...props }, index) => {
         return (
           <BouncingBuilding

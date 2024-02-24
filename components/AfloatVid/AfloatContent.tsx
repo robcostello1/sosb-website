@@ -17,8 +17,7 @@ import BuildingTextureProvider, {
 import { FloatingScene } from './components/FloatingStuff';
 import Sky from './components/Sky';
 import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
-import { useSongContext } from './components/SongProvider';
-import SongProvider from './components/SongProvider/SongProvider';
+import VideoProvider, { useVideoContext } from './components/Video';
 import { PARTS, START_POSITION_Z } from './consts';
 
 // TODO deprecate in favour of bars
@@ -56,7 +55,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
     }
   }, [loaded, onLoad]);
 
-  const { handlePlay, barRef } = useSongContext();
+  const { handlePlay, barRef } = useVideoContext();
 
   const handleSetMoving = useCallback(() => {
     setMoving(true);
@@ -133,6 +132,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
       {process.env.NODE_ENV === "development" ? <Stats /> : null}
 
       <CameraControls
+        dollySpeed={0}
         // - value to invert
         // azimuthRotateSpeed={0.66}
         // polarRotateSpeed={0.66}
@@ -199,9 +199,9 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
 const AfloatContentWrapper = ({ onLoad }: { onLoad: () => void }) => {
   return (
     <Canvas className={styles.container}>
-      <SongProvider>
+      <VideoProvider>
         <AfloatContent onLoad={onLoad} />
-      </SongProvider>
+      </VideoProvider>
     </Canvas>
   );
 };

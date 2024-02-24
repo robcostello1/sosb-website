@@ -1,23 +1,16 @@
-import gsap from "gsap";
-import { useRef, useState } from "react";
-import {
-  DoubleSide,
-  Mesh,
-  PlaneGeometry,
-  RawShaderMaterial,
-  Uniform,
-  Vector3,
-} from "three";
+import gsap from 'gsap';
+import { useRef, useState } from 'react';
+import { DoubleSide, Mesh, PlaneGeometry, RawShaderMaterial, Uniform, Vector3 } from 'three';
 
-import { useFrame } from "@react-three/fiber";
+import { useFrame } from '@react-three/fiber';
 
-import { Triplet } from "../../../../utils/types";
+import { Triplet } from '../../../../utils/types';
 // @ts-ignore
-import testFragmentShader from "../../shaders/test/fragment.glsl";
+import testFragmentShader from '../../shaders/test/fragment.glsl';
 // @ts-ignore
-import testVertexShader from "../../shaders/test/vertex.glsl";
-import { useSongContext } from "../SongProvider";
-import { getPosition } from "./utils";
+import testVertexShader from '../../shaders/test/vertex.glsl';
+import { useVideoContext } from '../Video';
+import { getPosition } from './utils';
 
 type IslandsProps = {
   scale: number;
@@ -35,7 +28,7 @@ const Islands = ({
   bounce,
 }: IslandsProps) => {
   const time = useRef(0);
-  const { analyserRef } = useSongContext();
+  const { analyserRef } = useVideoContext();
   const meshRef = useRef<Mesh<PlaneGeometry, RawShaderMaterial>>(null);
 
   const [finalPosition] = useState(() => getPosition(position, visible));

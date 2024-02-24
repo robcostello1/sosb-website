@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import ScreenContents from '../../City/Screen/ScreenContents';
 import Fridge from '../../Fridge';
 import FloatingStuff from '../FloatingStuff';
@@ -6,21 +8,18 @@ type FloatingSceneProps = {
   visible: boolean;
 };
 
+const SCREEN_SCALE = 0.003;
 const screen = (
   <ScreenContents
-    // TODO temp
-    url={"/videos/verse1.mp4"}
-    boxArgs={[3, 1, 0.1]}
+    boxArgs={[718 * SCREEN_SCALE, 404 * SCREEN_SCALE, 0.1]}
     videoOffset={[0, 0.2]}
     videoScale={1}
-    // TODO align with song
     start={true}
   />
 );
 const fridge = <Fridge />;
 
 const FloatingScene = ({ visible }: FloatingSceneProps) => {
-  console.log("VISIBLE", visible);
   return (
     <FloatingStuff
       numberOfItems={100}
@@ -36,4 +35,4 @@ const FloatingScene = ({ visible }: FloatingSceneProps) => {
   );
 };
 
-export default FloatingScene;
+export default memo(FloatingScene);

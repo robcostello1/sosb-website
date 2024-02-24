@@ -2,7 +2,7 @@ import { memo, useRef, useState } from 'react';
 
 import { useFrame } from '@react-three/fiber';
 
-import { useSongContext } from '../SongProvider';
+import { useVideoContext } from '../Video';
 import BuildingWithVines from './BuildingWithVines';
 import { useBuildingGroupParams } from './hooks';
 import { TextureProps } from './types';
@@ -27,7 +27,7 @@ const VineBuildingGroup = ({ textureProps, size }: VineBuildingGroupProps) => {
     }))
   );
 
-  const { barRef } = useSongContext();
+  const { barRef } = useVideoContext();
   const lastBarRef = useRef(barRef.current);
 
   useFrame(() => {

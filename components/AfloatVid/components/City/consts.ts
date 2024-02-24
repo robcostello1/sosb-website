@@ -1,5 +1,6 @@
-import { Triplet } from "../../../../utils/types";
+import { Triplet } from '../../../../utils/types';
 
+// TODO: duplication
 const WINDOW_HEIGHT = 3;
 export const BUILDING_TEXTURE_HEIGHT = 4 * WINDOW_HEIGHT;
 export const BUILDING_TEXTURE_WIDTH = BUILDING_TEXTURE_HEIGHT;

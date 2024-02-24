@@ -1,38 +1,37 @@
-import { on } from "events";
-import { MutableRefObject, useCallback, useEffect, useRef } from "react";
+import { MutableRefObject, useCallback, useEffect, useRef } from 'react';
 
-import { useFrame } from "@react-three/fiber";
+import { useFrame } from '@react-three/fiber';
 
-import { calculateBars } from "./utils";
+import { calculateBars } from './utils';
 
 const BPM = 123;
 const START_OFFSET = 0.401;
 
 export type UseSongReturnType = {
-  songRef: MutableRefObject<HTMLAudioElement | null>;
+  mediaRef: MutableRefObject<HTMLAudioElement | null>;
   analyserRef: MutableRefObject<AnalyserNode | null>;
   barRef: MutableRefObject<number>;
   handlePlay: () => void;
 };
 
 export const useSong = (): UseSongReturnType => {
-  const songRef = useRef<HTMLAudioElement>(new Audio());
+  const mediaRef = useRef<HTMLAudioElement>(new Audio());
   const analyserRef = useRef<AnalyserNode | null>(null);
   const barRef = useRef(0);
   const audioCtx = useRef<AudioContext>();
 
   useEffect(() => {
-    songRef.current.src = "/sound/afloat-full.mp3";
+    mediaRef.current.src = "/sound/afloat-full.mp3";
     audioCtx.current = new window.AudioContext();
     let audioSource = null;
 
-    audioSource = audioCtx.current.createMediaElementSource(songRef.current);
+    audioSource = audioCtx.current.createMediaElementSource(mediaRef.current);
     analyserRef.current = audioCtx.current.createAnalyser();
     audioSource.connect(analyserRef.current);
     analyserRef.current.connect(audioCtx.current.destination);
     analyserRef.current.fftSize = 128;
 
-    const song = songRef.current;
+    const song = mediaRef.current;
     return () => {
       song.pause();
     };
@@ -40,7 +39,7 @@ export const useSong = (): UseSongReturnType => {
 
   useFrame(() => {
     barRef.current = calculateBars(
-      songRef.current.currentTime || 0,
+      mediaRef.current.currentTime || 0,
       BPM,
       START_OFFSET
     );
@@ -48,8 +47,8 @@ export const useSong = (): UseSongReturnType => {
 
   const handlePlay = useCallback(() => {
     audioCtx.current?.resume();
-    songRef.current.play();
+    mediaRef.current.play();
   }, []);
 
-  return { songRef, analyserRef, barRef, handlePlay };
+  return { mediaRef, analyserRef, barRef, handlePlay };
 };

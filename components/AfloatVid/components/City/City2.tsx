@@ -18,6 +18,8 @@ type City2Props = {
   setMoving: (moving: boolean) => void;
 };
 
+const SCREEN_SCALE = 0.02;
+
 const City2 = ({
   duration,
   size,
@@ -61,13 +63,12 @@ const City2 = ({
       {garageLoaded && (
         <>
           <ScreenWithVines
-            position={[-10, 2, -3]}
+            position={[-10, (404 * SCREEN_SCALE) / 2 - 0.3, -60]}
             rotation={[0, Math.PI / 2, 0]}
-            boxArgs={[20, 10, 0.1]}
+            boxArgs={[718 * SCREEN_SCALE, 404 * SCREEN_SCALE, 0.1]}
             start={true}
-            url="/videos/verse1.mp4"
-            videoScale={1.7}
-            videoOffset={[0.2, 0.4]}
+            videoScale={1}
+            videoOffset={[0, 0]}
           />
 
           <BouncingBuildings

@@ -1,12 +1,12 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
-import { UseSongReturnType } from "../../hooks/useSong";
+import { UseSongReturnType } from '../../hooks/useSong';
 
 type SongContextType = UseSongReturnType;
 
 export const SongContext = createContext<SongContextType>({
   barRef: { current: 0 },
-  songRef: { current: null },
+  mediaRef: { current: null },
   analyserRef: { current: null },
   handlePlay: () => {},
 });

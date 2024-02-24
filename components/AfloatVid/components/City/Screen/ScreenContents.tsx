@@ -1,27 +1,28 @@
-import { forwardRef, memo, Suspense, useEffect, useRef } from 'react';
-import { MeshBasicMaterial, RepeatWrapping, Vector2 } from 'three';
+import { forwardRef, memo, Suspense, useEffect, useMemo, useRef } from 'react';
+import { MeshBasicMaterial, RepeatWrapping, Vector2, VideoTexture } from 'three';
 
 import { useVideoTexture } from '@react-three/drei';
 import { MeshProps } from '@react-three/fiber';
 
 import { Triplet } from '../../../../../utils/types';
+import { useVideoContext } from '../../Video';
 
 type ScreenContentsProps = Pick<MeshProps, "position"> & {
   aspectRatio?: number;
   boxArgs: Triplet;
   start: boolean;
-  url: string;
   videoOffset?: [number, number];
   videoScale?: number;
+  url?: string;
 };
 
 const ScreenContents = ({
   start = true,
-  url,
   boxArgs,
-  aspectRatio = 1920 / 1080,
+  aspectRatio = 1.5,
   videoOffset = [0, 0],
   videoScale = 1,
+  url,
 }: ScreenContentsProps) => {
   const videoMatRef = useRef<MeshBasicMaterial>(null);
 
@@ -57,12 +58,20 @@ const ScreenContents = ({
           />
         }
       >
-        <VideoMaterial
-          attach="material-4"
-          url={url}
-          start={start}
-          ref={videoMatRef}
-        />
+        {url ? (
+          <VideoMaterial
+            attach="material-4"
+            url={url}
+            start={start}
+            ref={videoMatRef}
+          />
+        ) : (
+          <VideoContextMaterial
+            attach="material-4"
+            start={start}
+            ref={videoMatRef}
+          />
+        )}
       </Suspense>
       <meshStandardMaterial attach="material-5" color={0x000000} />
       {/* // TODO - probably don't need 6 */}
@@ -88,5 +97,31 @@ const VideoMaterial = forwardRef<MeshBasicMaterial, VideoMaterialProps>(
     );
   }
 );
+
+type VideoContextMaterialProps = { attach: string; start: boolean };
+
+const VideoContextMaterial = forwardRef<
+  MeshBasicMaterial,
+  VideoContextMaterialProps
+>(({ attach, start }, ref) => {
+  const { mediaRef, mediaLoaded } = useVideoContext();
+
+  const texture = useMemo(
+    () =>
+      mediaRef.current && mediaLoaded
+        ? new VideoTexture(mediaRef.current)
+        : undefined,
+    [mediaRef, mediaLoaded]
+  );
+
+  return texture ? (
+    <meshBasicMaterial
+      map={texture}
+      attach={attach}
+      toneMapped={false}
+      ref={ref}
+    />
+  ) : null;
+});
 
 export default memo(ScreenContents);

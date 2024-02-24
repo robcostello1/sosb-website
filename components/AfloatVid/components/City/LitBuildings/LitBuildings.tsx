@@ -1,7 +1,8 @@
 import { memo, useCallback, useMemo } from 'react';
 
+import { Screen } from '../';
 import { getRandomColor } from '../../../../../utils/utils';
-import { useSongContext } from '../../SongProvider';
+import { useVideoContext } from '../../Video';
 import { OnFrameFunc } from '../BaseBuilding';
 import BouncingBuilding from '../BouncingBuilding/BouncingBuilding';
 import { useBuildingGroupParams } from '../hooks';
@@ -31,7 +32,7 @@ const LitBuildings = ({
     textureProps: limitedTextures,
   });
 
-  const { barRef } = useSongContext();
+  const { barRef } = useVideoContext();
 
   const handleFrame = useCallback<OnFrameFunc>(
     ({ mesh, light }) => {

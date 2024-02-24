@@ -25,7 +25,6 @@ export default function Afloat() {
   }, [removeItems]);
 
   const loadingPercent = ((NUM_TEXTURES - items) / NUM_TEXTURES) * 100;
-  console.log(loadingPercent);
 
   return (
     <div>
