@@ -1,11 +1,11 @@
-import { memo } from 'react';
+import { memo } from "react";
 
-import { MeshProps } from '@react-three/fiber';
+import { MeshProps } from "@react-three/fiber";
 
-import { Triplet } from '../../../../../utils/types';
-import ScreenContents from './ScreenContents';
+import { Triplet } from "../../../../../utils/types";
+import ScreenContents from "./ScreenContents";
 
-export type ScreenProps = Pick<MeshProps, "position"> & {
+export type ScreenProps = Pick<MeshProps, "position" | "rotation"> & {
   aspectRatio?: number;
   boxArgs: Triplet;
   start: boolean;

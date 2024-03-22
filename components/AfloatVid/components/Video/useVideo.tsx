@@ -1,9 +1,15 @@
-import { on } from 'events';
-import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
+import { on } from "events";
+import {
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
-import { useFrame } from '@react-three/fiber';
+import { useFrame } from "@react-three/fiber";
 
-import { calculateBars } from '../../hooks/utils';
+import { calculateBars } from "../../hooks/utils";
 
 const BPM = 123;
 const START_OFFSET = 0.401;
@@ -16,7 +22,7 @@ export type UseVideoReturnType = {
   handlePlay: () => void;
 };
 
-export const useVideo = (): UseVideoReturnType => {
+export const useVideo = (debug?: boolean): UseVideoReturnType => {
   const [mediaLoaded, setMediaLoaded] = useState(false);
   const mediaRef = useRef<HTMLVideoElement>();
   const analyserRef = useRef<AnalyserNode | null>(null);
@@ -50,12 +56,16 @@ export const useVideo = (): UseVideoReturnType => {
     };
   }, []);
 
-  useFrame(() => {
+  useFrame(({ clock: { elapsedTime } }) => {
     barRef.current = calculateBars(
       mediaRef.current?.currentTime || 0,
       BPM,
       START_OFFSET
     );
+
+    if (mediaRef.current && debug && Math.floor(elapsedTime) % 10 === 0) {
+      mediaRef.current.currentTime = 3 * 60;
+    }
   });
 
   const handlePlay = useCallback(() => {

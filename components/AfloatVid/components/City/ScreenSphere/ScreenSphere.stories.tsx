@@ -5,23 +5,22 @@ import { Canvas } from "@react-three/fiber";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import VideoProvider from "../../Video/VideoProvider";
-import BuildingTextureProvider from "../BuildingTextureProvider/BuildingTextureProvider";
-import BuildingOrb from "./BuildingOrb";
+import ScreenSphere from "./ScreenSphere";
 
 export default {
-  title: "BuildingOrb",
-  component: BuildingOrb,
+  title: "City/ScreenSphere",
+  component: ScreenSphere,
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
   },
-} as ComponentMeta<typeof BuildingOrb>;
+} as ComponentMeta<typeof ScreenSphere>;
 
-const Template: ComponentStory<typeof BuildingOrb> = (args) => {
+const Template: ComponentStory<typeof ScreenSphere> = (args) => {
   return (
     <Canvas
       camera={{
-        position: [3, 4, 100],
+        position: [3, 4, 5],
       }}
     >
       <Stats />
@@ -32,9 +31,7 @@ const Template: ComponentStory<typeof BuildingOrb> = (args) => {
       <directionalLight position={[10, 3, 5]} />
 
       <VideoProvider autoStart debug>
-        <BuildingTextureProvider>
-          <BuildingOrb {...args} />
-        </BuildingTextureProvider>
+        <ScreenSphere {...args} />
       </VideoProvider>
     </Canvas>
   );
@@ -42,10 +39,4 @@ const Template: ComponentStory<typeof BuildingOrb> = (args) => {
 
 export const Default = Template.bind({});
 
-Default.args = {
-  onPointerLeave: () => {},
-  onPointerOut: () => {},
-  onPointerMove: () => {},
-  onPointerEnter: () => {},
-  onPointerOver: () => {},
-};
+Default.args = {};

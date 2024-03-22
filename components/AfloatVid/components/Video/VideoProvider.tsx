@@ -1,15 +1,16 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from "react";
 
-import { VideoContext } from './context';
-import { useVideo } from './useVideo';
+import { VideoContext } from "./context";
+import { useVideo } from "./useVideo";
 
 type VideoProviderProps = {
   autoStart?: boolean;
+  debug?: boolean;
   children: ReactNode;
 };
 
-const VideoProvider = ({ autoStart, children }: VideoProviderProps) => {
-  const values = useVideo();
+const VideoProvider = ({ autoStart, debug, children }: VideoProviderProps) => {
+  const values = useVideo(debug);
 
   useEffect(() => {
     if (autoStart) {

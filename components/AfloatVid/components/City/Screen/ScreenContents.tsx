@@ -1,11 +1,16 @@
-import { forwardRef, memo, Suspense, useEffect, useMemo, useRef } from 'react';
-import { MeshBasicMaterial, RepeatWrapping, Vector2, VideoTexture } from 'three';
+import { forwardRef, memo, Suspense, useEffect, useMemo, useRef } from "react";
+import {
+  MeshBasicMaterial,
+  RepeatWrapping,
+  Vector2,
+  VideoTexture,
+} from "three";
 
-import { useVideoTexture } from '@react-three/drei';
-import { MeshProps } from '@react-three/fiber';
+import { useVideoTexture } from "@react-three/drei";
+import { MeshProps } from "@react-three/fiber";
 
-import { Triplet } from '../../../../../utils/types';
-import { useVideoContext } from '../../Video';
+import { Triplet } from "../../../../../utils/types";
+import { useVideoContext } from "../../Video";
 
 type ScreenContentsProps = Pick<MeshProps, "position"> & {
   aspectRatio?: number;
@@ -98,9 +103,13 @@ const VideoMaterial = forwardRef<MeshBasicMaterial, VideoMaterialProps>(
   }
 );
 
-type VideoContextMaterialProps = { attach: string; start: boolean };
+type VideoContextMaterialProps = {
+  attach?: string;
+  // TODO: not used
+  start?: boolean;
+};
 
-const VideoContextMaterial = forwardRef<
+export const VideoContextMaterial = forwardRef<
   MeshBasicMaterial,
   VideoContextMaterialProps
 >(({ attach, start }, ref) => {

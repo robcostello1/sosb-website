@@ -1,24 +1,37 @@
-import { memo, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
-import { Vector3 } from 'three';
-
-import { CameraControls, Stats } from '@react-three/drei';
-import { Canvas, useFrame } from '@react-three/fiber';
-
-import { Triplet } from '../../utils/types';
-import { Ocean } from '../Terrain';
-import styles from './AfloatContent.module.css';
 import {
-    BobbingItem, BuildingOrb, City, Islands, Movement, Raft, ShippingScene
-} from './components';
-import BaseBuilding from './components/City/BaseBuilding';
+  memo,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { Vector3 } from "three";
+
+import { CameraControls, Stats } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+
+import { Triplet } from "../../utils/types";
+import { Ocean } from "../Terrain";
+import styles from "./AfloatContent.module.css";
+import {
+  BobbingItem,
+  BuildingOrb,
+  City,
+  Islands,
+  Movement,
+  Raft,
+  ShippingScene,
+} from "./components";
+import BaseBuilding from "./components/City/BaseBuilding";
 import BuildingTextureProvider, {
-    BuildingTextureContext
-} from './components/City/BuildingTextureProvider/BuildingTextureProvider';
-import { FloatingScene } from './components/FloatingStuff';
-import Sky from './components/Sky';
-import SkyStreaks from './components/Sky/SkyStreaks/SkyStreaks';
-import VideoProvider, { useVideoContext } from './components/Video';
-import { PARTS, START_POSITION_Z } from './consts';
+  BuildingTextureContext,
+} from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
+import { FloatingScene } from "./components/FloatingStuff";
+import Sky from "./components/Sky";
+import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
+import VideoProvider, { useVideoContext } from "./components/Video";
+import { PARTS, START_POSITION_Z } from "./consts";
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -92,7 +105,6 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
       setShowSkyStreaks(true);
     }
     if (barRef.current > PARTS.outro) {
-      // setShowOrb(false);
       setShowSkyStreaks(false);
       setTimeSpeedMultiplyer(2);
       setShowOrb(false);
@@ -170,7 +182,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
 
         <FloatingScene visible={showFloatingStuff} />
 
-        <SkyStreaks visible={showSkyStreaks} numStreaks={20} />
+        <SkyStreaks visible={showSkyStreaks} numStreaks={10} />
 
         <BuildingTextureProvider>
           {city}

@@ -1,11 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { OrbitControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { OrbitControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Ocean } from '../../../Terrain';
-import ShippingScene from './ShippingScene';
+import { Ocean } from "../../../Terrain";
+import VideoProvider from "../Video/VideoProvider";
+import ShippingScene from "./ShippingScene";
 
 export default {
   title: "ShippingScene",
@@ -32,7 +33,9 @@ const Template: ComponentStory<typeof ShippingScene> = (args) => {
 
       <Ocean />
 
-      <ShippingScene {...args} />
+      <VideoProvider autoStart>
+        <ShippingScene {...args} />
+      </VideoProvider>
     </Canvas>
   );
 };

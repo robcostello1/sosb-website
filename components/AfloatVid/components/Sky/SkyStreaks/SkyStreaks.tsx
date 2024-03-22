@@ -55,11 +55,6 @@ const SkyStreak = ({ visible }: SkyStreakProps) => {
     if (groupRef.current) {
       groupRef.current.rotation.x -= delta * (120 / 123);
 
-      // Will transition from Math.PI to 0 at the horizon. We want max brightness
-      // between 90 and 0 deg from horizon.
-      // -(groupRef.current.rotation.x % Math.PI)
-      // console.log(Math.sin(groupRef.current.rotation.x));
-
       if (meshRef.current && trailRef.current) {
         lastScale.current = meshRef.current.scale.x;
         const scale =
