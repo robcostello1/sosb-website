@@ -1,11 +1,11 @@
 import { memo, useCallback, useEffect } from "react";
+import { REPEAT_WRAPPING } from "utils/consts";
+import { Triplet } from "utils/types";
+import { getStaticAsset } from "utils/utils";
 
 import { Box, Torus } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 
-import { REPEAT_WRAPPING } from "../../../../utils/consts";
-import { Triplet } from "../../../../utils/types";
-import { getStaticAsset } from "../../../../utils/utils";
 import { useTexture } from "../../hooks/useTexture";
 import Barrel from "./Barrel";
 import Plank from "./Plank";

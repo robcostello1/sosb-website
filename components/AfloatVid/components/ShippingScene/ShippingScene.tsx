@@ -1,8 +1,8 @@
 import gsap, { Power2 } from "gsap";
 import { useEffect, useRef } from "react";
 import { Group } from "three";
+import { Triplet } from "utils/types";
 
-import { Triplet } from "../../../../utils/types";
 import { Screen } from "../City";
 import Ship from "./Ship";
 import ShippingContainer from "./ShippingContainer";
@@ -50,7 +50,14 @@ const ShippingScene = ({ position, visible, debug }: ShippingSceneProps) => {
 
   return (
     <group position={position}>
-      <group ref={groupRef} position={[START_POSITION_X, START_POSITION_Y, 0]}>
+      <group
+        ref={groupRef}
+        position={[
+          debug ? 0 : START_POSITION_X,
+          debug ? 0 : START_POSITION_Y,
+          0,
+        ]}
+      >
         <ShippingContainer position={[10, 0, 20]} rotation={[1, 0.1, 0.1]} />
         <ShippingContainer
           position={[-10, -0.5, 30]}

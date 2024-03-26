@@ -1,6 +1,8 @@
 import React, { memo, useMemo, useRef } from "react";
 import { PlaneGeometry, TextureLoader, Vector3 } from "three";
 import { Water, WaterOptions } from "three/examples/jsm/objects/Water.js";
+import { REPEAT_WRAPPING } from "utils/consts";
+import { Triplet } from "utils/types";
 
 import {
   extend,
@@ -9,9 +11,6 @@ import {
   useLoader,
   useThree,
 } from "@react-three/fiber";
-
-import { REPEAT_WRAPPING } from "../../utils/consts";
-import { Triplet } from "../../utils/types";
 
 extend({ Water });
 declare global {

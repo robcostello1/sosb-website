@@ -1,9 +1,8 @@
 import { memo } from "react";
+import { REPEAT_WRAPPING } from "utils/consts";
+import { getStaticAsset } from "utils/utils";
 
 import { MeshReflectorMaterial, useTexture } from "@react-three/drei";
-
-import { REPEAT_WRAPPING } from "../../utils/consts";
-import { getStaticAsset } from "../../utils/utils";
 
 type RoadProps = { width: number; depth: number };
 

@@ -9,11 +9,10 @@ import {
   SphereGeometry,
   TextureLoader,
 } from "three";
+import { Triplet } from "utils/types";
+import { getDayNight, getStaticAsset } from "utils/utils";
 
 import { useFrame, useLoader } from "@react-three/fiber";
-
-import { Triplet } from "../../../../utils/types";
-import { getDayNight, getStaticAsset } from "../../../../utils/utils";
 
 const MOON_LIGHT_INTENSITY = 0.4;
 const INITIAL_ROTATION: Triplet = [1, -Math.PI / 2, 0];

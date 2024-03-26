@@ -1,13 +1,13 @@
-import { memo, useState } from 'react';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+import { memo, useState } from "react";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import { Triplet } from "utils/types";
 
-import { GradientTexture, Plane } from '@react-three/drei';
-import { useLoader } from '@react-three/fiber';
-import { Physics, RigidBody } from '@react-three/rapier';
+import { GradientTexture, Plane } from "@react-three/drei";
+import { useLoader } from "@react-three/fiber";
+import { Physics, RigidBody } from "@react-three/rapier";
 
-import { Triplet } from '../../utils/types';
-import PhysicsContainer from './PhysicsContainer';
-import { Social } from './Social';
+import PhysicsContainer from "./PhysicsContainer";
+import { Social } from "./Social";
 
 const SOCIAL_ICON_SIZE = 0.04;
 const SOCIAL_ICON_SCALE: [number, number, number] = [

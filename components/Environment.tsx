@@ -1,8 +1,7 @@
 import { memo, useEffect } from "react";
+import { getStaticAsset } from "utils/utils";
 
 import { useThree } from "@react-three/fiber";
-
-import { getStaticAsset } from "../utils/utils";
 
 const Environment = () => {
   const { scene } = useThree();

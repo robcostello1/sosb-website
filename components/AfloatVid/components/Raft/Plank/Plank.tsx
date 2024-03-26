@@ -1,9 +1,9 @@
 import { memo, useMemo, useRef } from "react";
 import { BoxGeometry, Mesh, MeshStandardMaterial, Vector2 } from "three";
+import { REPEAT_WRAPPING } from "utils/consts";
 
 import { MeshProps, MeshStandardMaterialProps } from "@react-three/fiber";
 
-import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 import { TextureProps } from "../../City/types";
 
 type PlankProps = Pick<MeshProps, "position" | "rotation"> & {

@@ -1,13 +1,21 @@
-import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
-import { BoxGeometry, Group, IUniform, Mesh, RawShaderMaterial, Uniform, Vector3 } from 'three';
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
+import {
+  BoxGeometry,
+  Group,
+  IUniform,
+  Mesh,
+  RawShaderMaterial,
+  Uniform,
+  Vector3,
+} from "three";
+import { Triplet } from "utils/types";
 
-import { GroupProps, MeshProps, useFrame } from '@react-three/fiber';
+import { GroupProps, MeshProps, useFrame } from "@react-three/fiber";
 
-import { Triplet } from '../../../../utils/types';
 // @ts-ignore
-import fragmentShader from '../../shaders/vine/fragment.glsl';
+import fragmentShader from "../../shaders/vine/fragment.glsl";
 // @ts-ignore
-import vertexShader from '../../shaders/vine/vertex.glsl';
+import vertexShader from "../../shaders/vine/vertex.glsl";
 
 type VinesProps = Pick<GroupProps, "scale" | "rotation" | "position"> & {
   debug?: boolean;

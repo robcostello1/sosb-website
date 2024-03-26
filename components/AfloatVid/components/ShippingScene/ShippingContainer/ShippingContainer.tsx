@@ -1,12 +1,12 @@
 import { useMemo } from "react";
 import { Vector2 } from "three";
+import { REPEAT_WRAPPING } from "utils/consts";
+import { Triplet } from "utils/types";
+import { getStaticAsset } from "utils/utils";
 
 import { Cylinder } from "@react-three/drei";
 import { MeshStandardMaterialProps } from "@react-three/fiber";
 
-import { REPEAT_WRAPPING } from "../../../../../utils/consts";
-import { Triplet } from "../../../../../utils/types";
-import { getStaticAsset } from "../../../../../utils/utils";
 import { useTexture } from "../../../hooks/useTexture";
 // TODO move
 import { TextureProps } from "../../City/types";

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { Mesh, MeshBasicMaterial } from "three";
+import { REPEAT_WRAPPING } from "utils/consts";
 
 import { Sphere } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
-import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 import { useVideoContext } from "../../Video";
 import { VideoContextMaterial } from "../Screen/ScreenContents";
 

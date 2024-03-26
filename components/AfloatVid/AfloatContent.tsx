@@ -6,11 +6,11 @@ import {
   useMemo,
   useState,
 } from "react";
+import { Triplet } from "utils/types";
 
 import { CameraControls, Stats } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 
-import { Triplet } from "../../utils/types";
 import { Ocean } from "../Terrain";
 import styles from "./AfloatContent.module.css";
 import {
@@ -20,8 +20,10 @@ import {
   Islands,
   Movement,
   Raft,
+  ShippingScene,
 } from "./components";
 import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
+import { FloatingScene } from "./components/FloatingStuff";
 import Sky from "./components/Sky";
 import SkyStreaks from "./components/Sky/SkyStreaks";
 import VideoProvider, { useVideoContext } from "./components/Video";
@@ -118,7 +120,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
         duration={300}
         moving={moving}
       >
-        {/* <ShippingScene visible={showShippingScene} position={[0, 0, -320]} /> */}
+        <ShippingScene visible={showShippingScene} position={[0, 0, -320]} />
 
         <City
           visible={showCity}
@@ -161,7 +163,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
 
         <Ocean />
 
-        {/* <FloatingScene visible={showFloatingStuff} /> */}
+        <FloatingScene visible={showFloatingStuff} />
 
         <SkyStreaks visible={showSkyStreaks} numStreaks={10} />
 

@@ -1,4 +1,4 @@
-import { Triplet } from '../../../../utils/types';
+import { Triplet } from "utils/types";
 
 // TODO: duplication
 const WINDOW_HEIGHT = 3;

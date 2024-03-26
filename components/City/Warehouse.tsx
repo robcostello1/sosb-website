@@ -1,10 +1,8 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { Color } from 'three';
+import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { Color } from "three";
+import { getRandomColor } from "utils/utils";
 
-import { ContactShadows } from '@react-three/drei';
-
-import { getRandomColor } from '../../utils/utils';
-import BuildingStory from './BuildingStory';
+import BuildingStory from "./BuildingStory";
 
 type WarehouseProps = {
   active: boolean;

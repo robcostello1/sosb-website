@@ -7,16 +7,7 @@ import { InstancedMeshProps, MeshProps, useLoader } from "@react-three/fiber";
 const SCALE = 0.2;
 
 const Barrel = (props: Pick<MeshProps, "position" | "rotation">) => {
-  const barrelModel = useLoader(
-    GLTFLoader,
-    "/models/barrel.glb"
-    // (loader) => {
-    //   const dracoLoader = new DRACOLoader();
-    //   // TODO
-    //   dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
-    //   loader.setDRACOLoader(dracoLoader);
-    // }
-  );
+  const barrelModel = useLoader(GLTFLoader, "/models/barrel.glb");
 
   const barrelArgs = useMemo<InstancedMeshProps["args"]>(() => {
     const mesh = barrelModel.scene.children[0] as Mesh<

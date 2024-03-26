@@ -1,13 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CircleGeometry, Group, Mesh, MeshBasicMaterial } from "three";
+import { Triplet } from "utils/types";
+import { getRandomColor } from "utils/utils";
 
 import { MeshLineGeometry, Trail } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
-import { Triplet } from "../../../../../utils/types";
-import { getRandomColor } from "../../../../../utils/utils";
-
-const NUMBER_OF_STREAKS = 10;
 const BRIGHTNESS_OFFSET = Math.random();
 const RANDOMNESS = 2;
 const MESH_POSITION: Triplet = [0, 0, -200];

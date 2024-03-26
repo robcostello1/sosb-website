@@ -1,9 +1,8 @@
-import { memo, useEffect, useRef } from 'react';
-import { SpotLight as ThreeSpotLight } from 'three';
+import { memo, useEffect, useRef } from "react";
+import { SpotLight as ThreeSpotLight } from "three";
+import { Triplet } from "utils/types";
 
-import { Cylinder, SpotLight } from '@react-three/drei';
-
-import { Triplet } from '../../../../utils/types';
+import { Cylinder, SpotLight } from "@react-three/drei";
 
 const GarageLight = ({ position }: { position: Triplet }) => {
   const light = useRef<ThreeSpotLight>(null);

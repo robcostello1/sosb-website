@@ -1,10 +1,10 @@
 import { gsap } from "gsap";
 import { memo, useContext, useEffect, useRef, useState } from "react";
 import { Euler, Group } from "three";
+import { Triplet } from "utils/types";
 
 import { GroupProps, useFrame } from "@react-three/fiber";
 
-import { Triplet } from "../../../../../utils/types";
 import BouncingBuilding from "../BouncingBuilding";
 import { BuildingTextureContext } from "../BuildingTextureProvider/BuildingTextureProvider";
 import ScreenSphere from "../ScreenSphere";

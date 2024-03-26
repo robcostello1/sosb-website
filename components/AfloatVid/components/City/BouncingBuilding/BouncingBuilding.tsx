@@ -7,10 +7,10 @@ import {
   MeshStandardMaterial,
   Vector3,
 } from "three";
+import { Triplet } from "utils/types";
 
 import { MeshProps } from "@react-three/fiber";
 
-import { Triplet } from "../../../../../utils/types";
 import BaseBuilding, {
   BaseBuildingProps,
   BUILDING_TEXTURE_HEIGHT,

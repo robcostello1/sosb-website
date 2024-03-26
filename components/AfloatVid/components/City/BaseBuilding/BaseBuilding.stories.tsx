@@ -1,13 +1,13 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
+import { getRandomColor } from "utils/utils";
 
-import { OrbitControls, Stage, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { OrbitControls, Stage, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { getRandomColor } from '../../../../../utils/utils';
-import { useBuildingTextures } from '../hooks';
-import BaseBuilding, { BaseBuildingProps } from './BaseBuilding';
-import { OnFrameFunc } from './types';
+import { useBuildingTextures } from "../hooks";
+import BaseBuilding, { BaseBuildingProps } from "./BaseBuilding";
+import { OnFrameFunc } from "./types";
 
 export default {
   title: "City/BaseBuilding",

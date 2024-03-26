@@ -1,7 +1,7 @@
 import { memo, useCallback, useMemo } from "react";
+import { getRandomColor } from "utils/utils";
 
 import { Screen } from "../";
-import { getRandomColor } from "../../../../../utils/utils";
 import { useVideoContext } from "../../Video";
 import { OnFrameFunc } from "../BaseBuilding";
 import BouncingBuilding from "../BouncingBuilding/BouncingBuilding";

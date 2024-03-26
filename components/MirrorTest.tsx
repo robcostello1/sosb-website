@@ -1,9 +1,9 @@
 import { memo } from "react";
+import { getStaticAsset } from "utils/utils";
 
 import { CubeCamera, useTexture } from "@react-three/drei";
 
 import { VectorProp } from "../consts";
-import { getStaticAsset } from "../utils/utils";
 
 const position: VectorProp = [0, -0.1, 1.5];
 

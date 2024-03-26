@@ -1,6 +1,4 @@
-import build from 'next/dist/build';
-
-import { Triplet } from '../../../../../../utils/types';
+import { Triplet } from "utils/types";
 
 const buildingParams: {
   key: string;

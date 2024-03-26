@@ -1,11 +1,11 @@
 import { forwardRef, memo, Suspense, useEffect, useMemo, useRef } from "react";
 import { MeshBasicMaterial, Vector2, VideoTexture } from "three";
+import { REPEAT_WRAPPING } from "utils/consts";
+import { Triplet } from "utils/types";
 
 import { useVideoTexture } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
 
-import { REPEAT_WRAPPING } from "../../../../../utils/consts";
-import { Triplet } from "../../../../../utils/types";
 import { useVideoContext } from "../../Video";
 
 type ScreenContentsProps = Pick<MeshProps, "position"> & {

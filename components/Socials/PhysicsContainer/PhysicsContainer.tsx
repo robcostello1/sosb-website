@@ -1,10 +1,10 @@
-import { ReactNode, useMemo, useRef } from 'react';
-import { Group, Vector3 } from 'three';
+import { ReactNode, useMemo, useRef } from "react";
+import { Group, Vector3 } from "three";
 
-import { BoxGeometryProps, Color, MeshProps } from '@react-three/fiber';
-import { RapierRigidBody, RigidBody } from '@react-three/rapier';
+import { BoxGeometryProps, Color, MeshProps } from "@react-three/fiber";
+import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 
-import { Triplet } from '../../../utils/types';
+import { Triplet } from "../../utils/types";
 
 const SLEEP_PROPS = {
   allowSleep: true,

@@ -1,7 +1,7 @@
 import { Texture, Vector3 } from "three";
+import { REPEAT_WRAPPING } from "utils/consts";
+import { Triplet } from "utils/types";
 
-import { REPEAT_WRAPPING } from "../../../../utils/consts";
-import { Triplet } from "../../../../utils/types";
 import {
   BUILDING_TEXTURE_HEIGHT,
   BUILDING_TEXTURE_WIDTH,

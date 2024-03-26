@@ -1,10 +1,10 @@
 import React from "react";
+import { REPEAT_WRAPPING } from "utils/consts";
 
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 import { useTexture } from "../../../hooks/useTexture";
 import Plank from "./Plank";
 

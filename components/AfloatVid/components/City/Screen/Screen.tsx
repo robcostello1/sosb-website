@@ -1,8 +1,8 @@
 import { memo } from "react";
+import { Triplet } from "utils/types";
 
 import { MeshProps } from "@react-three/fiber";
 
-import { Triplet } from "../../../../../utils/types";
 import ScreenContents from "./ScreenContents";
 
 export type ScreenProps = Pick<MeshProps, "position" | "rotation"> & {

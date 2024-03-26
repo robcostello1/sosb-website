@@ -1,10 +1,9 @@
-import { gsap } from 'gsap';
-import { memo, useEffect, useState } from 'react';
+import { gsap } from "gsap";
+import { memo, useEffect, useState } from "react";
+import { Triplet } from "utils/types";
 
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import { useFrame, useThree } from '@react-three/fiber';
-
-import { Triplet } from '../utils/types';
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { useFrame, useThree } from "@react-three/fiber";
 
 const cameraSettings: Record<
   string,

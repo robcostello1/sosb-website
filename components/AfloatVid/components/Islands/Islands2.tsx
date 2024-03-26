@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { DoubleSide, ShaderChunk } from 'three';
+import { useState } from "react";
+import { DoubleSide, ShaderChunk } from "three";
+import { Triplet } from "utils/types";
 
-import { ShaderMaterialProps } from '@react-three/fiber';
+import { ShaderMaterialProps } from "@react-three/fiber";
 
-import { Triplet } from '../../../../utils/types';
-import { monkeyPatch, noise } from './utils';
+import { monkeyPatch, noise } from "./utils";
 
 // TODO: https://codepen.io/marco_fugaro/pen/xxZWPWJ?editors=0010
 const SIZE = 100;

@@ -1,11 +1,17 @@
-import { gsap } from 'gsap';
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { BoxGeometry, Mesh, MeshStandardMaterial, Texture, Vector2 } from 'three';
+import { gsap } from "gsap";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  BoxGeometry,
+  Mesh,
+  MeshStandardMaterial,
+  Texture,
+  Vector2,
+} from "three";
+import { Triplet } from "utils/types";
 
-import { Triplet } from '../../../../utils/types';
-import Button from '../../../Button';
-import { useTexture } from '../../hooks/useTexture';
-import GarageLight from './GarageLight';
+import Button from "../../../Button";
+import { useTexture } from "../../hooks/useTexture";
+import GarageLight from "./GarageLight";
 
 const HEIGHT = 4;
 const WIDTH = 6;

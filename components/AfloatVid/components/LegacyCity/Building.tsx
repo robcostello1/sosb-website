@@ -8,12 +8,12 @@ import {
 } from "three";
 // @ts-ignore
 import { LoopSubdivision } from "three-subdivide";
+import { REPEAT_WRAPPING } from "utils/consts";
+import { Triplet } from "utils/types";
+import { getStaticAsset } from "utils/utils";
 
 import { MeshProps, useFrame } from "@react-three/fiber";
 
-import { REPEAT_WRAPPING } from "../../../../utils/consts";
-import { Triplet } from "../../../../utils/types";
-import { getStaticAsset } from "../../../../utils/utils";
 import { useTexture } from "../../hooks/useTexture";
 
 type BuildingProps = Omit<MeshProps, "scale"> & { scale: Triplet };

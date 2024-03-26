@@ -1,9 +1,12 @@
-import { useEffect, useRef } from 'react';
-import { BufferGeometry, InstancedMesh, Material, Object3D } from 'three';
+import { useEffect, useRef } from "react";
+import { BufferGeometry, InstancedMesh, Material, Object3D } from "three";
+import { Triplet } from "utils/types";
 
-import { Triplet } from '../../../../../utils/types';
-import { DEFAULT_BUILDING_HEIGHT, DEFAULT_BUILDING_WIDTH } from '../BaseBuilding';
-import ScreenContents from '../Screen/ScreenContents';
+import {
+  DEFAULT_BUILDING_HEIGHT,
+  DEFAULT_BUILDING_WIDTH,
+} from "../BaseBuilding";
+import ScreenContents from "../Screen/ScreenContents";
 
 type InstancedScreensProps = {
   count: number;

@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Euler, Vector3 } from "three";
+import { Triplet } from "utils/types";
+import { getRandomColor, getStaticAsset } from "utils/utils";
 
-import { Triplet } from "../../../../utils/types";
-import { getRandomColor, getStaticAsset } from "../../../../utils/utils";
 import { useTexture } from "../../hooks/useTexture";
 import { useVideoContext } from "../Video";
 import { OnFrameFunc } from "./BaseBuilding";

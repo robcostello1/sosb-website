@@ -1,6 +1,6 @@
 import { memo, useMemo } from "react";
+import { getStaticAsset } from "utils/utils";
 
-import { getStaticAsset } from "../../../../utils/utils";
 import { useTexture } from "../../hooks/useTexture";
 
 type FridgeProps = {};

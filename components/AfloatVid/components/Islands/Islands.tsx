@@ -1,16 +1,23 @@
-import gsap from 'gsap';
-import { useRef, useState } from 'react';
-import { DoubleSide, Mesh, PlaneGeometry, RawShaderMaterial, Uniform, Vector3 } from 'three';
+import gsap from "gsap";
+import { useRef, useState } from "react";
+import {
+  DoubleSide,
+  Mesh,
+  PlaneGeometry,
+  RawShaderMaterial,
+  Uniform,
+  Vector3,
+} from "three";
+import { Triplet } from "utils/types";
 
-import { useFrame } from '@react-three/fiber';
+import { useFrame } from "@react-three/fiber";
 
-import { Triplet } from '../../../../utils/types';
 // @ts-ignore
-import testFragmentShader from '../../shaders/test/fragment.glsl';
+import testFragmentShader from "../../shaders/test/fragment.glsl";
 // @ts-ignore
-import testVertexShader from '../../shaders/test/vertex.glsl';
-import { useVideoContext } from '../Video';
-import { getPosition } from './utils';
+import testVertexShader from "../../shaders/test/vertex.glsl";
+import { useVideoContext } from "../Video";
+import { getPosition } from "./utils";
 
 type IslandsProps = {
   scale: number;
@@ -58,6 +65,7 @@ const Islands = ({
         const bufferLength = analyserRef.current.frequencyBinCount;
         const dataArray = new Float32Array(bufferLength);
 
+        // TODO: doesn't work on Safari
         analyserRef.current.getFloatTimeDomainData(dataArray);
         let sumSquares1 = 0.0;
         let sumSquares2 = 0.0;

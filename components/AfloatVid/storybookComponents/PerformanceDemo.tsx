@@ -1,10 +1,10 @@
-import { useRef } from 'react';
-import { Mesh } from 'three';
+import { useRef } from "react";
+import { Mesh } from "three";
 
-import { Sphere } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { Sphere } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 
-import { Triplet } from '../../../utils/types';
+import { Triplet } from "../../utils/types";
 
 const PerformanceDemo = (props: { position?: Triplet }) => {
   const ref = useRef<Mesh>(null);

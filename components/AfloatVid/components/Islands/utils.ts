@@ -1,4 +1,4 @@
-import { Triplet } from '../../../../utils/types';
+import { Triplet } from "utils/types";
 
 export const getPosition = (position: Triplet, visible: boolean): Triplet => {
   return visible ? position : [position[0], position[1] - 35, position[2]];
