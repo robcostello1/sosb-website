@@ -3,7 +3,6 @@ import {
   BoxGeometry,
   Mesh,
   MeshStandardMaterial,
-  RepeatWrapping,
   Vector2,
   Vector3,
 } from "three";
@@ -12,14 +11,18 @@ import { LoopSubdivision } from "three-subdivide";
 
 import { MeshProps, useFrame } from "@react-three/fiber";
 
+import { REPEAT_WRAPPING } from "../../../../utils/consts";
 import { Triplet } from "../../../../utils/types";
+import { getStaticAsset } from "../../../../utils/utils";
 import { useTexture } from "../../hooks/useTexture";
 
 type BuildingProps = Omit<MeshProps, "scale"> & { scale: Triplet };
 
 const buildingTextureMap = [
-  "/maps/Sample from Apartment Textures by Boko/Apartments 1/1.",
-  "/maps/Sample from Apartment Textures by Boko/Apartments 5/",
+  getStaticAsset(
+    "/maps/Sample from Apartment Textures by Boko/Apartments 1/1."
+  ),
+  getStaticAsset("/maps/Sample from Apartment Textures by Boko/Apartments 5/"),
 ];
 
 const Building = ({ scale, ...props }: BuildingProps) => {
@@ -34,11 +37,11 @@ const Building = ({ scale, ...props }: BuildingProps) => {
       displacementMap: `${buildingTexture}Displacement.jpg`,
       normalMap: `${buildingTexture}Normal.jpg`,
       //   roughnessMap:
-      //     "/maps/Sample from Apartment Textures by Boko/Apartments 1/1.Specular.jpg",
+      //     getStaticAsset("/maps/Sample from Apartment Textures by Boko/Apartments 1/1.Specular.jpg"),
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-        texture.wrapS = texture.wrapT = RepeatWrapping;
+        texture.wrapS = texture.wrapT = REPEAT_WRAPPING;
         texture.repeat.set(finalScale.x / 30, finalScale.y / 30);
         texture.offset.set(Math.random(), Math.random());
       });

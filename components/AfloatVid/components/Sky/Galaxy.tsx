@@ -1,13 +1,19 @@
-import { forwardRef, memo, Ref, RefObject, useRef } from 'react';
+import { forwardRef, memo, Ref, RefObject, useRef } from "react";
 import {
-    BackSide, DirectionalLight, Group, Mesh, MeshBasicMaterial, MeshPhongMaterial, SphereGeometry,
-    TextureLoader
-} from 'three';
+  BackSide,
+  DirectionalLight,
+  Group,
+  Mesh,
+  MeshBasicMaterial,
+  MeshPhongMaterial,
+  SphereGeometry,
+  TextureLoader,
+} from "three";
 
-import { useFrame, useLoader } from '@react-three/fiber';
+import { useFrame, useLoader } from "@react-three/fiber";
 
-import { Triplet } from '../../../../utils/types';
-import { getDayNight } from '../../../../utils/utils';
+import { Triplet } from "../../../../utils/types";
+import { getDayNight, getStaticAsset } from "../../../../utils/utils";
 
 const MOON_LIGHT_INTENSITY = 0.4;
 const INITIAL_ROTATION: Triplet = [1, -Math.PI / 2, 0];
@@ -20,8 +26,14 @@ type GalaxyRef = {
 };
 
 const Galaxy = ({ castShadow, timeRef }: GalaxyRef) => {
-  const galaxyTexture = useLoader(TextureLoader, "/maps/optimised/galaxy.jpg");
-  const moonTexture = useLoader(TextureLoader, "/maps/moon.jpg");
+  const galaxyTexture = useLoader(
+    TextureLoader,
+    getStaticAsset("/maps/optimised/galaxy.jpg")
+  );
+  const moonTexture = useLoader(
+    TextureLoader,
+    getStaticAsset("/maps/moon.jpg")
+  );
 
   const groupRef = useRef<Group>(null);
   const moonRef = useRef<Mesh<SphereGeometry, MeshPhongMaterial>>(null);

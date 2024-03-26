@@ -1,5 +1,6 @@
 import { memo, useMemo } from "react";
 
+import { getStaticAsset } from "../../../../utils/utils";
 import { useTexture } from "../../hooks/useTexture";
 
 type FridgeProps = {};
@@ -12,7 +13,7 @@ const materialProps = {
 const FridgeContents = (_: FridgeProps) => {
   const { map: backMap } = useTexture(
     {
-      map: "/maps/optimised/fridge.jpg",
+      map: getStaticAsset("/maps/optimised/fridge.jpg"),
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {

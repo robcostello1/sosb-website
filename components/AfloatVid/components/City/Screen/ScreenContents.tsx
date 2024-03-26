@@ -1,14 +1,10 @@
 import { forwardRef, memo, Suspense, useEffect, useMemo, useRef } from "react";
-import {
-  MeshBasicMaterial,
-  RepeatWrapping,
-  Vector2,
-  VideoTexture,
-} from "three";
+import { MeshBasicMaterial, Vector2, VideoTexture } from "three";
 
 import { useVideoTexture } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
 
+import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 import { Triplet } from "../../../../../utils/types";
 import { useVideoContext } from "../../Video";
 
@@ -38,7 +34,7 @@ const ScreenContents = ({
       if (material.map) {
         material.map.offset = new Vector2(...videoOffset);
         const boxAspectRatio = aspectRatio / (boxArgs[0] / boxArgs[1]);
-        material.map.wrapS = material.map.wrapT = RepeatWrapping;
+        material.map.wrapS = material.map.wrapT = REPEAT_WRAPPING;
         material.map.repeat = new Vector2(
           1 / videoScale,
           (1 / videoScale) * boxAspectRatio

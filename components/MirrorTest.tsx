@@ -1,14 +1,15 @@
-import { memo } from 'react';
+import { memo } from "react";
 
-import { CubeCamera, useTexture } from '@react-three/drei';
+import { CubeCamera, useTexture } from "@react-three/drei";
 
-import { VectorProp } from '../consts';
+import { VectorProp } from "../consts";
+import { getStaticAsset } from "../utils/utils";
 
 const position: VectorProp = [0, -0.1, 1.5];
 
 const MirrorTest = () => {
   const textureProps = useTexture({
-    roughnessMap: "/maps/decals_0006_roughness_1k.jpg",
+    roughnessMap: getStaticAsset("/maps/decals_0006_roughness_1k.jpg"),
   });
   return (
     <>

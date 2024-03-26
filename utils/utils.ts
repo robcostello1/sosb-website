@@ -8,3 +8,10 @@ export const getDayNight = (time: number) => {
 
 export const getRandomColor = () =>
   new Color(Math.random(), Math.random(), Math.random());
+
+const CLOUDFRONT_URL = "https://d190trwkq4jv03.cloudfront.net/public";
+
+export const getStaticAsset = (path: string) => {
+  return path;
+  // return `${CLOUDFRONT_URL}${path}`;
+};

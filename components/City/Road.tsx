@@ -1,17 +1,20 @@
-import { useTexture, MeshReflectorMaterial } from "@react-three/drei";
 import { memo } from "react";
-import { RepeatWrapping } from "three";
+
+import { MeshReflectorMaterial, useTexture } from "@react-three/drei";
+
+import { REPEAT_WRAPPING } from "../../utils/consts";
+import { getStaticAsset } from "../../utils/utils";
 
 type RoadProps = { width: number; depth: number };
 
 const Road = ({ width, depth }: RoadProps) => {
   const textureProps = useTexture(
     {
-      alphaMap: "/maps/decals_0006_alpha3_1k.jpg",
+      alphaMap: getStaticAsset("/maps/decals_0006_alpha3_1k.jpg"),
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-        texture.wrapS = texture.wrapT = RepeatWrapping;
+        texture.wrapS = texture.wrapT = REPEAT_WRAPPING;
         texture.repeat.set(2, 2);
       });
     }

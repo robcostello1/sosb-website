@@ -1,6 +1,8 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect } from "react";
 
-import { useThree } from '@react-three/fiber';
+import { useThree } from "@react-three/fiber";
+
+import { getStaticAsset } from "../utils/utils";
 
 const Environment = () => {
   const { scene } = useThree();
@@ -9,12 +11,12 @@ const Environment = () => {
   const [cubeMap] = useLoader(CubeTextureLoader, [
     // @ts-ignore
     [
-      "/maps/city/px.jpg",
-      "/maps/city/nx.jpg",
-      "/maps/city/py.jpg",
-      "/maps/city/ny.jpg",
-      "/maps/city/pz.jpg",
-      "/maps/city/nz.jpg",
+      getStaticAsset("/maps/city/px.jpg"),
+      getStaticAsset("/maps/city/nx.jpg"),
+      getStaticAsset("/maps/city/py.jpg"),
+      getStaticAsset("/maps/city/ny.jpg"),
+      getStaticAsset("/maps/city/pz.jpg"),
+      getStaticAsset("/maps/city/nz.jpg"),
     ],
   ]);
 

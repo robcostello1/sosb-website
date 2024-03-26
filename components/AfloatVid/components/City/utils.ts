@@ -1,10 +1,14 @@
-import { MirroredRepeatWrapping, RepeatWrapping, Texture, Vector3 } from 'three';
+import { Texture, Vector3 } from "three";
 
-import { Triplet } from '../../../../utils/types';
+import { REPEAT_WRAPPING } from "../../../../utils/consts";
+import { Triplet } from "../../../../utils/types";
 import {
-    BUILDING_TEXTURE_HEIGHT, BUILDING_TEXTURE_WIDTH, DEFAULT_BUILDING_HEIGHT, DEFAULT_BUILDING_WIDTH
-} from './consts';
-import { TextureProps } from './types';
+  BUILDING_TEXTURE_HEIGHT,
+  BUILDING_TEXTURE_WIDTH,
+  DEFAULT_BUILDING_HEIGHT,
+  DEFAULT_BUILDING_WIDTH,
+} from "./consts";
+import { TextureProps } from "./types";
 
 export const getBuildingAttributes = (size: number, index: number) => {
   const isEven = index % 2 === 0;
@@ -36,8 +40,8 @@ export function weightedRandom(
 
 export const applyBuildingWrap = (textures: Texture | Texture[]) => {
   (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-    texture.wrapS = RepeatWrapping;
-    texture.wrapT = RepeatWrapping;
+    texture.wrapS = REPEAT_WRAPPING;
+    texture.wrapT = REPEAT_WRAPPING;
   });
 };
 
@@ -110,8 +114,8 @@ export const applyScaledTexture = (
     clonedTexture.repeat.x = x;
     clonedTexture.repeat.y = y;
     // TODO needs to be expressly set here
-    clonedTexture.wrapS = RepeatWrapping;
-    clonedTexture.wrapT = RepeatWrapping;
+    clonedTexture.wrapS = REPEAT_WRAPPING;
+    clonedTexture.wrapT = REPEAT_WRAPPING;
 
     acc[key as keyof TextureProps] = clonedTexture;
     return acc;

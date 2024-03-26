@@ -6,7 +6,6 @@ import {
   useMemo,
   useState,
 } from "react";
-import { Vector3 } from "three";
 
 import { CameraControls, Stats } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
@@ -21,15 +20,10 @@ import {
   Islands,
   Movement,
   Raft,
-  ShippingScene,
 } from "./components";
-import BaseBuilding from "./components/City/BaseBuilding";
-import BuildingTextureProvider, {
-  BuildingTextureContext,
-} from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
-import { FloatingScene } from "./components/FloatingStuff";
+import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
 import Sky from "./components/Sky";
-import SkyStreaks from "./components/Sky/SkyStreaks/SkyStreaks";
+import SkyStreaks from "./components/Sky/SkyStreaks";
 import VideoProvider, { useVideoContext } from "./components/Video";
 import { PARTS, START_POSITION_Z } from "./consts";
 
@@ -124,7 +118,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
         duration={300}
         moving={moving}
       >
-        <ShippingScene visible={showShippingScene} position={[0, 0, -320]} />
+        {/* <ShippingScene visible={showShippingScene} position={[0, 0, -320]} /> */}
 
         <City
           visible={showCity}
@@ -161,26 +155,13 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
         position={[-10, -2, 2]}
       />
       <ambientLight intensity={0.1} />
-      <Suspense
-        fallback={
-          <BuildingTextureProvider>
-            <BuildingTextureContext.Consumer>
-              {(texturesProps) => (
-                <BaseBuilding
-                  position={new Vector3(0, 0, 0)}
-                  scale={new Vector3(0.05, 0.05, 0.05)}
-                  textureProps={texturesProps[0]}
-                />
-              )}
-            </BuildingTextureContext.Consumer>
-          </BuildingTextureProvider>
-        }
-      >
+
+      <Suspense>
         <Sky overrideTime={0} timeSpeedMultiplier={timeSpeedMultiplyer} />
 
         <Ocean />
 
-        <FloatingScene visible={showFloatingStuff} />
+        {/* <FloatingScene visible={showFloatingStuff} /> */}
 
         <SkyStreaks visible={showSkyStreaks} numStreaks={10} />
 

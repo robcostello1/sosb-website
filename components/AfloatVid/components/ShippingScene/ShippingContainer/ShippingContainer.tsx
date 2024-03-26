@@ -1,10 +1,12 @@
 import { useMemo } from "react";
-import { RepeatWrapping, Vector2 } from "three";
+import { Vector2 } from "three";
 
 import { Cylinder } from "@react-three/drei";
 import { MeshStandardMaterialProps } from "@react-three/fiber";
 
+import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 import { Triplet } from "../../../../../utils/types";
+import { getStaticAsset } from "../../../../../utils/utils";
 import { useTexture } from "../../../hooks/useTexture";
 // TODO move
 import { TextureProps } from "../../City/types";
@@ -126,15 +128,23 @@ const BarEnd = ({
 const ShippingContainer = ({ position, rotation }: ShippingContainerProps) => {
   const texture = useTexture(
     {
-      map: "/maps/optimised/Metal_Currogated_007_basecolor.jpg",
-      normalMap: "/maps/optimised/Metal_Currogated_007_normal.jpg",
-      roughnessMap: "/maps/optimised/Metal_Currogated_007_roughness.jpg",
-      aoMap: "/maps/optimised/Metal_Currogated_007_ambientOcclusion_2.jpg",
-      metalnessMap: "/maps/optimised/Metal_Currogated_007_metallic.jpg",
+      map: getStaticAsset("/maps/optimised/Metal_Currogated_007_basecolor.jpg"),
+      normalMap: getStaticAsset(
+        "/maps/optimised/Metal_Currogated_007_normal.jpg"
+      ),
+      roughnessMap: getStaticAsset(
+        "/maps/optimised/Metal_Currogated_007_roughness.jpg"
+      ),
+      aoMap: getStaticAsset(
+        "/maps/optimised/Metal_Currogated_007_ambientOcclusion_2.jpg"
+      ),
+      metalnessMap: getStaticAsset(
+        "/maps/optimised/Metal_Currogated_007_metallic.jpg"
+      ),
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-        texture.wrapS = texture.wrapT = RepeatWrapping;
+        texture.wrapS = texture.wrapT = REPEAT_WRAPPING;
         // TODO different repeat settings for end
         texture.repeat.set(4, 1);
       });

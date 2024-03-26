@@ -1,14 +1,9 @@
 import { memo, useMemo, useRef } from "react";
-import {
-  BoxGeometry,
-  Mesh,
-  MeshStandardMaterial,
-  RepeatWrapping,
-  Vector2,
-} from "three";
+import { BoxGeometry, Mesh, MeshStandardMaterial, Vector2 } from "three";
 
 import { MeshProps, MeshStandardMaterialProps } from "@react-three/fiber";
 
+import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 import { TextureProps } from "../../City/types";
 
 type PlankProps = Pick<MeshProps, "position" | "rotation"> & {
@@ -38,8 +33,8 @@ const Plank = ({
         // TODO
         clonedTexture.offset.set(0.005 + Math.floor(offsetX), offsetY);
         // TODO needs to be expressly set here
-        clonedTexture.wrapS = RepeatWrapping;
-        clonedTexture.wrapT = RepeatWrapping;
+        clonedTexture.wrapS = REPEAT_WRAPPING;
+        clonedTexture.wrapT = REPEAT_WRAPPING;
 
         acc[key as keyof TextureProps] = clonedTexture;
         return acc;

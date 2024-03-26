@@ -1,8 +1,8 @@
-import { Texture } from 'three';
+import { LinearFilter, Texture } from "three";
 
-import { useTexture as useDreiTexture } from '@react-three/drei';
+import { useTexture as useDreiTexture } from "@react-three/drei";
 
-import { useLoadingStore } from '../state/loading';
+import { useLoadingStore } from "../state/loading";
 
 // TODO handle additional properties
 // @ts-expect-error
@@ -11,6 +11,7 @@ export const useTexture: typeof useDreiTexture = (input, onLoad) => {
 
   return useDreiTexture(input, (texture: Texture | Texture[]) => {
     removeItem();
+
     onLoad?.(texture);
   });
 };

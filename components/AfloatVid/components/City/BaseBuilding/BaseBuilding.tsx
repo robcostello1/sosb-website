@@ -1,15 +1,20 @@
-import { forwardRef, memo, RefObject, useMemo, useRef } from 'react';
-import { mergeRefs } from 'react-merge-refs';
+import { forwardRef, memo, RefObject, useMemo, useRef } from "react";
+import { mergeRefs } from "react-merge-refs";
 import {
-    BackSide, BoxGeometry, Mesh, MeshBasicMaterial, MeshStandardMaterial, RepeatWrapping, Vector2,
-    Vector3
-} from 'three';
+  BackSide,
+  BoxGeometry,
+  Mesh,
+  MeshBasicMaterial,
+  MeshStandardMaterial,
+  Vector2,
+  Vector3,
+} from "three";
 
-import { MeshProps, useFrame } from '@react-three/fiber';
+import { MeshProps, useFrame } from "@react-three/fiber";
 
-import { TextureProps } from '../types';
-import { applyScaledTexture } from '../utils';
-import { OnFrameFunc } from './types';
+import { TextureProps } from "../types";
+import { applyScaledTexture } from "../utils";
+import { OnFrameFunc } from "./types";
 
 export type BaseBuildingProps = Pick<MeshProps, "position" | "rotation"> & {
   lightRef?: RefObject<Mesh<BoxGeometry, MeshBasicMaterial>>;

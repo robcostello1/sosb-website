@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import { OrbitControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { OrbitControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import SongProvider from '../SongProvider/SongProvider';
-import City2 from './City2';
+import VideoProvider from "../Video";
+import City2 from "./City2";
 
 export default {
   title: "City/City2",
@@ -30,9 +30,9 @@ const Template: ComponentStory<typeof City2> = (args) => {
       <ambientLight intensity={0.1} />
       <directionalLight position={[10, 3, 5]} />
 
-      <SongProvider autoStart>
+      <VideoProvider autoStart>
         <City2 {...args} />
-      </SongProvider>
+      </VideoProvider>
     </Canvas>
   );
 };

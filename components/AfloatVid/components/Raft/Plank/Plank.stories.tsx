@@ -1,10 +1,10 @@
 import React from "react";
-import { RepeatWrapping } from "three";
 
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
+import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 import { useTexture } from "../../../hooks/useTexture";
 import Plank from "./Plank";
 
@@ -20,11 +20,11 @@ export default {
 const PlankWrapper: ComponentStory<typeof Plank> = (args) => {
   const textures = useTexture(
     {
-      map: "/maps/optimised/wood_planks_grey_diff_1k.jpg",
+      map: getStaticAsset("/maps/optimised/wood_planks_grey_diff_1k.jpg"),
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-        texture.wrapS = texture.wrapT = RepeatWrapping;
+        texture.wrapS = texture.wrapT = REPEAT_WRAPPING;
       });
     }
   );
@@ -50,3 +50,6 @@ Default.args = {
   length: 1,
   width: 1,
 };
+function getStaticAsset(arg0: string): any {
+  throw new Error("Function not implemented.");
+}

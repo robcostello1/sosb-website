@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import { Box, OrbitControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Box, OrbitControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Ocean from '../../../Terrain/Ocean';
-import SongProvider from '../SongProvider';
-import Islands from './Islands';
+import Ocean from "../../../Terrain/Ocean";
+import SongProvider from "../SongProvider";
+import Islands from "./Islands";
 
 export default {
   title: "Islands",
@@ -37,9 +37,9 @@ const Template: ComponentStory<typeof Islands> = (args) => {
         <meshStandardMaterial />
       </Box> */}
 
-      <SongProvider autoStart>
+      <VideoProvider autoStart>
         <Islands {...args} />
-      </SongProvider>
+      </VideoProvider>
     </Canvas>
   );
 };

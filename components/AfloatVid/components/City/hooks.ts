@@ -1,40 +1,49 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Euler, Vector3 } from 'three';
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Euler, Vector3 } from "three";
 
-import { Triplet } from '../../../../utils/types';
-import { getRandomColor } from '../../../../utils/utils';
-import { useTexture } from '../../hooks/useTexture';
-import { useVideoContext } from '../Video';
-import { OnFrameFunc } from './BaseBuilding';
+import { Triplet } from "../../../../utils/types";
+import { getRandomColor, getStaticAsset } from "../../../../utils/utils";
+import { useTexture } from "../../hooks/useTexture";
+import { useVideoContext } from "../Video";
+import { OnFrameFunc } from "./BaseBuilding";
 import {
-    DEFAULT_BUILDING_HEIGHT, DEFAULT_POSITION, DEFAULT_ROTATION, DEFAULT_SCALE
-} from './consts';
-import { TextureProps } from './types';
-import { applyBuildingWrap, getBuildingGroupParams } from './utils';
+  DEFAULT_BUILDING_HEIGHT,
+  DEFAULT_POSITION,
+  DEFAULT_ROTATION,
+  DEFAULT_SCALE,
+} from "./consts";
+import { TextureProps } from "./types";
+import { applyBuildingWrap, getBuildingGroupParams } from "./utils";
 
 export const useBuildingTextures = (): TextureProps[] => {
   const textures = [
     useTexture(
       {
-        map: "/maps/optimised/building-facade-1.jpg",
-        roughnessMap: "/maps/optimised/building-facade-1-roughness.jpg",
-        alphaMap: "/maps/optimised/building-facade-1-alpha.jpg",
+        map: getStaticAsset("/maps/optimised/building-facade-1.jpg"),
+        roughnessMap: getStaticAsset(
+          "/maps/optimised/building-facade-1-roughness.jpg"
+        ),
+        alphaMap: getStaticAsset("/maps/optimised/building-facade-1-alpha.jpg"),
       },
       applyBuildingWrap
     ),
     useTexture(
       {
-        map: "/maps/optimised/building-facade-2.jpg",
-        roughnessMap: "/maps/optimised/building-facade-2-roughness.jpg",
-        alphaMap: "/maps/optimised/building-facade-2-alpha.jpg",
+        map: getStaticAsset("/maps/optimised/building-facade-2.jpg"),
+        roughnessMap: getStaticAsset(
+          "/maps/optimised/building-facade-2-roughness.jpg"
+        ),
+        alphaMap: getStaticAsset("/maps/optimised/building-facade-2-alpha.jpg"),
       },
       applyBuildingWrap
     ),
     useTexture(
       {
-        map: "/maps/optimised/building-facade-3.jpg",
-        roughnessMap: "/maps/optimised/building-facade-3-roughness.jpg",
-        alphaMap: "/maps/optimised/building-facade-3-alpha.jpg",
+        map: getStaticAsset("/maps/optimised/building-facade-3.jpg"),
+        roughnessMap: getStaticAsset(
+          "/maps/optimised/building-facade-3-roughness.jpg"
+        ),
+        alphaMap: getStaticAsset("/maps/optimised/building-facade-3-alpha.jpg"),
       },
       applyBuildingWrap
     ),

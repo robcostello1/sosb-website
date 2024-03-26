@@ -1,4 +1,3 @@
-import { on } from "events";
 import {
   MutableRefObject,
   useCallback,
@@ -35,12 +34,23 @@ export const useVideo = (debug?: boolean): UseVideoReturnType => {
     video.setAttribute("src", "videos/main.mp4");
     video.setAttribute("style", "position: fixed; visibility: hidden");
 
-    // TODO temp
-    // video.setAttribute("loop", "true");
-
     document.body.appendChild(video);
 
-    audioCtx.current = new window.AudioContext();
+    const AudioContext =
+      window.AudioContext ||
+      // @ts-expect-error
+      window.webkitAudioContext || // Safari and old versions of Chrome
+      false;
+
+    if (AudioContext) {
+      audioCtx.current = new AudioContext();
+    } else {
+      alert(
+        "Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox"
+      );
+      return;
+    }
+
     let audioSource = null;
 
     audioSource = audioCtx.current.createMediaElementSource(video);

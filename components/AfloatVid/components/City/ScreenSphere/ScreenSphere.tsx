@@ -1,9 +1,10 @@
 import { useEffect, useRef } from "react";
-import { Mesh, MeshBasicMaterial, RepeatWrapping, Vector2 } from "three";
+import { Mesh, MeshBasicMaterial } from "three";
 
 import { Sphere } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 
+import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 import { useVideoContext } from "../../Video";
 import { VideoContextMaterial } from "../Screen/ScreenContents";
 
@@ -23,7 +24,7 @@ const ScreenSphere = ({ scale = 1 }: ScreenSphereProps) => {
     const material = videoMatRef.current;
 
     if (material?.map) {
-      material.map.wrapS = material.map.wrapT = RepeatWrapping;
+      material.map.wrapS = material.map.wrapT = REPEAT_WRAPPING;
       const ratio = 10 / 11;
       material.map.repeat.set(TILING_REPEATS, TILING_REPEATS * ratio);
     }

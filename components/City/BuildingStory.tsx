@@ -1,8 +1,8 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo } from "react";
 
-import { GroupProps } from '@react-three/fiber';
+import { GroupProps } from "@react-three/fiber";
 
-import { VectorProp } from '../../consts';
+import { VectorProp } from "../../consts";
 
 export type BuildingStoryProps = GroupProps & {
   wallWindowMatrix: [number, number, number];
@@ -36,12 +36,12 @@ const BuildingStory = ({
   // const [cubeMap] = useLoader(CubeTextureLoader, [
   //   // @ts-ignore
   //   [
-  //     "/maps/city/px.jpg",
-  //     "/maps/city/nx.jpg",
-  //     "/maps/city/py.jpg",
-  //     "/maps/city/ny.jpg",
-  //     "/maps/city/pz.jpg",
-  //     "/maps/city/nz.jpg",
+  //     getStaticAsset("/maps/city/px.jpg"),
+  //     getStaticAsset("/maps/city/nx.jpg"),
+  //     getStaticAsset("/maps/city/py.jpg"),
+  //     getStaticAsset("/maps/city/ny.jpg"),
+  //     getStaticAsset("/maps/city/pz.jpg"),
+  //     getStaticAsset("/maps/city/nz.jpg"),
   //   ],
   // ]);
 

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import { PointerLockControls, Stats } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { PointerLockControls, Stats } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Ocean } from '../../../../Terrain';
-import SongProvider from '../../SongProvider';
-import { useBuildingTextures } from '../hooks';
-import GlitchBuildings from './GlitchBuildings';
+import { Ocean } from "../../../../Terrain";
+import VideoProvider from "../../Video";
+import { useBuildingTextures } from "../hooks";
+import GlitchBuildings from "./GlitchBuildings";
 
 export default {
   title: "GlitchBuildings",
@@ -39,9 +39,9 @@ const Template: ComponentStory<typeof GlitchBuildings> = (args) => {
 
       <Ocean />
 
-      <SongProvider autoStart>
+      <VideoProvider autoStart>
         <StoryWrapper />
-      </SongProvider>
+      </VideoProvider>
     </Canvas>
   );
 };

@@ -1,10 +1,11 @@
 import { memo, useCallback, useEffect } from "react";
-import { RepeatWrapping } from "three";
 
 import { Box, Torus } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 
+import { REPEAT_WRAPPING } from "../../../../utils/consts";
 import { Triplet } from "../../../../utils/types";
+import { getStaticAsset } from "../../../../utils/utils";
 import { useTexture } from "../../hooks/useTexture";
 import Barrel from "./Barrel";
 import Plank from "./Plank";
@@ -72,26 +73,30 @@ const Raft = ({ setCamera = true }: RaftProps) => {
 export const RaftContent = memo(() => {
   const plankTexture = useTexture(
     {
-      map: "/maps/optimised/wood_planks_grey_diff_1k.jpg",
-      normalMap: "/maps/optimised/wood_planks_grey_nor_dx_1k.jpg",
-      roughnessMap: "/maps/optimised/wood_planks_grey_water_rough_1k.jpg",
+      map: getStaticAsset("/maps/optimised/wood_planks_grey_diff_1k.jpg"),
+      normalMap: getStaticAsset(
+        "/maps/optimised/wood_planks_grey_nor_dx_1k.jpg"
+      ),
+      roughnessMap: getStaticAsset(
+        "/maps/optimised/wood_planks_grey_water_rough_1k.jpg"
+      ),
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-        texture.wrapS = texture.wrapT = RepeatWrapping;
+        texture.wrapS = texture.wrapT = REPEAT_WRAPPING;
       });
     }
   );
 
   const ropeTexture = useTexture(
     {
-      map: "/maps/optimised/Rope_001_basecolor.jpg",
-      normalMap: "/maps/optimised/Rope_001_normal.jpg",
-      roughnessMap: "/maps/optimised/Rope_001_roughness.jpg",
+      map: getStaticAsset("/maps/optimised/Rope_001_basecolor.jpg"),
+      normalMap: getStaticAsset("/maps/optimised/Rope_001_normal.jpg"),
+      roughnessMap: getStaticAsset("/maps/optimised/Rope_001_roughness.jpg"),
     },
     (textures) => {
       (Array.isArray(textures) ? textures : [textures]).forEach((texture) => {
-        texture.wrapS = texture.wrapT = RepeatWrapping;
+        texture.wrapS = texture.wrapT = REPEAT_WRAPPING;
         texture.rotation = Math.PI / 2;
         texture.repeat.set(1, 64);
       });
