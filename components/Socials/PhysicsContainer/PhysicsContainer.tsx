@@ -1,16 +1,9 @@
 import { ReactNode, useMemo, useRef } from "react";
-import { Group, Vector3 } from "three";
+import { Vector3 } from "three";
+import { Triplet } from "utils/types";
 
-import { BoxGeometryProps, Color, MeshProps } from "@react-three/fiber";
+import { Color, MeshProps } from "@react-three/fiber";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
-
-import { Triplet } from "../../utils/types";
-
-const SLEEP_PROPS = {
-  allowSleep: true,
-  sleepTimeLimit: 1,
-  sleepSpeedLimit: 1,
-};
 
 type PhysicsContainerProps = MeshProps & {
   boxWallThickness?: number;
@@ -18,7 +11,6 @@ type PhysicsContainerProps = MeshProps & {
   baseSize?: number;
   boxHeight?: number;
   falseBasePosition?: number;
-  color?: Color;
   children: ReactNode;
   onClick?: () => void;
 };
@@ -31,7 +23,6 @@ export const PhysicsContainer = ({
   falseBasePosition,
   children,
   onClick,
-  ...props
 }: PhysicsContainerProps) => {
   const boxWallArgs = useMemo<Triplet>(
     () => [baseSize, boxHeight, boxWallThickness],

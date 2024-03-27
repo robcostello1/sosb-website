@@ -1,10 +1,9 @@
 import { PropsWithChildren, useState } from "react";
+import { Triplet } from "utils/types";
 
 import { Text3D } from "@react-three/drei";
 import { Color, MeshProps } from "@react-three/fiber";
 import { CylinderCollider, RigidBody } from "@react-three/rapier";
-
-import { Triplet } from "../../utils/types";
 
 const SLEEP_PROPS = {
   allowSleep: true,
