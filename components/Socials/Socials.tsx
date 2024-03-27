@@ -45,7 +45,6 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
           boxHeight={BIN_HEIGHT}
           falseBasePosition={BIN_FALSE_BASE_POSITION}
           position={[0, 0, 0]}
-          color="green"
           onClick={() => {
             onBin(!active);
             setActive(true);
