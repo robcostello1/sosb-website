@@ -56,6 +56,18 @@ export const useVideo = (debug?: boolean): UseVideoReturnType => {
 
     audioSource = audioCtx.current.createMediaElementSource(video);
     analyserRef.current = audioCtx.current.createAnalyser();
+
+    // Fixes missing method in Safari
+    // https://stackoverflow.com/questions/54182324/analyser-getfloattimedomaindata-does-not-exist-in-safari
+    if (analyserRef.current && !analyserRef.current.getFloatTimeDomainData) {
+      var r = new Uint8Array(2048);
+      analyserRef.current.getFloatTimeDomainData = function (e) {
+        analyserRef.current!.getByteTimeDomainData(r);
+        for (var t = 0, o = e.length; o > t; t++)
+          e[t] = 0.0078125 * (r[t] - 128);
+      };
+    }
+
     audioSource.connect(analyserRef.current);
     analyserRef.current.connect(audioCtx.current.destination);
     analyserRef.current.fftSize = 128;

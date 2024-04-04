@@ -1,11 +1,10 @@
 import React from "react";
 
-import { Box, OrbitControls, Stats } from "@react-three/drei";
+import { OrbitControls, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import Ocean from "../../../Terrain/Ocean";
-import SongProvider from "../SongProvider";
+import VideoProvider from "../Video";
 import Islands from "./Islands";
 
 export default {

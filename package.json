@@ -40,7 +40,6 @@
     "@aws-cdk/aws-s3": "^1.115.0",
     "@aws-cdk/aws-s3-deployment": "^1.115.0",
     "@aws-cdk/core": "^1.115.0",
-    "aws-cdk": "^1.115.0",
     "@babel/core": "^7.21.3",
     "@next/bundle-analyzer": "^14.1.0",
     "@react-three/drei": "^9.80.9",
@@ -56,6 +55,7 @@
     "@testing-library/react": "^14.0.0",
     "@types/lodash": "^4.14.191",
     "@types/three": "^0.146.0",
+    "aws-cdk": "^1.115.0",
     "babel-loader": "^8.3.0",
     "eslint-plugin-storybook": "^0.6.11",
     "glsl-shader-loader": "^0.1.6",
@@ -66,6 +66,7 @@
     "react-merge-refs": "^2.0.2",
     "react-three-gui": "^0.4.2",
     "storybook-dark-mode": "^3.0.1",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
     "web-audio-daw": "^4.13.1"
   }
 }
