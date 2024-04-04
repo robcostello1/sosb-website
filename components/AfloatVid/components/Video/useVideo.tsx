@@ -33,6 +33,7 @@ export const useVideo = (debug?: boolean): UseVideoReturnType => {
     const video = mediaRef.current;
     video.setAttribute("src", "videos/main.mp4");
     video.setAttribute("style", "position: fixed; visibility: hidden");
+    video.setAttribute("playsinline", "true");
 
     document.body.appendChild(video);
 
