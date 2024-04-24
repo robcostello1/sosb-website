@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
-import { OrbitControls, Stats } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { OrbitControls, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
+import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import VideoProvider from "../../Video/VideoProvider";
-import ScreenSphere from "./ScreenSphere";
+import VideoProvider from '../../Video/VideoProvider';
+import ScreenSphere from './ScreenSphere';
 
 export default {
   title: "City/ScreenSphere",
@@ -30,7 +30,7 @@ const Template: ComponentStory<typeof ScreenSphere> = (args) => {
       <ambientLight intensity={0.1} />
       <directionalLight position={[10, 3, 5]} />
 
-      <VideoProvider autoStart debug>
+      <VideoProvider autoStart debug videoUrl="/videos/main-test-2.mp4">
         <ScreenSphere {...args} />
       </VideoProvider>
     </Canvas>

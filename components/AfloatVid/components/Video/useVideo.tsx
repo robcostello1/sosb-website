@@ -1,14 +1,8 @@
-import {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { MutableRefObject, useCallback, useEffect, useRef, useState } from 'react';
 
-import { useFrame } from "@react-three/fiber";
+import { useFrame } from '@react-three/fiber';
 
-import { calculateBars } from "../../hooks/utils";
+import { calculateBars } from '../../hooks/utils';
 
 const BPM = 123;
 const START_OFFSET = 0.401;
@@ -21,7 +15,10 @@ export type UseVideoReturnType = {
   handlePlay: () => void;
 };
 
-export const useVideo = (debug?: boolean): UseVideoReturnType => {
+export const useVideo = (
+  videoUrl = "videos/main.mp4",
+  debug?: boolean
+): UseVideoReturnType => {
   const [mediaLoaded, setMediaLoaded] = useState(false);
   const mediaRef = useRef<HTMLVideoElement>();
   const analyserRef = useRef<AnalyserNode | null>(null);
@@ -31,7 +28,8 @@ export const useVideo = (debug?: boolean): UseVideoReturnType => {
   useEffect(() => {
     mediaRef.current = document.createElement("video");
     const video = mediaRef.current;
-    video.setAttribute("src", "videos/main.mp4");
+    console.log({ videoUrl });
+    video.setAttribute("src", videoUrl);
     video.setAttribute("style", "position: fixed; visibility: hidden");
     video.setAttribute("playsinline", "true");
 
@@ -77,7 +75,7 @@ export const useVideo = (debug?: boolean): UseVideoReturnType => {
     return () => {
       video.pause();
     };
-  }, []);
+  }, [videoUrl]);
 
   useFrame(({ clock: { elapsedTime } }) => {
     barRef.current = calculateBars(
