@@ -1,4 +1,4 @@
-import { Color } from "three";
+import { Color } from 'three';
 
 export const getDayNight = (time: number) => {
   const angle = ((time / 24) % 1) * Math.PI;
@@ -12,6 +12,7 @@ export const getRandomColor = () =>
 const CLOUDFRONT_URL = "https://d190trwkq4jv03.cloudfront.net/public";
 
 export const getStaticAsset = (path: string) => {
-  return path;
-  // return `${CLOUDFRONT_URL}${path}`;
+  return process.env.NODE_ENV === "production"
+    ? `${CLOUDFRONT_URL}${path}`
+    : path;
 };

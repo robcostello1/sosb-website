@@ -28,7 +28,6 @@ export const useVideo = (
   useEffect(() => {
     mediaRef.current = document.createElement("video");
     const video = mediaRef.current;
-    console.log({ videoUrl });
     video.setAttribute("src", videoUrl);
     video.setAttribute("style", "position: fixed; visibility: hidden");
     video.setAttribute("playsinline", "true");

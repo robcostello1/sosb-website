@@ -1,17 +1,12 @@
-import { gsap } from "gsap";
-import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-  BoxGeometry,
-  Mesh,
-  MeshStandardMaterial,
-  Texture,
-  Vector2,
-} from "three";
-import { Triplet } from "utils/types";
+import { gsap } from 'gsap';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { BoxGeometry, Mesh, MeshStandardMaterial, Texture, Vector2 } from 'three';
+import { Triplet } from 'utils/types';
+import { getStaticAsset } from 'utils/utils';
 
-import Button from "../../../Button";
-import { useTexture } from "../../hooks/useTexture";
-import GarageLight from "./GarageLight";
+import Button from '../../../Button';
+import { useTexture } from '../../hooks/useTexture';
+import GarageLight from './GarageLight';
 
 const HEIGHT = 4;
 const WIDTH = 6;
@@ -47,10 +42,14 @@ const Garage = ({
   const [wallsLoaded, setWallsLoaded] = useState(false);
   const textureProps = useTexture(
     {
-      map: `/maps/optimised/concrete_layers_02_diff_1k.jpg`,
-      roughnessMap: `/maps/optimised/concrete_layers_02_rough_1k.jpg`,
-      aoMap: `/maps/optimised/concrete_layers_02_ao_1k.jpg`,
-      normalMap: `/maps/optimised/concrete_layers_02_nor_dx_1k.jpg`,
+      map: getStaticAsset(`/maps/optimised/concrete_layers_02_diff_1k.jpg`),
+      roughnessMap: getStaticAsset(
+        `/maps/optimised/concrete_layers_02_rough_1k.jpg`
+      ),
+      aoMap: getStaticAsset(`/maps/optimised/concrete_layers_02_ao_1k.jpg`),
+      normalMap: getStaticAsset(
+        `/maps/optimised/concrete_layers_02_nor_dx_1k.jpg`
+      ),
     },
     () => {
       setWallsLoaded(true);
@@ -60,10 +59,14 @@ const Garage = ({
   const [shutterLoaded, setShutterLoaded] = useState(false);
   const shutterTextureProps = useTexture(
     {
-      map: `/maps/optimised/painted_metal_shutter_diff_1k.jpg`,
-      roughnessMap: `/maps/optimised/painted_metal_shutter_rough_1k.jpg`,
-      aoMap: `/maps/optimised/painted_metal_shutter_ao_1k.jpg`,
-      normalMap: `/maps/optimised/painted_metal_shutter_nor_dx_1k.jpg`,
+      map: getStaticAsset(`/maps/optimised/painted_metal_shutter_diff_1k.jpg`),
+      roughnessMap: getStaticAsset(
+        `/maps/optimised/painted_metal_shutter_rough_1k.jpg`
+      ),
+      aoMap: getStaticAsset(`/maps/optimised/painted_metal_shutter_ao_1k.jpg`),
+      normalMap: getStaticAsset(
+        `/maps/optimised/painted_metal_shutter_nor_dx_1k.jpg`
+      ),
     },
     (texture) => {
       (Array.isArray(texture) ? texture : [texture]).forEach((texture) => {
