@@ -1,33 +1,22 @@
-import {
-  memo,
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { Triplet } from "utils/types";
+import { memo, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Triplet } from 'utils/types';
+import { exitFullscreen, goFullscreen } from 'utils/utils';
 
-import { CameraControls, Stats } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { CameraControls, Stats } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
 
-import { Ocean } from "../Terrain";
-import styles from "./AfloatContent.module.css";
+import { Ocean } from '../Terrain';
+import styles from './AfloatContent.module.css';
 import {
-  BobbingItem,
-  BuildingOrb,
-  City,
-  Islands,
-  Movement,
-  Raft,
-  ShippingScene,
-} from "./components";
-import BuildingTextureProvider from "./components/City/BuildingTextureProvider/BuildingTextureProvider";
-import { FloatingScene } from "./components/FloatingStuff";
-import Sky from "./components/Sky";
-import SkyStreaks from "./components/Sky/SkyStreaks";
-import VideoProvider, { useVideoContext } from "./components/Video";
-import { PARTS, START_POSITION_Z } from "./consts";
+    BobbingItem, BuildingOrb, City, Islands, Movement, Raft, ShippingScene
+} from './components';
+import BuildingTextureProvider from './components/City/BuildingTextureProvider/BuildingTextureProvider';
+import { FloatingScene } from './components/FloatingStuff';
+import Sky from './components/Sky';
+import SkyStreaks from './components/Sky/SkyStreaks';
+import Controls from './components/Utils/Controls';
+import VideoProvider, { useVideoContext } from './components/Video';
+import { PARTS, START_POSITION_Z } from './consts';
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -192,12 +181,41 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
 };
 
 const AfloatContentWrapper = ({ onLoad }: { onLoad: () => void }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [volume, setVolume] = useState(60);
+  const [fullscreen, setFullscreen] = useState(false);
+  const [init, setInit] = useState(false);
+
+  const handleFullscreen = useCallback(
+    (newState: boolean) => {
+      if (ref.current) {
+        if (newState) {
+          goFullscreen(ref.current);
+          setInit(true);
+        } else if (init) {
+          exitFullscreen();
+        }
+      }
+
+      setFullscreen(newState);
+    },
+    [init]
+  );
+
   return (
-    <Canvas className={styles.container}>
-      <VideoProvider>
-        <AfloatContent onLoad={onLoad} />
-      </VideoProvider>
-    </Canvas>
+    <div ref={ref} className={styles.outer}>
+      <Controls
+        volume={volume}
+        fullscreen={fullscreen}
+        onChangeVolume={setVolume}
+        onChangeFullscreen={handleFullscreen}
+      />
+      <Canvas className={styles.container}>
+        <VideoProvider volume={volume}>
+          <AfloatContent onLoad={onLoad} />
+        </VideoProvider>
+      </Canvas>
+    </div>
   );
 };
 

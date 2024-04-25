@@ -8,6 +8,7 @@ type VideoProviderProps = {
   autoStart?: boolean;
   debug?: boolean;
   videoUrl?: string;
+  volume?: number;
 };
 
 const VideoProvider = ({
@@ -15,8 +16,9 @@ const VideoProvider = ({
   debug,
   children,
   videoUrl,
+  volume = 60,
 }: VideoProviderProps) => {
-  const values = useVideo(videoUrl, debug);
+  const values = useVideo({ videoUrl, debug, volume });
 
   useEffect(() => {
     if (autoStart) {

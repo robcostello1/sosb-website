@@ -1,0 +1,26 @@
+.root {
+    position: relative;
+}
+
+.volumeRange {
+    appearance: slider-vertical;
+    position: absolute;
+    bottom: 56px;
+    right: 18px;
+    opacity: 0;
+    width: 16px;
+    height: 72px;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.root:hover .volumeRange {
+    pointer-events: all;
+    opacity: 1;
+}
+
+.volumeIcon {
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}

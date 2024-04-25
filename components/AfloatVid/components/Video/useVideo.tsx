@@ -15,10 +15,17 @@ export type UseVideoReturnType = {
   handlePlay: () => void;
 };
 
-export const useVideo = (
+type UseVideoProps = {
+  videoUrl?: string;
+  debug?: boolean;
+  volume?: number;
+};
+
+export const useVideo = ({
   videoUrl = "videos/main.mp4",
-  debug?: boolean
-): UseVideoReturnType => {
+  debug,
+  volume = 60,
+}: UseVideoProps): UseVideoReturnType => {
   const [mediaLoaded, setMediaLoaded] = useState(false);
   const mediaRef = useRef<HTMLVideoElement>();
   const analyserRef = useRef<AnalyserNode | null>(null);
@@ -87,6 +94,12 @@ export const useVideo = (
       mediaRef.current.currentTime = 3 * 60;
     }
   });
+
+  useEffect(() => {
+    if (mediaRef.current) {
+      mediaRef.current.volume = volume / 100;
+    }
+  }, [volume]);
 
   const handlePlay = useCallback(() => {
     audioCtx.current?.resume();
