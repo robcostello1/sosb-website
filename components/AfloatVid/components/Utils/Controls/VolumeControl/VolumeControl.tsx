@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { useMemo } from 'react';
-import { FaVolumeDown, FaVolumeOff, FaVolumeUp } from 'react-icons/fa';
+import { RiVolumeDownLine, RiVolumeMuteLine, RiVolumeUpLine } from 'react-icons/ri';
 
 import styles from './VolumeControl.module.css';
 
@@ -17,19 +17,20 @@ const VolumeControl = ({
 }: VolumeControlProps) => {
   const volumeIcon = useMemo(() => {
     const props = {
+      "aria-label": "Volume",
       className: styles.volumeIcon,
       onClick: () => onChangeVolume(volume < 10 ? 100 : 0),
     };
 
     if (volume === 0) {
-      return <FaVolumeOff {...props} />;
+      return <RiVolumeMuteLine {...props} />;
     }
 
     if (volume < 60) {
-      return <FaVolumeDown {...props} />;
+      return <RiVolumeDownLine {...props} />;
     }
 
-    return <FaVolumeUp {...props} />;
+    return <RiVolumeUpLine {...props} />;
   }, [volume, onChangeVolume]);
 
   return (

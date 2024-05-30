@@ -1,15 +1,29 @@
-.root {
+
+
+.section {
+    padding: 8px;
+    padding-top: 0;
+    display: flex;
     position: fixed;
     bottom: 0;
+    z-index: 1;
+}
+
+.sectionLeft {
+    padding-right: 0;
+    left: 0;
+}
+
+.sectionRight {
+    padding-left: 0;
     right: 0;
-    color: white;
-    z-index: 1000;
-    opacity: 0.8;
-    display: flex;
-    padding: 0 12px 8px 0;
 }
 
 .control {
     padding: 12px 8px;
     cursor: pointer;
+}
+
+.control svg {
+    display: block
 }

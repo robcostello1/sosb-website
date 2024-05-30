@@ -11,9 +11,10 @@ a {
   text-decoration: none;
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
 }
+
 
 @media (prefers-color-scheme: dark) {
   html {

@@ -2,13 +2,17 @@
     position: relative;
 }
 
+.control {
+    z-index: 1;
+}
+
 .volumeRange {
     appearance: slider-vertical;
     position: absolute;
     bottom: 56px;
-    right: 18px;
+    right: 0;
     opacity: 0;
-    width: 16px;
+    width: 48px;
     height: 72px;
     transition: opacity 0.3s;
     pointer-events: none;

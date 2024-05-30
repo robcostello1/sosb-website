@@ -19,4 +19,7 @@ const Template: ComponentStory<typeof About> = (args) => {
 
 export const Default = Template.bind({});
 
-Default.args = {};
+Default.args = {
+  show: true,
+  onHide: () => {},
+};

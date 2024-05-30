@@ -1,5 +1,8 @@
-import { RiFullscreenExitFill, RiFullscreenFill } from 'react-icons/ri';
+import classNames from 'classnames';
+import { useState } from 'react';
+import { RiFullscreenExitFill, RiFullscreenFill, RiInformationLine } from 'react-icons/ri';
 
+import About from './About';
 import styles from './Controls.module.css';
 import VolumeControl from './VolumeControl';
 
@@ -16,25 +19,40 @@ const Controls = ({
   onChangeVolume,
   onChangeFullscreen,
 }: ControlsProps) => {
-  return (
-    <div className={styles.root}>
-      <VolumeControl
-        className={styles.control}
-        volume={volume}
-        onChangeVolume={onChangeVolume}
-      />
+  const [aboutShown, setAboutShown] = useState(false);
 
-      <div
-        className={styles.control}
-        onClick={() => onChangeFullscreen(!fullscreen)}
-      >
-        {!fullscreen ? (
-          <RiFullscreenFill size={32} />
-        ) : (
-          <RiFullscreenExitFill size={32} />
-        )}
+  return (
+    <>
+      <div className={classNames(styles.section, styles.sectionLeft)}>
+        <div
+          className={styles.control}
+          onClick={() => setAboutShown(!aboutShown)}
+        >
+          <RiInformationLine size={32} aria-label="About" />
+        </div>
       </div>
-    </div>
+
+      <div className={classNames(styles.section, styles.sectionRight)}>
+        <VolumeControl
+          className={styles.control}
+          volume={volume}
+          onChangeVolume={onChangeVolume}
+        />
+
+        <div
+          className={styles.control}
+          onClick={() => onChangeFullscreen(!fullscreen)}
+        >
+          {!fullscreen ? (
+            <RiFullscreenFill size={32} aria-label="Make fullscreen" />
+          ) : (
+            <RiFullscreenExitFill size={32} aria-label="Leave fullscreen" />
+          )}
+        </div>
+      </div>
+
+      <About show={aboutShown} onHide={() => setAboutShown(false)} />
+    </>
   );
 };
 
