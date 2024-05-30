@@ -95,36 +95,11 @@ const SkyStreak = ({ visible }: SkyStreakProps) => {
   return (
     <group rotation={outerGroupRotation} position={OUTER_GROUP_POSITION}>
       <group ref={groupRef} rotation={innerGroupRotation}>
-        {/* <Trail
-          ref={trailRef}
-          width={size * 10} // Width of the line
-          color={initialColor} // Color of the line
-          length={4} // Length of the line
-          decay={1} // How fast the line fades away
-          local={false} // Wether to use the target's world or local positions
-          stride={0} // Min distance between previous and current point
-          interval={1} // Number of frames to wait before next calculation
-          attenuation={trailAttenuation} // A function to define the width in each point along it.
-        > */}
-        <Cone position={MESH_POSITION} ref={meshRef} args={[1, 100, 1, 1]}>
-          <meshBasicMaterial color={initialColor} />
-        </Cone>
-        {/* <Triangle
-          vertices={[
-            new Vector3(1, 0, 0),
-            new Vector3(0, 1, 0),
-            new Vector3(0, 0, 1),
-          ]}
+        <Triangle
           color={initialColor}
           position={MESH_POSITION}
-          ref={meshRef}
-        /> */}
-        {/* <circleGeometry args={[size]} />
-         */}
-
-        {/* <meshBasicMaterial color={initialColor} />
-        </mesh> */}
-        {/* </Trail> */}
+          scale={[1, -1000, 1]}
+        />
       </group>
     </group>
   );

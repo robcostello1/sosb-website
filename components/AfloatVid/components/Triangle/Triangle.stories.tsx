@@ -2,7 +2,7 @@ import { noop } from "lodash";
 import React from "react";
 import { Color, Vector3 } from "three";
 
-import { Box, OrbitControls, Stats } from "@react-three/drei";
+import { Box, OrbitControls, Stage, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
@@ -21,7 +21,7 @@ const Template: ComponentStory<typeof Triangle> = (args) => {
   return (
     <Canvas
       camera={{
-        position: [3, 4, 5],
+        position: [0, 0, -10],
       }}
     >
       <Stats />
@@ -39,11 +39,7 @@ const Template: ComponentStory<typeof Triangle> = (args) => {
 export const Default = Template.bind({});
 
 Default.args = {
-  vertices: [
-    new Vector3(0, 20, 0),
-    new Vector3(0, 0, 0),
-    new Vector3(20, 0, 0),
-  ],
+  // vertices: [new Vector3(0, 1, 0), new Vector3(0, 0, 0), new Vector3(1, 0, 0)],
   color: new Color(0xff0000),
   onBeforeRender: noop,
   onAfterRender: noop,
