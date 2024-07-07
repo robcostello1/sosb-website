@@ -1,20 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  BackSide,
-  CircleGeometry,
-  DoubleSide,
-  Group,
-  Mesh,
-  MeshBasicMaterial,
-} from "three";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import { Triplet } from "utils/types";
-import { getRandomColor } from "utils/utils";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { BackSide, CircleGeometry, DoubleSide, Group, Mesh, MeshBasicMaterial } from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { Triplet } from 'utils/types';
+import { getRandomColor } from 'utils/utils';
 
-import { MeshLineGeometry, Sphere, Trail } from "@react-three/drei";
-import { useFrame, useLoader } from "@react-three/fiber";
+import { MeshLineGeometry, Sphere, Trail } from '@react-three/drei';
+import { useFrame, useLoader } from '@react-three/fiber';
 
-import Arc from "../../Arc";
+import Arc from '../../Arc';
 
 const BRIGHTNESS_OFFSET = Math.random();
 const RANDOMNESS = 2;
@@ -45,55 +38,57 @@ const SkyStreak = ({ visible }: SkyStreakProps) => {
   );
 
   const groupRef = useRef<Group>(null);
-  // const meshRef = useRef<Mesh<CircleGeometry, MeshBasicMaterial>>(null);
+  const arcRef = useRef<Group>(null);
   // const trailRef = useRef<MeshLineGeometry>(null);
 
-  // const lastScale = useRef(0);
+  const lastScale = useRef(0);
 
-  // const handleAfterAnimation = useCallback(() => {
-  //   setOuterGroupRotation(getRandomRotation());
-  //   if (
-  //     meshRef.current
-  //     // && trailRef.current
-  //   ) {
-  //     // (trailRef.current.material as MeshBasicMaterial).needsUpdate = true;
-  //     // (trailRef.current as MeshLineGeometry).visible = visible;
-  //     meshRef.current.visible = visible;
-  //   }
-  // }, [
-  // visible
-  // ]);
+  const handleAfterAnimation = useCallback(() => {
+    //   setOuterGroupRotation(getRandomRotation());
+    if (
+      arcRef.current
+      //     // && trailRef.current
+    ) {
+      //     // (trailRef.current.material as MeshBasicMaterial).needsUpdate = true;
+      //     // (trailRef.current as MeshLineGeometry).visible = visible;
+      arcRef.current.visible = visible;
+    }
+  }, [visible]);
 
   useFrame((_, delta) => {
     if (groupRef.current) {
       groupRef.current.rotation.x -= delta * (120 / 123);
 
-      // if (
-      // meshRef.current
-      // && trailRef.current
-      // ) {
-      // lastScale.current = meshRef.current.scale.x;
-      // const scale =
-      //   Math.max(
-      //     0,
-      //     Math.pow(
-      //       Math.sin(groupRef.current.rotation.x + BRIGHTNESS_OFFSET),
-      //       1
-      //     )
-      //   ) * size;
+      if (
+        arcRef.current
+        // && trailRef.current
+      ) {
+        lastScale.current = arcRef.current.scale.x;
+        const scale =
+          Math.max(
+            0,
+            Math.pow(
+              Math.sin(groupRef.current.rotation.x + BRIGHTNESS_OFFSET),
+              1
+            )
+          ) * size;
 
-      // const trailMaterial = trailRef.current.material as MeshBasicMaterial;
+        // const trailMaterial = trailRef.current.material as MeshBasicMaterial;
 
-      // meshRef.current.scale.set(scale, scale, scale);
-      // trailMaterial.transparent = true;
-      // trailMaterial.opacity = scale;
-      // trailMaterial.needsUpdate = true;
+        arcRef.current.scale.set(
+          arcRef.current.scale.x,
+          arcRef.current.scale.y,
+          scale
+        );
+        // trailMaterial.transparent = true;
+        // trailMaterial.opacity = scale;
+        // trailMaterial.needsUpdate = true;
 
-      // if (lastScale.current > 0 && scale === 0) {
-      //   // Change stuff once animation complete
-      //   setTimeout(handleAfterAnimation, 100);
-      // }
-      // }
+        if (lastScale.current > 0 && scale === 0) {
+          // Change stuff once animation complete
+          setTimeout(handleAfterAnimation, 100);
+        }
+      }
     }
   });
 
@@ -102,26 +97,16 @@ const SkyStreak = ({ visible }: SkyStreakProps) => {
   //   []
   // );
 
+  console.log(initialColor);
+
   return (
     <group rotation={outerGroupRotation} position={OUTER_GROUP_POSITION}>
       <group ref={groupRef} rotation={innerGroupRotation}>
-        <Arc scale={[-200, 200, 100 * size]} color={initialColor} />
-        {/* <Trail
-          ref={trailRef}
-          width={size * 10} // Width of the line
-          color={initialColor} // Color of the line
-          length={4} // Length of the line
-          decay={1} // How fast the line fades away
-          local={false} // Wether to use the target's world or local positions
-          stride={0} // Min distance between previous and current point
-          interval={1} // Number of frames to wait before next calculation
-          attenuation={trailAttenuation} // A function to define the width in each point along it.
-        >
-          <mesh position={MESH_POSITION} ref={meshRef}>
-            <circleGeometry args={[size]} />
-            <meshBasicMaterial color={initialColor} />
-          </mesh>
-        </Trail> */}
+        <Arc
+          ref={arcRef}
+          scale={[-200, 200, 200 * size]}
+          color={initialColor}
+        />
       </group>
     </group>
   );
