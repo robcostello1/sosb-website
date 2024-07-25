@@ -36,7 +36,7 @@ const About = ({ show, onHide }: AboutProps) => {
           </p>
 
           <h3>Listen or Buy</h3>
-          <div>
+          <div className={styles.buttonGroup}>
             <a
               className={styles.button}
               href="https://soundsofsystembreakdown.bandcamp.com/album/desperate-creatures"
@@ -61,7 +61,7 @@ const About = ({ show, onHide }: AboutProps) => {
           </div>
 
           <h3>Follow</h3>
-          <div>
+          <div className={styles.buttonGroup}>
             <a
               className={styles.button}
               href="https://www.instagram.com/sosbmusic/"
