@@ -3,6 +3,7 @@ import { Color } from "three";
 import { getRandomColor } from "utils/utils";
 
 import BuildingStory from "./BuildingStory";
+import Door from "./Door";
 
 type WarehouseProps = {
   active: boolean;
@@ -41,6 +42,12 @@ const Warehouse = ({ active, onClick }: WarehouseProps) => {
 
   return (
     <>
+      <Door
+        windowMaterialColor={active && windowMaterialColor}
+        rotation={[0, Math.PI, 0]}
+        position={[-0.5, 0.01, 1]}
+      />
+
       <BuildingStory
         onClick={() => {
           onClick();

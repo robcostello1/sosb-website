@@ -1,5 +1,3 @@
-type Socials2Props = {};
-
 import { useFrame, useLoader } from 'react-three-fiber';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
@@ -7,8 +5,6 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 const Socials2 = () => {
   const model = useLoader(GLTFLoader, "/models/bin-2.glb");
 
-  // Here's the animation part
-  // *************************
   let mixer: THREE.AnimationMixer;
 
   const handleClick = () => {
@@ -27,7 +23,7 @@ const Socials2 = () => {
   });
 
   return (
-    <group onClick={handleClick}>
+    <group onClick={handleClick} scale={[0.1,0.1,0.1]}>
       <primitive object={model.scene} />
     </group>
   );

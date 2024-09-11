@@ -1,21 +1,17 @@
 import { memo, useEffect } from 'react';
 import Wad from 'web-audio-daw';
+import WadType from 'web-audio-daw/types/wad';
+import { SFXProps } from './types';
 
-export type SoundConfig = Omit<ConstructorParameters<typeof Wad>[0], "source">;
-
-const sounds = {
+const sounds: Record<string, WadType> = {
   bin1: new Wad({
-    // @ts-ignore
+    // @ts-ignore can take sound file path
     source: "/sound/bin1.mp3",
   }),
   bin2: new Wad({
     // @ts-ignore
     source: "/sound/bin2.mp3",
   }),
-};
-
-export type SFXProps = {
-  current?: keyof typeof sounds;
 };
 
 const SFX = ({ current }: SFXProps) => {

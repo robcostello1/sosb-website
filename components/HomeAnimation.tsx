@@ -13,8 +13,8 @@ import Road from './City/Road';
 import StreetLamp from './City/StreetLamp';
 import TowerBlock from './City/TowerBlock';
 import Warehouse from './City/Warehouse';
-import { SFXProps, SoundConfig } from './SFX';
-import Socials from './Socials/Socials';
+import { SFXProps, SoundConfig } from './SFX/types';
+import SocialsStatic from './SocialsStatic';
 import SOSB from './SOSB';
 
 extend({ UnrealBloomPass });
@@ -23,7 +23,7 @@ const Sounds = dynamic(() => import("./Sounds"), {
   ssr: false,
 });
 
-const SFX = dynamic(() => import("./SFX"), {
+const SFX = dynamic(() => import("./SFX/SFX"), {
   ssr: false,
 });
 
@@ -94,8 +94,7 @@ const HomeAnimation = () => {
 
       <Camera focus={focus} />
 
-      <Socials
-        onBin={(full) => (full ? setCurrentSFX("bin1") : setCurrentSFX("bin2"))}
+      <SocialsStatic
         position={[0.6, 0, 1.1]}
         rotation={[0, 0.1, 0]}
       />
