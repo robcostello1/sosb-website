@@ -112,6 +112,9 @@ const HomeAnimation = () => {
         onClick={() =>
           setFocus(focus !== "warehouse" ? "warehouse" : undefined)
         }
+        onClickInside={() => {
+          window.open("/afloat", "_self");
+        }}
       />
 
       <TowerBlock
