@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { OrbitControls, Stats } from '@react-three/drei';
+import { OrbitControls, Plane, Stats } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
@@ -30,6 +30,8 @@ const Template: ComponentStory<typeof SocialsStatic> = (args) => {
       <directionalLight position={[10, 3, 5]} />
 
       <SocialsStatic {...args} />
+
+      <Plane scale={[10, 10, 10]} rotation={[-Math.PI / 2, 0, 0]}><meshBasicMaterial color="grey" /></Plane>
     </Canvas>
   );
 };

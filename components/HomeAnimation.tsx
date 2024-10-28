@@ -96,7 +96,7 @@ const HomeAnimation = () => {
 
       <SocialsStatic
         position={[0.6, 0, 1.1]}
-        rotation={[0, 0.1, 0]}
+        rotation={[0, 0, 0]}
       />
 
       <fog attach="fog" args={["#000000", 1, 5]} />
