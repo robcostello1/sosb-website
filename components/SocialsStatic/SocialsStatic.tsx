@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, ReactNode } from "react";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Triplet } from "utils/types";
@@ -16,10 +16,10 @@ const BIN_HEIGHT = 0.15;
 type SocialsProps = {
   position?: Triplet;
   rotation?: Triplet;
+  trash?: ReactNode;
 };
 
-const Socials = (props: SocialsProps) => {
-  const trashModel = useLoader(GLTFLoader, "/models/trash.glb");
+const Socials = ({ trash, ...props }: SocialsProps) => {
 
   const { data: font } = useLoader(
     FontLoader,
@@ -46,7 +46,7 @@ const Socials = (props: SocialsProps) => {
       </Bin>
 
       <group position={[-0.17, 0, 0.11]} rotation={[0, -1, 0]} scale={[0.11, 0.11, 0.11]}>
-        <primitive object={trashModel.scene} />
+        {trash}
       </group>
 
       {/* Spotify */}

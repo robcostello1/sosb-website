@@ -32,7 +32,7 @@ const Door = ({
   const groupRef = useRef<Group>(null);
 
   useEffect(() => {
-    if (groupRef.current && open) {
+    if (groupRef.current) {
       gsap.to(groupRef.current.rotation, {
         duration: 1,
         ease: Power2.easeInOut,
