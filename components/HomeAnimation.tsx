@@ -3,7 +3,7 @@ import { Fragment, memo, Suspense, useCallback, useEffect, useState } from 'reac
 import { UnrealBloomPass } from 'three-stdlib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
-import { Effects, PerspectiveCamera } from '@react-three/drei';
+import { Effects, PerspectiveCamera, Stats } from '@react-three/drei';
 import { extend, useLoader, useThree } from '@react-three/fiber';
 
 import { useSoundAdjustments } from '../hooks/useSoundAdjustments';
@@ -107,7 +107,7 @@ const HomeAnimation = () => {
 
   return (
     <Fragment key={version}>
-      {/* <Stats /> */}
+      {process.env.NODE_ENV === 'development' && <Stats />}
 
       <Camera focus={focus} />
 

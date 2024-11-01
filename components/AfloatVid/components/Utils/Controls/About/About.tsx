@@ -7,6 +7,7 @@ import {
 } from 'react-share';
 
 import styles from './About.module.css';
+import Link from 'next/link';
 
 type AboutProps = {
   show: boolean;
@@ -97,7 +98,7 @@ const About = ({ show, onHide }: AboutProps) => {
             </a>
           </div>
 
-          <a href="/" className={styles.backLink}><FaArrowLeft /> Back to website</a>
+          <Link href="/" className={styles.backLink}><FaArrowLeft /> Back to website</Link>
 
           {/* <h3>Share</h3>
           <EmailShareButton url={""}>Test</EmailShareButton>
