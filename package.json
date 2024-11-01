@@ -30,7 +30,8 @@
     "react-share": "^5.1.0",
     "three": "^0.146.0",
     "typescript": "4.9.3",
-    "zustand": "^4.5.0"
+    "zustand": "^4.5.0",
+    "web-audio-daw": "^4.13.1"
   },
   "devDependencies": {
     "@aws-cdk/aws-certificatemanager": "^1.115.0",
@@ -71,7 +72,6 @@
     "react-merge-refs": "^2.0.2",
     "react-three-gui": "^0.4.2",
     "storybook-dark-mode": "^3.0.1",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
-    "web-audio-daw": "^4.13.1"
+    "tsconfig-paths-webpack-plugin": "^4.1.0"
   }
 }

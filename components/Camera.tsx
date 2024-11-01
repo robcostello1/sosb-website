@@ -25,7 +25,7 @@ const cameraSettings: Record<
   warehouse: {
     position: {
       landscape: [0.3, 0.2, 1.5],
-      portrait: [0.3, 0.2, 1.5],
+      portrait: [0.3, 0.2, 1.18],
     },
     rotation: [0, Math.PI / 2, 0],
   },

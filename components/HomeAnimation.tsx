@@ -13,9 +13,10 @@ import Road from './City/Road';
 import StreetLamp from './City/StreetLamp';
 import TowerBlock from './City/TowerBlock';
 import Warehouse from './City/Warehouse';
-import { SFXProps, SoundConfig } from './SFX';
-import Socials from './Socials/Socials';
+import { SFXProps, SoundConfig } from './SFX/types';
+import SocialsStatic from './SocialsStatic';
 import SOSB from './SOSB';
+import { Galaxy } from './AfloatVid/components';
 
 extend({ UnrealBloomPass });
 
@@ -23,7 +24,7 @@ const Sounds = dynamic(() => import("./Sounds"), {
   ssr: false,
 });
 
-const SFX = dynamic(() => import("./SFX"), {
+const SFX = dynamic(() => import("./SFX/SFX"), {
   ssr: false,
 });
 
@@ -47,6 +48,7 @@ const sounds = [
 ] as const;
 
 const HomeAnimation = () => {
+  const trashModel = useLoader(GLTFLoader, "/models/trash.glb");
   const ferris = useLoader(GLTFLoader, "/ferris.glb");
   const bus = useLoader(GLTFLoader, "/bus.glb");
   const tree = useLoader(GLTFLoader, "/tree.glb");
@@ -94,10 +96,10 @@ const HomeAnimation = () => {
 
       <Camera focus={focus} />
 
-      <Socials
-        onBin={(full) => (full ? setCurrentSFX("bin1") : setCurrentSFX("bin2"))}
+      <SocialsStatic
         position={[0.6, 0, 1.1]}
-        rotation={[0, 0.1, 0]}
+        rotation={[0, 0, 0]}
+        trash={<primitive object={trashModel.scene} />}
       />
 
       <fog attach="fog" args={["#000000", 1, 5]} />
@@ -108,11 +110,22 @@ const HomeAnimation = () => {
 
       <Road width={4} depth={4} />
 
+      <group position={[-1, 0, -0.3]} rotation={[0, 1, 0]} scale={[1, 0.7, 0.8]}>
+        <primitive object={trashModel.scene.clone()} />
+      </group>
+
+      <group position={[-1, 0, -0.3]} rotation={[0, 1, 0]} scale={[1, 0.7, 0.8]}>
+        <primitive object={trashModel.scene.clone()} />
+      </group>
+
       <Warehouse
         active={focus === "warehouse"}
         onClick={() =>
-          setFocus(focus !== "warehouse" ? "warehouse" : undefined)
+          setFocus(focus === "warehouse" ? undefined : "warehouse")
         }
+        onClickInside={() => {
+          window.open("/afloat", "_self");
+        }}
       />
 
       <TowerBlock
@@ -124,6 +137,7 @@ const HomeAnimation = () => {
       />
 
       <StreetLamp position={[-0.3, 0.5, 0.8]} />
+
       <Reset
         onClick={() => setVersion(version + 1)}
         position={[-0.34, 0.17, 0.82]}

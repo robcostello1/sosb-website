@@ -3,21 +3,25 @@ import { Color } from "three";
 import { getRandomColor } from "utils/utils";
 
 import BuildingStory from "./BuildingStory";
+import Door from "./Door";
 
 type WarehouseProps = {
   active: boolean;
   onClick: () => void;
+  onClickInside: () => void;
 };
 
-const Warehouse = ({ active, onClick }: WarehouseProps) => {
+const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
   const [windowMaterialColor, setWindowMaterialColor] = useState<Color>(
     new Color(Math.random(), Math.random(), Math.random())
   );
+  const [lightIntensity, setLightIntensity] = useState(Math.random());
   const interval = useRef<any>();
 
   useEffect(() => {
     clearInterval(interval.current);
     interval.current = setInterval(() => {
+      setLightIntensity(Math.random());
       setWindowMaterialColor(getRandomColor());
     }, 500);
     return () => {
@@ -25,22 +29,17 @@ const Warehouse = ({ active, onClick }: WarehouseProps) => {
     };
   }, []);
 
-  const windowMaterial = useMemo(
-    () => (
-      <meshStandardMaterial
-        roughness={0}
-        emissive={active ? windowMaterialColor : "black"}
-        emissiveIntensity={Math.random() / 2}
-        metalness={1}
-        transparent={true}
-        opacity={0.7}
-      />
-    ),
-    [active, windowMaterialColor]
-  );
-
   return (
     <>
+      <Door
+        windowMaterialColor={active && windowMaterialColor}
+        emissiveIntensity={lightIntensity}
+        rotation={[0, Math.PI, 0]}
+        position={[-0.5, 0.01, 1]}
+        open={active}
+        onClickInside={onClickInside}
+      />
+
       <BuildingStory
         onClick={() => {
           onClick();
@@ -55,7 +54,14 @@ const Warehouse = ({ active, onClick }: WarehouseProps) => {
         wallMaterial={
           <meshStandardMaterial color={0x555555} roughness={1} metalness={0} />
         }
-        windowMaterial={windowMaterial}
+        windowMaterial={<meshStandardMaterial
+          roughness={0}
+          emissive={active ? windowMaterialColor : "black"}
+          emissiveIntensity={lightIntensity / 2}
+          metalness={1}
+          transparent={true}
+          opacity={0.7}
+        />}
       />
 
       {/* Footpath */}

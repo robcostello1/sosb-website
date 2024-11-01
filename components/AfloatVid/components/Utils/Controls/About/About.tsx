@@ -1,9 +1,9 @@
 import classNames from 'classnames';
-import { FaBandcamp, FaEllipsisH, FaInstagram, FaRegEnvelope, FaSpotify } from 'react-icons/fa';
+import { FaBandcamp, FaEllipsisH, FaInstagram, FaRegEnvelope, FaSpotify, FaArrowLeft } from 'react-icons/fa';
 import OutsideClickHandler from 'react-outside-click-handler';
 import {
-    EmailShareButton, FacebookShareButton, LinkedinShareButton, RedditShareButton,
-    TelegramShareButton, TumblrShareButton, TwitterShareButton, WhatsappShareButton
+  EmailShareButton, FacebookShareButton, LinkedinShareButton, RedditShareButton,
+  TelegramShareButton, TumblrShareButton, TwitterShareButton, WhatsappShareButton
 } from 'react-share';
 
 import styles from './About.module.css';
@@ -96,6 +96,8 @@ const About = ({ show, onHide }: AboutProps) => {
               More
             </a>
           </div>
+
+          <a href="/" className={styles.backLink}><FaArrowLeft /> Back to website</a>
 
           {/* <h3>Share</h3>
           <EmailShareButton url={""}>Test</EmailShareButton>
