@@ -1,5 +1,5 @@
 import dynamic from 'next/dynamic';
-import { Fragment, memo, Suspense, useCallback, useState } from 'react';
+import { Fragment, memo, Suspense, useCallback, useEffect, useState } from 'react';
 import { UnrealBloomPass } from 'three-stdlib';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 
@@ -16,7 +16,6 @@ import Warehouse from './City/Warehouse';
 import { SFXProps, SoundConfig } from './SFX/types';
 import SocialsStatic from './SocialsStatic';
 import SOSB from './SOSB';
-import { Galaxy } from './AfloatVid/components';
 
 extend({ UnrealBloomPass });
 
@@ -64,13 +63,13 @@ const HomeAnimation = () => {
         ...current,
         // Ambience should be high to the right
         ambiance: {
-          volume: focus === "warehouse" ? 0 : camera.rotation.y * 3 + 1.5,
+          volume: focus === "warehouse" || focus === "none" ? 0 : camera.rotation.y * 3 + 1.5,
         },
         warehouse: {
           volume:
             focus === "warehouse"
               ? 1
-              : Math.max(0, warehouseVol * warehouseVol * warehouseVol),
+              : focus === "none" ? 0 : Math.max(0, warehouseVol * warehouseVol * warehouseVol),
           filter: {
             type: "lowpass" as const,
             frequency:
@@ -89,6 +88,22 @@ const HomeAnimation = () => {
   const soundAdjustments = useSoundAdjustments(getNewSoundValues, focus);
 
   const [version, setVersion] = useState(0);
+
+  const toggleTabActive = useCallback(() => {
+    if (document.hidden) {
+      setFocus('none');
+    } else {
+      setFocus(undefined);
+    }
+  }, [])
+
+  useEffect(() => {
+    document.addEventListener("visibilitychange", toggleTabActive);
+
+    return () => {
+      document.removeEventListener("visibilitychange", toggleTabActive)
+    }
+  }, []);
 
   return (
     <Fragment key={version}>
