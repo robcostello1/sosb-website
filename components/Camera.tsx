@@ -59,7 +59,7 @@ const Camera = ({ focus }: CameraProps) => {
         x: () => pos[0],
         y: () => pos[1],
         z: () => pos[2],
-        duration: 3,
+        duration: 1,
         onComplete: () => {
           if (!focus) {
             setOrbitActive(true);
@@ -72,7 +72,7 @@ const Camera = ({ focus }: CameraProps) => {
           x: () => (settings.rotation as Triplet)[0],
           y: () => (settings.rotation as Triplet)[1],
           z: () => (settings.rotation as Triplet)[2],
-          duration: 3,
+          duration: 1,
         });
       }
     }
