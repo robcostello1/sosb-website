@@ -1,5 +1,5 @@
 import React from "react";
-import { REPEAT_WRAPPING } from "utils/consts";
+import { REPEAT_WRAPPING } from "../../../../../utils/consts";
 
 import { OrbitControls, Stage } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
