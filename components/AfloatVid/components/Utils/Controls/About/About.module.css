@@ -100,3 +100,17 @@
     display: inline-block;
     margin-right: 6px;
 }
+
+.closeButton {
+    appearance: none;
+    background: none;
+    border: none;
+    color: inherit;
+    padding: 12px;
+    margin-top: -12px;
+    margin-right: -12px;
+    margin-left: auto;
+    display: block;
+    cursor: pointer;
+    font-size: 24px;
+}

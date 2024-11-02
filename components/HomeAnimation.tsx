@@ -103,7 +103,7 @@ const HomeAnimation = () => {
     return () => {
       document.removeEventListener("visibilitychange", toggleTabActive)
     }
-  }, []);
+  }, [toggleTabActive]);
 
   return (
     <Fragment key={version}>

@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import { FaBandcamp, FaEllipsisH, FaInstagram, FaRegEnvelope, FaSpotify, FaArrowLeft } from 'react-icons/fa';
+import { IoCloseSharp } from "react-icons/io5";
 import OutsideClickHandler from 'react-outside-click-handler';
-import {
-  EmailShareButton, FacebookShareButton, LinkedinShareButton, RedditShareButton,
-  TelegramShareButton, TumblrShareButton, TwitterShareButton, WhatsappShareButton
-} from 'react-share';
+// import {
+//   EmailShareButton, FacebookShareButton, LinkedinShareButton, RedditShareButton,
+//   TelegramShareButton, TumblrShareButton, TwitterShareButton, WhatsappShareButton
+// } from 'react-share';
 
 import styles from './About.module.css';
 import Link from 'next/link';
@@ -19,6 +20,10 @@ const About = ({ show, onHide }: AboutProps) => {
     <div className={classNames(styles.root, show && styles.show)}>
       <OutsideClickHandler onOutsideClick={onHide}>
         <div className={styles.box}>
+          <button className={styles.closeButton} onClick={onHide}>
+            <IoCloseSharp />
+          </button>
+
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className={styles.logo}
@@ -98,7 +103,7 @@ const About = ({ show, onHide }: AboutProps) => {
             </a>
           </div>
 
-          <Link href="/" className={styles.backLink}><FaArrowLeft /> Back to website</Link>
+          <Link href="/" className={styles.backLink}><><FaArrowLeft /> Back to website</></Link>
 
           {/* <h3>Share</h3>
           <EmailShareButton url={""}>Test</EmailShareButton>
