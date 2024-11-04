@@ -7,6 +7,9 @@ import { getStaticAsset } from 'utils/utils';
 import Button from '../../../Button';
 import { useTexture } from '../../hooks/useTexture';
 import GarageLight from './GarageLight';
+import { useLoader } from '@react-three/fiber';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
+import GarageSign from '../../../City/WarehouseSign';
 
 const HEIGHT = 4;
 const WIDTH = 6;

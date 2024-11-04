@@ -1,11 +1,9 @@
 import React from 'react';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader';
 
-import { OrbitControls, Sphere, Stats } from '@react-three/drei';
-import { Canvas, useLoader } from '@react-three/fiber';
+import { OrbitControls, Stats } from '@react-three/drei';
+import { Canvas } from '@react-three/fiber';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 
-import { Social } from './Social/Social';
 import Socials from './Socials';
 
 export default {

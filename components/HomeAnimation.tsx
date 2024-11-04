@@ -7,15 +7,17 @@ import { Effects, PerspectiveCamera, Stats } from '@react-three/drei';
 import { extend, useLoader, useThree } from '@react-three/fiber';
 
 import { useSoundAdjustments } from '../hooks/useSoundAdjustments';
+import { getStaticAsset } from '../utils/utils';
 import Camera from './Camera';
-import Reset from './City/Reset';
+// import Reset from './City/Reset';
 import Road from './City/Road';
 import StreetLamp from './City/StreetLamp';
 import TowerBlock from './City/TowerBlock';
 import Warehouse from './City/Warehouse';
-import { SFXProps, SoundConfig } from './SFX/types';
+import { SoundConfig } from './SFX/types';
 import SocialsStatic from './SocialsStatic';
 import SOSB from './SOSB';
+import FerrisWheel from './City/FerrisWheel';
 
 extend({ UnrealBloomPass });
 
@@ -23,9 +25,9 @@ const Sounds = dynamic(() => import("./Sounds"), {
   ssr: false,
 });
 
-const SFX = dynamic(() => import("./SFX/SFX"), {
-  ssr: false,
-});
+// const SFX = dynamic(() => import("./SFX/SFX"), {
+//   ssr: false,
+// });
 
 const sounds = [
   {
@@ -47,11 +49,10 @@ const sounds = [
 ] as const;
 
 const HomeAnimation = () => {
-  const trashModel = useLoader(GLTFLoader, "/models/trash.glb");
-  const ferris = useLoader(GLTFLoader, "/ferris.glb");
-  const bus = useLoader(GLTFLoader, "/bus.glb");
-  const tree = useLoader(GLTFLoader, "/tree.glb");
-  const [currentSFX, setCurrentSFX] = useState<SFXProps["current"]>();
+  const trashModel = useLoader(GLTFLoader, getStaticAsset("/models/trash.glb"));
+  const bus = useLoader(GLTFLoader, getStaticAsset("/bus.glb"));
+  const tree = useLoader(GLTFLoader, getStaticAsset("/tree.glb"));
+  // const [currentSFX, setCurrentSFX] = useState<SFXProps["current"]>();
   const [focus, setFocus] = useState<string>();
 
   const { camera } = useThree();
@@ -125,6 +126,8 @@ const HomeAnimation = () => {
 
       <Road width={4} depth={4} />
 
+      <FerrisWheel position={[-0.7, 0.88, 0.2]} />
+
       <group position={[-1, 0, -0.3]} rotation={[0, 1, 0]} scale={[1, 0.7, 0.8]}>
         <primitive object={trashModel.scene.clone()} />
       </group>
@@ -151,12 +154,12 @@ const HomeAnimation = () => {
         windowStrutCount={6}
       />
 
-      <StreetLamp position={[-0.3, 0.5, 0.8]} />
+      <StreetLamp position={[-0.3, 0.5, 0.74]} />
 
-      <Reset
+      {/* <Reset
         onClick={() => setVersion(version + 1)}
         position={[-0.34, 0.17, 0.82]}
-      />
+      /> */}
 
       <SOSB />
 
@@ -164,16 +167,13 @@ const HomeAnimation = () => {
         <Sounds initSoundConfig={sounds} soundAdjustments={soundAdjustments} />
       </Suspense>
 
-      <Suspense>
+      {/* <Suspense>
         <SFX current={currentSFX} />
-      </Suspense>
+      </Suspense> */}
 
       {/* Tree */}
       <group
         position={[1.3, 0, -0.5]}
-        // Other tree was too big
-        // position={[1, 0, -0.5]}
-        // scale={0.3}
         onClick={() => {
           window.open("https://linktr.ee/sosbmusic");
         }}
@@ -181,16 +181,6 @@ const HomeAnimation = () => {
         <primitive object={tree.scene} />
       </group>
 
-      {/* Ferris */}
-      <group
-        position={[-0.7, 0.88, 0.2]}
-        scale={1.3}
-        onClick={() => {
-          window.open("https://www.youtube.com/watch?v=PcBFhMXr5_A");
-        }}
-      >
-        <primitive object={ferris.scene} />
-      </group>
 
       {/* Bus */}
       <group

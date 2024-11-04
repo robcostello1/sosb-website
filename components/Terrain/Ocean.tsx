@@ -11,6 +11,7 @@ import {
   useLoader,
   useThree,
 } from "@react-three/fiber";
+import { getStaticAsset } from "utils/utils";
 
 extend({ Water });
 declare global {
@@ -31,7 +32,7 @@ const Ocean = ({
 }) => {
   const ref = useRef<Water>(null);
   const gl = useThree((state) => state.gl);
-  const waterNormals = useLoader(TextureLoader, "/waternormals.jpg");
+  const waterNormals = useLoader(TextureLoader, getStaticAsset("/waternormals.jpg"));
 
   waterNormals.wrapS = waterNormals.wrapT = REPEAT_WRAPPING;
   const geom = useMemo(() => new PlaneGeometry(30000, 30000), []);

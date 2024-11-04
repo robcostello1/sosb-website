@@ -1,13 +1,13 @@
 import { memo, useMemo } from "react";
 import { BufferGeometry, FrontSide, Mesh, MeshStandardMaterial } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-
 import { InstancedMeshProps, MeshProps, useLoader } from "@react-three/fiber";
+import { getStaticAsset } from "utils/utils";
 
 const SCALE = 0.2;
 
 const Barrel = (props: Pick<MeshProps, "position" | "rotation">) => {
-  const barrelModel = useLoader(GLTFLoader, "/models/barrel.glb");
+  const barrelModel = useLoader(GLTFLoader, getStaticAsset("/models/barrel.glb"));
 
   const barrelArgs = useMemo<InstancedMeshProps["args"]>(() => {
     const mesh = barrelModel.scene.children[0] as Mesh<

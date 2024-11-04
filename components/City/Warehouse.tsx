@@ -4,6 +4,7 @@ import { getRandomColor } from "utils/utils";
 
 import BuildingStory from "./BuildingStory";
 import Door from "./Door";
+import WarehouseSign from "./WarehouseSign";
 
 type WarehouseProps = {
   active: boolean;
@@ -16,6 +17,7 @@ const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
     new Color(Math.random(), Math.random(), Math.random())
   );
   const [lightIntensity, setLightIntensity] = useState(Math.random());
+  const [hovered, setHovered] = useState(false);
   const interval = useRef<any>();
 
   useEffect(() => {
@@ -29,8 +31,14 @@ const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    console.log("hovered", hovered);
+  }, [hovered]);
+
   return (
-    <>
+    <group onPointerEnter={() => setHovered(true)} onPointerLeave={() => setHovered(false)}>
+      <WarehouseSign active={active || hovered} />
+
       <Door
         windowMaterialColor={active && windowMaterialColor}
         emissiveIntensity={lightIntensity}
@@ -41,12 +49,7 @@ const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
       />
 
       <BuildingStory
-        onClick={() => {
-          onClick();
-          // window.open(
-          //   "https://soundsofsystembreakdown.bandcamp.com/album/desperate-creatures"
-          // );
-        }}
+        onClick={onClick}
         rotation={[0, Math.PI, 0]}
         position={[-1, 0, 1.2]}
         scale={[1, 0.55, 0.8]}
@@ -73,7 +76,7 @@ const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
         <boxGeometry />
         <meshStandardMaterial color={0x444444} roughness={1} metalness={0} />
       </mesh>
-    </>
+    </group>
   );
 };
 

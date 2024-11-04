@@ -29,13 +29,14 @@ type SocialProps = Omit<MeshProps, "scale"> & {
   onClick?: () => void;
 };
 
-export const SocialMaterial = ({ color }: { color: Color }) => (
+export const SocialMaterial = ({ color, emissiveIntensity = 1 }: { color: Color, emissiveIntensity?: number }) => (
   <>
     <meshStandardMaterial
       attach="material-0"
       roughness={1}
       color="#333333"
       emissive={color}
+      emissiveIntensity={emissiveIntensity}
     />
     <meshStandardMaterial attach="material-1" roughness={0.5} color="#333333" />
   </>
