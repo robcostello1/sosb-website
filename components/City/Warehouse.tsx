@@ -31,10 +31,6 @@ const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log("hovered", hovered);
-  }, [hovered]);
-
   return (
     <group onPointerEnter={() => setHovered(true)} onPointerLeave={() => setHovered(false)}>
       <WarehouseSign active={active || hovered} />
