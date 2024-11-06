@@ -36,7 +36,7 @@ const Door = ({
       gsap.to(groupRef.current.rotation, {
         duration: 1,
         ease: Power2.easeInOut,
-        y: open ? 0.6 : 0,
+        y: open ? 0.8 : 0,
       });
     }
   }, [groupRef, open]);

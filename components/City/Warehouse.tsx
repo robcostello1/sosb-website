@@ -17,6 +17,7 @@ const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
     new Color(Math.random(), Math.random(), Math.random())
   );
   const [lightIntensity, setLightIntensity] = useState(Math.random());
+  const [randomlyLitSignActive, setRandomlyLitSignActive] = useState(false);
   const [hovered, setHovered] = useState(false);
   const interval = useRef<any>();
 
@@ -25,6 +26,7 @@ const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
     interval.current = setInterval(() => {
       setLightIntensity(Math.random());
       setWindowMaterialColor(getRandomColor());
+      setRandomlyLitSignActive(Math.random() < 0.3);
     }, 500);
     return () => {
       clearInterval(interval.current);
@@ -33,7 +35,10 @@ const Warehouse = ({ active, onClick, onClickInside }: WarehouseProps) => {
 
   return (
     <group onPointerEnter={() => setHovered(true)} onPointerLeave={() => setHovered(false)}>
-      <WarehouseSign active={active || hovered} />
+      <WarehouseSign
+        active={active || hovered || randomlyLitSignActive}
+        intensity={active ? 1 : active ? 1 : Math.pow(lightIntensity, 2)}
+      />
 
       <Door
         windowMaterialColor={active && windowMaterialColor}

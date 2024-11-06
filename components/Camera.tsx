@@ -20,12 +20,12 @@ const cameraSettings: Record<
       landscape: [0.1, 0.3, 1.5],
       portrait: [0.1, 0.5, 2.5],
     },
-    rotation: [-0.1973955598498807, 0.06527916052414474, 0.013045821306220144],
+    rotation: [-0.197, 0.065, 0.013],
   },
   warehouse: {
     position: {
       landscape: [0.3, 0.2, 1.5],
-      portrait: [0.3, 0.2, 1.18],
+      portrait: [0.3, 0.2, 1.03],
     },
     rotation: [0, Math.PI / 2, 0],
   },
@@ -53,6 +53,11 @@ const Camera = ({ focus }: CameraProps) => {
 
   useFrame((_state, _delta) => {
     const settings = cameraSettings[focus || "init"];
+
+    if (!settings) {
+      return;
+    }
+
     const pos = settings.position[isPortrait ? "portrait" : "landscape"];
     if (!orbitActive) {
       gsap.to(camera.position, {

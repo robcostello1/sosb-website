@@ -6,9 +6,12 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { getStaticAsset } from "utils/utils";
 
-const GarageSign = (
-    { active }: { active: boolean }
-) => {
+type GarageSignProps = {
+    active: boolean;
+    intensity: number;
+}
+
+const GarageSign = ({ active, intensity }: GarageSignProps) => {
     const arrow = useLoader(GLTFLoader, getStaticAsset("/models/arrow.glb"));
 
     const { data: font } = useLoader(
@@ -25,11 +28,11 @@ const GarageSign = (
     useEffect(() => {
         if (arrorRef.current) {
             arrorRef.current.children[0].children.forEach((child) => {
-                child.material.emissiveIntensity = active ? 1 : 0;
+                child.material.emissiveIntensity = active ? intensity : 0;
                 child.material.needsUpdate = true;
             });
         }
-    }, [arrorRef, active])
+    }, [arrorRef, active, intensity])
 
     return (
         <group
@@ -39,7 +42,7 @@ const GarageSign = (
         >
             <Text3D scale={[0.201, 0.201, 0.4]} position={[0, 0, 0]} font={font}>
                 Afloat
-                <SocialMaterial color="red" emissiveIntensity={active ? 1 : 0} />
+                <SocialMaterial color="red" emissiveIntensity={active ? intensity : 0} />
             </Text3D>
             <group position={[0.31, -0.26, 0.04]} scale={[0.084, 0.084, 0.021]} rotation={[0, 0, 0.3]}>
                 <primitive ref={arrorRef} object={arrow.scene} />
