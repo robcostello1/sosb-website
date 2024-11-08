@@ -56,7 +56,7 @@ const Socials = ({ trash, ...props }: SocialsProps) => {
         position={[-0.22, 0.02, 0.12]}
         rotation={[-1.3, 2.9, 0.3]}
         onClick={() => {
-          window.open("https://open.spotify.com/artist/5l73vUu289Rs8q1bYffw6q");
+          window.open("https://open.spotify.com/artist/5l73vUu289Rs8q1bYffw6q", "SOSB Spotify");
         }}
       >
         {"\uf1bc"}
@@ -69,7 +69,7 @@ const Socials = ({ trash, ...props }: SocialsProps) => {
         position={[-0.12, 0.007, 0.17]}
         rotation={[Math.PI / 2, 0, 3.3]}
         onClick={() => {
-          window.open("https://www.facebook.com/SOSBmusic");
+          window.open("https://www.facebook.com/SOSBmusic", "SOSB Facebook");
         }}
       >
         {"\uf09a"}
@@ -82,7 +82,7 @@ const Socials = ({ trash, ...props }: SocialsProps) => {
         position={[-0.17, 0.04, 0.02]}
         rotation={[0, 0, 0]}
         onClick={() => {
-          window.open("https://instagram.com/sosbmusic");
+          window.open("https://instagram.com/sosbmusic", "SOSB Instagram");
         }}
       >
         {"\uf16d"}

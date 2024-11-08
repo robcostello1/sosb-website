@@ -67,7 +67,7 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
           rotation={[0, Math.PI / 4, Math.PI / 2]}
           active={active}
           onClick={() => {
-            active && window.open("https://www.facebook.com/SOSBmusic");
+            active && window.open("https://www.facebook.com/SOSBmusic", "SOSB Facebook");
           }}
         >
           {"\uf09a"}
@@ -82,7 +82,7 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
           rotation={[0, Math.PI / 3, Math.PI / 2]}
           active={active}
           onClick={() => {
-            active && window.open("https://instagram.com/sosbmusic");
+            active && window.open("https://instagram.com/sosbmusic", "SOSB Instagram");
           }}
         >
           {"\uf16d"}
@@ -99,7 +99,7 @@ const Socials = ({ onBin, ...props }: SocialsProps) => {
           onClick={() => {
             active &&
               window.open(
-                "https://open.spotify.com/artist/5l73vUu289Rs8q1bYffw6q"
+                "https://open.spotify.com/artist/5l73vUu289Rs8q1bYffw6q", "SOSB Spotify"
               );
           }}
         >

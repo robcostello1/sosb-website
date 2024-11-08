@@ -41,16 +41,13 @@ const FerrisWheel = ({ scale = [1, 1, 1], ...props }: FerrisWheelProps) => {
     return (
         <group
             scale={[scale[0] * SCALE, scale[1] * SCALE, scale[2] * SCALE]}
-            onClick={() => {
-                setActive(!active)
-                // window.open("https://www.youtube.com/watch?v=PcBFhMXr5_A");
-            }}
+            onClick={() => setActive(!active)}
             {...props}
         >
             <group
                 onClick={() => {
                     if (active) {
-                        window.open("https://www.youtube.com/watch?v=PcBFhMXr5_A");
+                        window.open("https://www.youtube.com/watch?v=PcBFhMXr5_A", "Neon Contrails Music Video");
                     }
                 }}
                 scale={[0.9, 0.9, 0.9]}

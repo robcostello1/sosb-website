@@ -175,7 +175,7 @@ const HomeAnimation = () => {
       <group
         position={[1.3, 0, -0.5]}
         onClick={() => {
-          window.open("https://linktr.ee/sosbmusic");
+          window.open("https://linktr.ee/sosbmusic", "SOSB Linktree");
         }}
       >
         <primitive object={tree.scene} />
