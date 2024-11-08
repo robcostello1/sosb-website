@@ -31,7 +31,7 @@ const cameraSettings: Record<
   },
   socials: {
     position: {
-      landscape: [0.1, 0.3, 0],
+      landscape: [0.3, 0.2, 1.4],
       portrait: [0.3, 0.2, 1.4],
     },
     rotation: [-0.6, -0.55, -0.3],
