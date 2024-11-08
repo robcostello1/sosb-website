@@ -1,11 +1,11 @@
-import { memo, ReactNode } from "react";
+import { memo, ReactNode, useRef } from "react";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { Triplet } from "utils/types";
 
 import { GradientTexture } from "@react-three/drei";
 import { useLoader } from "@react-three/fiber";
 
+import { Group } from "three";
 import Bin from "./Bin";
 import SocialStatic from "./SocialStatic";
 const BIN_WALL_THICKNESS = 0.003;
@@ -17,17 +17,31 @@ type SocialsProps = {
   position?: Triplet;
   rotation?: Triplet;
   trash?: ReactNode;
+  active?: boolean;
+  onClick?: () => void;
 };
 
-const Socials = ({ trash, ...props }: SocialsProps) => {
-
+const Socials = ({ trash, active, onClick, ...props }: SocialsProps) => {
+  const trashRef = useRef<Group>(null);
   const { data: font } = useLoader(
     FontLoader,
     "/fonts/Font Awesome 6 Brands Regular_Regular.json"
   );
 
   return (
-    <group {...props}>
+    <group {...props} onClick={onClick}>
+      {active && (
+        <spotLight
+          position={[-0.1, 0.2, 0]}
+          castShadow
+          penumbra={0.5}
+          intensity={0.5}
+          angle={0.6}
+          color={"lightyellow"}
+          target={trashRef.current || undefined}
+        />)}
+
+
       <Bin
         boxWallThickness={BIN_WALL_THICKNESS}
         basePosition={BIN_BASE_POSITION}
@@ -45,7 +59,7 @@ const Socials = ({ trash, ...props }: SocialsProps) => {
         </meshStandardMaterial>
       </Bin>
 
-      <group position={[-0.17, 0, 0.11]} rotation={[0, -1, 0]} scale={[0.11, 0.11, 0.11]}>
+      <group ref={trashRef} position={[-0.17, 0, 0.11]} rotation={[0, -1, 0]} scale={[0.11, 0.11, 0.11]}>
         {trash}
       </group>
 
@@ -56,7 +70,9 @@ const Socials = ({ trash, ...props }: SocialsProps) => {
         position={[-0.22, 0.02, 0.12]}
         rotation={[-1.3, 2.9, 0.3]}
         onClick={() => {
-          window.open("https://open.spotify.com/artist/5l73vUu289Rs8q1bYffw6q", "SOSB Spotify");
+          if (active) {
+            window.open("https://open.spotify.com/artist/5l73vUu289Rs8q1bYffw6q", "SOSB Spotify");
+          }
         }}
       >
         {"\uf1bc"}
@@ -69,7 +85,9 @@ const Socials = ({ trash, ...props }: SocialsProps) => {
         position={[-0.12, 0.007, 0.17]}
         rotation={[Math.PI / 2, 0, 3.3]}
         onClick={() => {
-          window.open("https://www.facebook.com/SOSBmusic", "SOSB Facebook");
+          if (active) {
+            window.open("https://www.facebook.com/SOSBmusic", "SOSB Facebook");
+          }
         }}
       >
         {"\uf09a"}
@@ -82,44 +100,13 @@ const Socials = ({ trash, ...props }: SocialsProps) => {
         position={[-0.17, 0.04, 0.02]}
         rotation={[0, 0, 0]}
         onClick={() => {
-          window.open("https://instagram.com/sosbmusic", "SOSB Instagram");
+          if (active) {
+            window.open("https://instagram.com/sosbmusic", "SOSB Instagram");
+          }
         }}
       >
         {"\uf16d"}
       </SocialStatic>
-
-      {/* Insta */}
-      {/* <SquareSocial
-        font={font}
-        color="#EF426F"
-        position={[0, BIN_FALSE_BASE_POSITION + 0.1, 0]}
-        scale={SOCIAL_ICON_SCALE}
-        rotation={[0, Math.PI / 3, Math.PI / 2]}
-        active={active}
-        onClick={() => {
-          active && window.open("https://instagram.com/sosbmusic");
-        }}
-      >
-        {"\uf16d"}
-      </SquareSocial> */}
-
-      {/* Spotify */}
-      {/* <Social
-        font={font}
-        color="#1DB954"
-        position={[0, BIN_FALSE_BASE_POSITION + 0.15, 0]}
-        scale={SOCIAL_ICON_SCALE}
-        rotation={[0, Math.PI / 2, Math.PI / 2]}
-        active={active}
-        onClick={() => {
-          active &&
-            window.open(
-              "https://open.spotify.com/artist/5l73vUu289Rs8q1bYffw6q"
-            );
-        }}
-      >
-        {"\uf1bc"}
-      </Social> */}
     </group>
   );
 };

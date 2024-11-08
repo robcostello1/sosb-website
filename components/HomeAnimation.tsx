@@ -53,7 +53,7 @@ const HomeAnimation = () => {
   const bus = useLoader(GLTFLoader, getStaticAsset("/bus.glb"));
   const tree = useLoader(GLTFLoader, getStaticAsset("/tree.glb"));
   // const [currentSFX, setCurrentSFX] = useState<SFXProps["current"]>();
-  const [focus, setFocus] = useState<string>();
+  const [focus, setFocus] = useState<"socials" | "warehouse" | "none">();
 
   const { camera } = useThree();
 
@@ -88,8 +88,6 @@ const HomeAnimation = () => {
 
   const soundAdjustments = useSoundAdjustments(getNewSoundValues, focus);
 
-  const [version, setVersion] = useState(0);
-
   const toggleTabActive = useCallback(() => {
     if (document.hidden) {
       setFocus('none');
@@ -107,16 +105,10 @@ const HomeAnimation = () => {
   }, [toggleTabActive]);
 
   return (
-    <Fragment key={version}>
+    <Fragment>
       {process.env.NODE_ENV === 'development' && <Stats />}
 
       <Camera focus={focus} />
-
-      <SocialsStatic
-        position={[0.6, 0, 1.1]}
-        rotation={[0, 0, 0]}
-        trash={<primitive object={trashModel.scene} />}
-      />
 
       <fog attach="fog" args={["#000000", 1, 5]} />
 
@@ -125,6 +117,16 @@ const HomeAnimation = () => {
       <ambientLight intensity={0.2} color="lightblue" />
 
       <Road width={4} depth={4} />
+
+      <SocialsStatic
+        position={[0.6, 0, 1.1]}
+        rotation={[0, 0, 0]}
+        trash={<primitive object={trashModel.scene} />}
+        active={focus === "socials"}
+        onClick={() =>
+          setFocus(focus === "socials" ? undefined : "socials")
+        }
+      />
 
       <FerrisWheel position={[-0.7, 0.88, 0.2]} />
 

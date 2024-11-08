@@ -29,6 +29,13 @@ const cameraSettings: Record<
     },
     rotation: [0, Math.PI / 2, 0],
   },
+  socials: {
+    position: {
+      landscape: [0.1, 0.3, 0],
+      portrait: [0.3, 0.2, 1.4],
+    },
+    rotation: [-0.6, -0.55, -0.3],
+  },
 };
 
 type CameraProps = { focus?: string };
