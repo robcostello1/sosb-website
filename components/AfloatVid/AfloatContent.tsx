@@ -8,7 +8,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Ocean } from '../Terrain';
 import styles from './AfloatContent.module.css';
 import {
-    BobbingItem, BuildingOrb, City, Islands, Movement, Raft, ShippingScene
+  BobbingItem, BuildingOrb, City, Islands, Movement, Raft, ShippingScene
 } from './components';
 import BuildingTextureProvider from './components/City/BuildingTextureProvider/BuildingTextureProvider';
 import { FloatingScene } from './components/FloatingStuff';
@@ -73,10 +73,12 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
     if (barRef.current > PARTS.verse2) {
       setShowCity(false);
     }
+    if (barRef.current > PARTS.hook - 2) {
+      setShowIslands(true);
+    }
     if (barRef.current > PARTS.hook) {
       setShowFloatingStuff(false);
       setShowSkyStreaks(false);
-      setShowIslands(true);
       setShowShippingScene(false);
     }
     // if (barRef.current > PARTS.chorus - 0.5 && barRef.current < PARTS.chorus) {
@@ -165,7 +167,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
           visible={showIslands}
           scale={200}
           position={[-105, -3, 0]}
-          bounce={0.35}
+          bounce={0.55}
         />
         <Islands
           visible={showIslands}

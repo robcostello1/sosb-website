@@ -46,7 +46,7 @@ type TemplateProps = {
   )[];
 };
 
-const handleSetMoving = () => {};
+const handleSetMoving = () => { };
 
 const Template = (args: TemplateProps) => {
   const shouldShow = (scene: TemplateProps["selectedScene"][number]) =>
@@ -108,7 +108,7 @@ const Template = (args: TemplateProps) => {
 
         <FloatingScene visible={shouldShow("floating")} />
 
-        <SkyStreaks visible={shouldShow("sky streaks")} numStreaks={20} />
+        <SkyStreaks visible={shouldShow("sky streaks")} numStreaks={40} />
 
         <GlitchBuildings visible={shouldShow("glitch buildings")} />
       </BuildingTextureProvider>

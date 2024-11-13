@@ -45,8 +45,26 @@ const FloatingStuff = ({
 }: FloatingStuffProps) => {
   const childrenArray = useMemo(() => Children.toArray(children), [children]);
   const worldRef = useRef<Group>(null);
+  const outerGroupRef = useRef<Group>(null);
   const raftColliderRef = useRef<RapierRigidBody>(null);
   const worldPosition = useRef(from);
+
+  // TODO: floating items end up above the water
+  // useEffect(() => {
+  //   if (outerGroupRef.current) {
+  //     if (visible) {
+  //       gsap.to(outerGroupRef.current.position, {
+  //         y: 0,
+  //         duration: 4,
+  //       });
+  //     } else {
+  //       gsap.to(outerGroupRef.current.position, {
+  //         y: -2,
+  //         duration: 4,
+  //       });
+  //     }
+  //   }
+  // }, [visible, outerGroupRef]);
 
   useEffect(() => {
     if (worldRef.current && visible) {
@@ -90,28 +108,32 @@ const FloatingStuff = ({
   );
 
   return (
-    <group ref={worldRef} position={[0, 0, from]}>
-      <Physics debug={debug} paused={!visible}>
-        {childrenArray.map((child, index) => (
-          <FloatingItemV2
-            key={index}
-            flotationProps={DEFAULT_FLOTATION_PROPS}
-            numberOfItems={numberOfItems / childrenArray.length}
-            spread={spread}
-          >
-            {child}
-          </FloatingItemV2>
-        ))}
+    <group ref={outerGroupRef}
+    // position={[0, -2, 0]}
+    >
+      <group ref={worldRef} position={[0, 0, from]}>
+        <Physics debug={debug} paused={!visible}>
+          {childrenArray.map((child, index) => (
+            <FloatingItemV2
+              key={index}
+              flotationProps={DEFAULT_FLOTATION_PROPS}
+              numberOfItems={numberOfItems / childrenArray.length}
+              spread={spread}
+            >
+              {child}
+            </FloatingItemV2>
+          ))}
 
-        <RigidBody
-          ref={raftColliderRef}
-          linearDamping={Infinity}
-          angularDamping={Infinity}
-          colliders={"ball"}
-        >
-          {raftCollider}
-        </RigidBody>
-      </Physics>
+          <RigidBody
+            ref={raftColliderRef}
+            linearDamping={Infinity}
+            angularDamping={Infinity}
+            colliders={"ball"}
+          >
+            {raftCollider}
+          </RigidBody>
+        </Physics>
+      </group>
     </group>
   );
 };
