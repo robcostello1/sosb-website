@@ -2,27 +2,38 @@ import classNames from 'classnames';
 import { FaBandcamp, FaEllipsisH, FaInstagram, FaRegEnvelope, FaSpotify, FaArrowLeft } from 'react-icons/fa';
 import { IoCloseSharp } from "react-icons/io5";
 import OutsideClickHandler from 'react-outside-click-handler';
-// import {
-//   EmailShareButton, FacebookShareButton, LinkedinShareButton, RedditShareButton,
-//   TelegramShareButton, TumblrShareButton, TwitterShareButton, WhatsappShareButton
-// } from 'react-share';
-
 import styles from './About.module.css';
 import Link from 'next/link';
+import { ReactNode } from 'react';
 
 type AboutProps = {
   show: boolean;
-  onHide: () => void;
+  onHide?: () => void;
+  children?: ReactNode
 };
 
-const About = ({ show, onHide }: AboutProps) => {
+const About = ({
+  show,
+  onHide,
+  children = (
+    <>
+      <h2>Afloat</h2>
+      <p>
+        You&apos;re viewing an immersive music video for
+        &ldquo;Afloat&rdquo; by Sounds of System Breakdown.
+        &ldquo;Afloat&rdquo; features on our 2022 album, Desperate
+        Creatures.
+      </p>
+    </>
+  )
+}: AboutProps) => {
   return (
     <div className={classNames(styles.root, show && styles.show)}>
-      <OutsideClickHandler onOutsideClick={onHide}>
+      <OutsideClickHandler onOutsideClick={onHide || (() => { })}>
         <div className={styles.box}>
-          <button className={styles.closeButton} onClick={onHide}>
+          {onHide && <button className={styles.closeButton} onClick={onHide}>
             <IoCloseSharp />
-          </button>
+          </button>}
 
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -33,13 +44,7 @@ const About = ({ show, onHide }: AboutProps) => {
             alt="SOSB"
           />
 
-          <h2>Afloat</h2>
-          <p>
-            You&apos;re viewing an immersive music video for
-            &ldquo;Afloat&rdquo; by Sounds of System Breakdown.
-            &ldquo;Afloat&rdquo; features on our 2022 album, Desperate
-            Creatures.
-          </p>
+          {children}
 
           <h3>Listen or Buy</h3>
           <div className={styles.buttonGroup}>

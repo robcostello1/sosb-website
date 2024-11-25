@@ -1,4 +1,4 @@
-import { ReactNode, useMemo } from 'react';
+import { memo, ReactNode, useMemo } from 'react';
 
 import { InstancedRigidBodies, InstancedRigidBodyProps } from '@react-three/rapier';
 
@@ -28,7 +28,8 @@ const FloatingItems = ({
 
       instances.push({
         linearDamping: 0.9,
-        key: "instance_" + Math.random(),
+        angularDamping: 0.9,
+        key: `instance-${i}`,
         position: [
           weightedRandom(6) * spread[0] * (i % 2 === 0 ? 1 : -1),
           depth,
@@ -57,4 +58,4 @@ const FloatingItems = ({
   );
 };
 
-export default FloatingItems;
+export default memo(FloatingItems);

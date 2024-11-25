@@ -37,7 +37,6 @@ const FloatingStuff = ({
   duration,
   delay,
   debug,
-  // TODO
   spread = DEFAULT_SPREAD,
   numberOfItems = 100,
   children,
@@ -109,9 +108,8 @@ const FloatingStuff = ({
 
   return (
     <group ref={outerGroupRef}
-    // position={[0, -2, 0]}
     >
-      <group ref={worldRef} position={[0, 0, from]}>
+      <group ref={worldRef} position={[0, 0, from]} visible={visible}>
         <Physics debug={debug} paused={!visible}>
           {childrenArray.map((child, index) => (
             <FloatingItemV2

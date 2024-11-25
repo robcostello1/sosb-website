@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
 import ScreenContents from '../../City/Screen/ScreenContents';
-import Fridge from '../../Fridge';
+import FridgeContents from '../../Fridge';
 import FloatingStuff from '../FloatingStuff';
 
 type FloatingSceneProps = {
@@ -17,7 +17,7 @@ const screen = (
     start={true}
   />
 );
-const fridge = <Fridge />;
+const fridge = <FridgeContents />;
 
 const FloatingScene = ({ visible }: FloatingSceneProps) => {
   return (

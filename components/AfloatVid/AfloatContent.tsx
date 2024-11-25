@@ -17,6 +17,8 @@ import SkyStreaks from './components/Sky/SkyStreaks';
 import Controls from './components/Utils/Controls';
 import VideoProvider, { useVideoContext } from './components/Video';
 import { PARTS, START_POSITION_Z } from './consts';
+import { ErrorBoundary } from '@sentry/nextjs';
+import About from './components/Utils/Controls/About';
 
 // TODO deprecate in favour of bars
 const parts = {
@@ -206,17 +208,31 @@ const AfloatContentWrapper = ({ onLoad }: { onLoad: () => void }) => {
 
   return (
     <div ref={ref} className={styles.outer}>
-      <Controls
-        volume={volume}
-        fullscreen={fullscreen}
-        onChangeVolume={setVolume}
-        onChangeFullscreen={handleFullscreen}
-      />
-      <Canvas className={styles.container}>
-        <VideoProvider volume={volume}>
-          <AfloatContent onLoad={onLoad} />
-        </VideoProvider>
-      </Canvas>
+      <ErrorBoundary fallback={<About show>
+        <h1>Afloat</h1>
+        <p>Sorry, you need WebGL enabled to view this site.</p>
+        <p>
+          <em>Afloat</em> is an immersive music video for the Sounds of System Breakdown song of the same name. You initially find yourself on a raft floating through a flooded city, but as time progresses the environment around you starts to behave in unexpected ways.
+        </p>
+        <p>
+          <em>Afloat</em> is built using WebGL and ThreeJS, allowing complex 3D graphics to be displayed in standard web browsers. Its environment is generated algorithmically, and will never appear the same way twice.
+        </p>
+        <p>
+          <em>Afloat</em> was created by Rob Costello, creative force behind Sounds of System Breakdown. Rob also DJs and writes under the name Tech Nicholson and spends his day job writing code. Afloat is taken from Sounds of System Breakdown’s third album, Desperate Creatures.
+        </p>
+      </About>}>
+        <Controls
+          volume={volume}
+          fullscreen={fullscreen}
+          onChangeVolume={setVolume}
+          onChangeFullscreen={handleFullscreen}
+        />
+        <Canvas className={styles.container}>
+          <VideoProvider volume={volume}>
+            <AfloatContent onLoad={onLoad} />
+          </VideoProvider>
+        </Canvas>
+      </ErrorBoundary>
     </div>
   );
 };
