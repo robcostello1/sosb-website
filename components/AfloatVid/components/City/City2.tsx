@@ -77,7 +77,7 @@ const City2 = ({
             started={moving}
             barNumToShowLights={PARTS.verse - 1}
             active={visible}
-            numberOfBuildings={120}
+            numberOfBuildings={160}
           />
 
           <VineBuildingGroup textureProps={textureProps} size={size} />

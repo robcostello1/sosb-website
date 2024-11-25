@@ -81,12 +81,12 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
     if (barRef.current > PARTS.hook) {
       setShowFloatingStuff(false);
       setShowSkyStreaks(false);
-      setShowShippingScene(false);
     }
     // if (barRef.current > PARTS.chorus - 0.5 && barRef.current < PARTS.chorus) {
     //   setTimeSpeedMultiplyer(400);
     // }
     if (barRef.current > PARTS.chorus - 3) {
+      setShowShippingScene(false);
       setTimeSpeedMultiplyer(0.5);
       setShowOrb(true);
     }

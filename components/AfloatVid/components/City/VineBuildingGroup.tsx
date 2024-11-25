@@ -16,7 +16,7 @@ const VineBuildingGroup = ({ textureProps, size }: VineBuildingGroupProps) => {
   const params = useBuildingGroupParams({
     buildingHeightFactor: 100,
     size,
-    numberOfBuildings: 20,
+    numberOfBuildings: 40,
     textureProps,
   });
 
