@@ -4,17 +4,18 @@ import { useCallback, useEffect, } from 'react';
 import { NUM_TEXTURES, useLoadingStore } from '../../components/AfloatVid/state/loading';
 import styles from '../../styles/Home.module.css';
 import afloatStyles from './Afloat.module.css';
-import type { GetStaticProps } from "next";
 
-export const getStaticProps: GetStaticProps =
-  async (_context) => ({ props: { host: process.env['HOST'] || null } });
 
 const AfloatContent = dynamic(
   () => import("../../components/AfloatVid/AfloatContent"),
   { ssr: false }
 );
 
-export default function Afloat({ host }: { host: string }) {
+const TITLE = "Sounds of System Breakdown - Afloat";
+const DESCRIPTION = "Float through a drowned city in this immersive music video";
+const IMAGE = "https://sosbmusic.com/afloat-screenshot.jpg";
+
+export default function Afloat() {
   const reset = useLoadingStore((state) => state.reset);
   const items = useLoadingStore((state) => state.items);
   const removeItems = useLoadingStore((state) => state.removeItems);
@@ -32,20 +33,20 @@ export default function Afloat({ host }: { host: string }) {
   return (
     <div>
       <Head>
-        <title>Sounds of System Breakdown - Afloat</title>
-        <meta name="description" content="An immersive music video" />
+        <title>{TITLE}</title>
+        <meta name="description" content={DESCRIPTION} />
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Sounds of System Breakdown - Afloat" />
-        <meta property="og:description" content="An immersive music video" />
-        <meta property="og:image" content="https://sosbmusic.com/afloat-screenshot.jpg" />
+        <meta property="og:title" content={TITLE} />
+        <meta property="og:description" content={DESCRIPTION} />
+        <meta property="og:image" content={IMAGE} />
         <meta property="og:url" content="https://sosbmusic.com/afloat" />
         <meta property="og:type" content="video" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@sosbmusic" />
         <meta name="twitter:creator" content="@sosbmusic" />
-        <meta name="twitter:title" content="Sounds of System Breakdown - Afloat" />
-        <meta name="twitter:description" content="An immersive music video" />
-        <meta name="twitter:image" content="https://sosbmusic.com/afloat-screenshot.jpg" />
+        <meta name="twitter:title" content={TITLE} />
+        <meta name="twitter:description" content={DESCRIPTION} />
+        <meta name="twitter:image" content={IMAGE} />
       </Head>
 
       {loadingPercent < 100 ? (
