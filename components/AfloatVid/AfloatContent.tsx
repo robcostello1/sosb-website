@@ -158,7 +158,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
 
         <FloatingScene visible={showFloatingStuff} />
 
-        <SkyStreaks visible={showSkyStreaks} numStreaks={10} />
+        <SkyStreaks visible={showSkyStreaks} numStreaks={18} />
 
         <BuildingTextureProvider>
           {city}
@@ -175,7 +175,7 @@ const AfloatContent = ({ onLoad }: { onLoad: () => void }) => {
           visible={showIslands}
           scale={200}
           position={[105, -3, 0]}
-          bounce={0.35}
+          bounce={0.55}
         />
 
         {raft}
