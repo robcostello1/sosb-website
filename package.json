@@ -13,6 +13,7 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@next/third-parties": "^15.0.3",
     "@react-three/fiber": "^8.9.1",
     "@react-three/rapier": "^0.15.0",
     "@sentry/nextjs": "^7.91.0",
@@ -30,8 +31,8 @@
     "react-share": "^5.1.0",
     "three": "^0.146.0",
     "typescript": "4.9.3",
-    "zustand": "^4.5.0",
-    "web-audio-daw": "^4.13.1"
+    "web-audio-daw": "^4.13.1",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@aws-cdk/aws-certificatemanager": "^1.115.0",

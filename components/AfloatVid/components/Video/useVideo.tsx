@@ -43,7 +43,6 @@ export const useVideo = ({
 
     const AudioContext =
       window.AudioContext ||
-      // @ts-expect-error
       window.webkitAudioContext || // Safari and old versions of Chrome
       false;
 

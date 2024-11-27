@@ -25,7 +25,7 @@ const About = ({
         Creatures.
       </p>
       <p>
-        This experience was built by <a href="https://robcostello.net/" target="_blank">Rob Costello</a>.
+        This experience was built by <a href="https://robcostello.net/" target="_blank" rel="noreferrer">Rob Costello</a>.
       </p>
     </>
   )
@@ -124,7 +124,7 @@ const About = ({
           <WhatsappShareButton /> */}
         </div>
       </OutsideClickHandler>
-    </div>
+    </div >
   );
 };
 
