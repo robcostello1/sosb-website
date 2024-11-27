@@ -1,5 +1,5 @@
 import gsap, { Power2 } from 'gsap';
-import { memo, Suspense, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Group } from 'three';
 
 import { PARTS, START_POSITION_Z } from '../../consts';

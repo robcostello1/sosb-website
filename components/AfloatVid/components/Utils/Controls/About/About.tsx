@@ -20,9 +20,12 @@ const About = ({
       <h2>Afloat</h2>
       <p>
         You&apos;re viewing an immersive music video for
-        &ldquo;Afloat&rdquo; by Sounds of System Breakdown.
-        &ldquo;Afloat&rdquo; features on our 2022 album, Desperate
+        <em>Afloat</em> by Sounds of System Breakdown.
+        <em>Afloat</em> features on our 2022 album, Desperate
         Creatures.
+      </p>
+      <p>
+        This experience was built by <a href="https://robcostello.net/" target="_blank">Rob Costello</a>.
       </p>
     </>
   )
