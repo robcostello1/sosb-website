@@ -4,6 +4,7 @@ import { useCallback, useEffect, } from 'react';
 import { NUM_TEXTURES, useLoadingStore } from '../../components/AfloatVid/state/loading';
 import styles from '../../styles/Home.module.css';
 import afloatStyles from './Afloat.module.css';
+import Script from 'next/script';
 
 
 const AfloatContent = dynamic(

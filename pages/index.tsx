@@ -3,8 +3,8 @@ import Head from "next/head";
 import { Canvas } from "@react-three/fiber";
 import styles from "../styles/Home.module.css";
 
+import { useEffect, useState } from "react";
 import HomeAnimation from "../components/HomeAnimation";
-import { useEffect, useState, memo } from "react";
 
 export default function Home() {
   const [overlayActive, setOverlayActive] = useState(true);
